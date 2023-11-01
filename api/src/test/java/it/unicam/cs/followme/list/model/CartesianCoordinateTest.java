@@ -16,11 +16,27 @@ public class CartesianCoordinateTest {
         CartesianCoordinate cartesianCoordinates = new CartesianCoordinate(1.0, 1.0);
         assertEquals(1.0, cartesianCoordinates.getX());
     }
+
+    @Test
+    public void shouldSetXValue() {
+        CartesianCoordinate cartesianCoordinates = new CartesianCoordinate(1.0, 1.0);
+        cartesianCoordinates.setX(2.0);
+        assertEquals(2.0, cartesianCoordinates.getX());
+    }
+
     @Test
     public void testGetY() {
         CartesianCoordinate cartesianCoordinates = new CartesianCoordinate(1.0, 1.0);
         assertEquals(1, cartesianCoordinates.getY());
     }
+
+    @Test
+    public void shouldSetYValue() {
+        CartesianCoordinate cartesianCoordinates = new CartesianCoordinate(1.0, 1.0);
+        cartesianCoordinates.setY(2.0);
+        assertEquals(2.0, cartesianCoordinates.getY());
+    }
+
     @Test
     public void testCalculateDistance() {
         CartesianCoordinate cartesianCoordinates = new CartesianCoordinate(1.0, 1.0);

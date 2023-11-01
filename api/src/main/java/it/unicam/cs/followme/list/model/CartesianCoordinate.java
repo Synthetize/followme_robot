@@ -1,5 +1,7 @@
 package it.unicam.cs.followme.list.model;
 
+import java.security.PublicKey;
+
 public class CartesianCoordinate implements Coordinate<CartesianCoordinate>{
     private double x;
     private double y;
@@ -13,8 +15,16 @@ public class CartesianCoordinate implements Coordinate<CartesianCoordinate>{
         return this.x;
     }
 
+    public void setX(double x) {
+        this.x = x;
+    }
+
     public double getY() {
         return this.y;
+    }
+
+    public void setY(double y) {
+        this.y = y;
     }
     @Override
     public double calculateDistance(CartesianCoordinate coordinates) {

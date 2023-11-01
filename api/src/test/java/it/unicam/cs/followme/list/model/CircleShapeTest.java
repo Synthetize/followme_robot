@@ -14,9 +14,9 @@ public class CircleShapeTest {
 
     @Test
     public void shouldThrowExceptionWhenRadiusIsEqualOrLessThanZero() {
-        ArithmeticException exception = assertThrows(ArithmeticException.class, () -> new CircleShape(0, "_LABEL"));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new CircleShape(0, "_LABEL"));
         assertEquals("Radius must be greater than 0", exception.getMessage());
-        ArithmeticException exception2 = assertThrows(ArithmeticException.class, () -> new CircleShape(-5, "_LABEL"));
+        IllegalArgumentException exception2 = assertThrows(IllegalArgumentException.class, () -> new CircleShape(-5, "_LABEL"));
         assertEquals("Radius must be greater than 0", exception2.getMessage());
     }
 

@@ -12,13 +12,13 @@ public class RectangleShapeTest {
 
     @Test
     public void shouldThrowExceptionWhenWidthOrHeightAreEqualOrLessThanZero() {
-        ArithmeticException exception = assertThrows(ArithmeticException.class, () -> new RectangleShape(0, 5, "_LABEL"));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new RectangleShape(0, 5, "_LABEL"));
         assertEquals("Width and height must be greater than 0", exception.getMessage());
-        ArithmeticException exception2 = assertThrows(ArithmeticException.class, () -> new RectangleShape(5, 0, "_LABEL"));
+        IllegalArgumentException exception2 = assertThrows(IllegalArgumentException.class, () -> new RectangleShape(5, 0, "_LABEL"));
         assertEquals("Width and height must be greater than 0", exception2.getMessage());
-        ArithmeticException exception3 = assertThrows(ArithmeticException.class, () -> new RectangleShape(-5, 5, "_LABEL"));
+        IllegalArgumentException exception3 = assertThrows(IllegalArgumentException.class, () -> new RectangleShape(-5, 5, "_LABEL"));
         assertEquals("Width and height must be greater than 0", exception3.getMessage());
-        ArithmeticException exception4 = assertThrows(ArithmeticException.class, () -> new RectangleShape(5, -5, "_LABEL"));
+        IllegalArgumentException exception4 = assertThrows(IllegalArgumentException.class, () -> new RectangleShape(5, -5, "_LABEL"));
         assertEquals("Width and height must be greater than 0", exception4.getMessage());
     }
 
