@@ -15,13 +15,4 @@ public interface Shape {
      * @return the condition label of the shape
      */
     String getConditionLabel();
-    /*
-     * This method is used to check if the shape contains the robot
-     * @param coordinates the coordinates of the robot
-     * @return true if the shape contains the robot, false otherwise
-     */
-    //boolean hasTheRobotInside(Coordinate<T> coordinates);
-    // TODO: 01/11/2023 serve veramente questo metodo qui?
-
-
 }

@@ -9,8 +9,8 @@ public class RectangleShape implements Shape {
     public RectangleShape(double width, double height, String conditionLabel) {
         if (width <= 0 || height <= 0)
             throw new IllegalArgumentException("Width and height must be greater than 0");
-        if (!(conditionLabel.startsWith("_")))
-            throw new IllegalArgumentException("Condition label must start with _");
+        if (!(conditionLabel.endsWith("_")))
+            throw new IllegalArgumentException("Condition label must end with _");
         this.conditionLabel = conditionLabel;
         this.width = width;
         this.height = height;
@@ -30,9 +30,4 @@ public class RectangleShape implements Shape {
     public String getConditionLabel() {
         return this.conditionLabel;
     }
-
-   /* @Override
-    public boolean hasTheRobotInside(Coordinate coordinates) {
-        return false;
-    }*/
 }
