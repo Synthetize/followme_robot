@@ -6,24 +6,24 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CircleShapeTest {
 
-    CircleShape circleShape = new CircleShape(5, "_LABEL");
+    CircleShape circleShape = new CircleShape(5, "LABEL_");
     @Test
     public void shouldCreateCircleShape() {
-        assertDoesNotThrow(() -> new CircleShape(5, "_LABEL"));
+        assertDoesNotThrow(() -> new CircleShape(5, "LABEL_"));
     }
 
     @Test
     public void shouldThrowExceptionWhenRadiusIsEqualOrLessThanZero() {
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new CircleShape(0, "_LABEL"));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new CircleShape(0, "LABEL_"));
         assertEquals("Radius must be greater than 0", exception.getMessage());
-        IllegalArgumentException exception2 = assertThrows(IllegalArgumentException.class, () -> new CircleShape(-5, "_LABEL"));
+        IllegalArgumentException exception2 = assertThrows(IllegalArgumentException.class, () -> new CircleShape(-5, "LABEL_"));
         assertEquals("Radius must be greater than 0", exception2.getMessage());
     }
 
     @Test
-    public void shouldThrowExceptionWhenConditionLabelDoesNotStartWithUnderscore() {
+    public void shouldThrowExceptionWhenConditionLabelDoesNotStartEndUnderscore() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new CircleShape(5, "LABEL"));
-        assertEquals("Condition label must start with _", exception.getMessage());
+        assertEquals("Condition label must end with _", exception.getMessage());
     }
 
     @Test
@@ -38,6 +38,6 @@ public class CircleShapeTest {
 
     @Test
     public void testGetConditionLabel() {
-        assertEquals("_LABEL", circleShape.getConditionLabel());
+        assertEquals("LABEL_", circleShape.getConditionLabel());
     }
 }

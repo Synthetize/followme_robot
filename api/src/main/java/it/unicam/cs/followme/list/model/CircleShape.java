@@ -9,8 +9,8 @@ public class CircleShape implements Shape{
     public CircleShape(double radius, String conditionLabel) {
         if(radius <= 0)
             throw new IllegalArgumentException("Radius must be greater than 0");
-        if(!(conditionLabel.startsWith("_")))
-            throw new IllegalArgumentException("Condition label must start with _");
+        if(!(conditionLabel.endsWith("_")))
+            throw new IllegalArgumentException("Condition label must end with _");
         this.conditionLabel = conditionLabel;
         this.radius = radius;
         this.area = calculateArea();
@@ -33,8 +33,4 @@ public class CircleShape implements Shape{
         return this.conditionLabel;
     }
 
-    /*@Override
-    public boolean hasTheRobotInside(Coordinate coordinates) {
-        return false;
-    }*/
 }
