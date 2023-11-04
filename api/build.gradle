@@ -9,3 +9,11 @@ plugins {
 dependencies {
     api project(':utilities')
 }
+
+task wrapper(type: Wrapper){
+    gradleVersion = '7.2'
+}
+
+task prepareKotlinBuildScriptModel {
+
+}
