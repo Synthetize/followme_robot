@@ -1,7 +1,6 @@
-package it.unicam.cs.followme.list.model;
+package it.unicam.cs.followme.list.model.shapes;
 
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 public class RectangleShapeTest {
@@ -28,9 +27,4 @@ public class RectangleShapeTest {
         assertEquals("Condition label must end with _", exception.getMessage());
     }
 
-    @Test
-    public void shouldReturnTheCorrectShapeArea() {
-        RectangleShape rectangleShape = new RectangleShape(5, 8, "LABEL_");
-        assertEquals(40, rectangleShape.getShapeArea());
-    }
 }

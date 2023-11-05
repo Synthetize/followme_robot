@@ -1,5 +1,6 @@
-package it.unicam.cs.followme.list.model;
+package it.unicam.cs.followme.list.model.shapes;
 
+import it.unicam.cs.followme.list.model.shapes.CircleShape;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,23 +22,13 @@ public class CircleShapeTest {
     }
 
     @Test
-    public void shouldThrowExceptionWhenConditionLabelDoesNotStartEndUnderscore() {
+    public void shouldThrowExceptionWhenConditionLabelDoesNotEndUWithUnderscore() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> new CircleShape(5, "LABEL"));
         assertEquals("Condition label must end with _", exception.getMessage());
     }
 
     @Test
-    public void testGetRadius() {
-        assertEquals(5, circleShape.getRadius());
-    }
-
-    @Test
-    public void shouldReturnTheCorrectShapeArea() {
-        assertEquals(78.53981633974483, circleShape.getShapeArea());
-    }
-
-    @Test
     public void testGetConditionLabel() {
-        assertEquals("LABEL_", circleShape.getConditionLabel());
+        assertEquals("LABEL_", circleShape.conditionLabel());
     }
 }

@@ -1,4 +1,5 @@
 package it.unicam.cs.followme.list.model;
+import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -14,12 +15,12 @@ public class CartesianCoordinateTest {
     @Test
     public void testGetX() {
         CartesianCoordinate cartesianCoordinates = new CartesianCoordinate(1.0, 1.0);
-        assertEquals(1.0, cartesianCoordinates.xValue());
+        assertEquals(1.0, cartesianCoordinates.getX());
     }
 
     @Test
     public void testGetY() {
         CartesianCoordinate cartesianCoordinates = new CartesianCoordinate(1.0, 1.0);
-        assertEquals(1, cartesianCoordinates.yValue());
+        assertEquals(1, cartesianCoordinates.getY());
     }
 }

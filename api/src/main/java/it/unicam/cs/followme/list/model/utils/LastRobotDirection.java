@@ -1,13 +1,14 @@
 package it.unicam.cs.followme.list.model.utils;
-
 public class LastRobotDirection implements MovementDirection {
 
-    private Coordinate direction;
-    private int speed;
+    private final Coordinate direction;
+    private final int speed;
 
     // TODO: 05/11/2023 passare coordinate invece di differenceX e differenceY, rimuovere speed
     // TODO: 05/11/2023 invece di ritornare una coordinata ritorna due valori 'movementX' e 'movementY'
     public LastRobotDirection(double differenceX, double differenceY, int speed) {
+        if(speed < 0)
+            throw new IllegalArgumentException("Speed must be positive");
         double direction = Math.sqrt(Math.pow(differenceX,2)+Math.pow(differenceY,2));
         this.speed = speed;
         double xMovementValue = (differenceX /direction)*speed;
@@ -22,6 +23,9 @@ public class LastRobotDirection implements MovementDirection {
     public Coordinate getDirection(){
         return this.direction;
     }
+
+}
+
 //    private CartesianCoordinate calculateDirection(Coordinate robotPosition, Coordinate targetPosition, int speed) {
 //        double startingRobotX = robotPosition.getX();
 //        double startingRobotY = robotPosition.getY();
@@ -38,4 +42,3 @@ public class LastRobotDirection implements MovementDirection {
 //        return new CartesianCoordinate(startingRobotX, startingRobotY);
 //    }
 //
-}
