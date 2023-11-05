@@ -6,6 +6,7 @@ public class LastRobotDirection implements MovementDirection {
     private int speed;
 
     // TODO: 05/11/2023 passare coordinate invece di differenceX e differenceY, rimuovere speed
+    // TODO: 05/11/2023 invece di ritornare una coordinata ritorna due valori 'movementX' e 'movementY'
     public LastRobotDirection(double differenceX, double differenceY, int speed) {
         double direction = Math.sqrt(Math.pow(differenceX,2)+Math.pow(differenceY,2));
         this.speed = speed;
