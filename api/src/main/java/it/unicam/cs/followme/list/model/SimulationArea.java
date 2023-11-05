@@ -1,53 +1,67 @@
 package it.unicam.cs.followme.list.model;
 
+import it.unicam.cs.followme.list.model.robots.Robot;
+import it.unicam.cs.followme.list.model.shapes.CircleShape;
+import it.unicam.cs.followme.list.model.shapes.RectangleShape;
+import it.unicam.cs.followme.list.model.shapes.Shape;
+import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
+import it.unicam.cs.followme.list.model.utils.Coordinate;
+
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class SimulationArea implements Environment<CartesianCoordinate> {
+public class SimulationArea<R extends Robot> implements Environment<R> {
 
-    private final Map<Shape, CartesianCoordinate> shapesDetails;
-    private final Map<Robot, CartesianCoordinate> robotsDetails;
+    private final Map<Shape, Coordinate> shapesDetails;
+    private final Map<R, Coordinate> robotsDetails;
 
-    public SimulationArea() {
-        this.shapesDetails = new HashMap<>();
-        this.robotsDetails = new HashMap<>();
+    public SimulationArea(Map<Shape, Coordinate> shapesDetails, Map<R, Coordinate> robotsDetails) {
+        this.shapesDetails = shapesDetails;
+        this.robotsDetails = robotsDetails;
     }
 
-
     @Override
-    public Map<Shape, CartesianCoordinate> getShapesDetails() {
+    public Map<Shape, Coordinate> getShapesDetails() {
         return this.shapesDetails;
     }
 
     @Override
-    public Map<Robot, CartesianCoordinate> getRobotsDetails() {
+    public Map<R, Coordinate> getRobotsDetails() {
         return this.robotsDetails;
     }
 
     @Override
-    public void addShapes(List<Shape> shapes, List<CartesianCoordinate> coordinates) {
-      shapes.forEach(shape -> {
-          shapesDetails.put(shape, coordinates.get(shapes.indexOf(shape)));
-      });
+    public void addShapes(List<Shape> shapes, List<Coordinate> coordinates) {
+        shapes.forEach(shape -> {
+            shapesDetails.put(shape, coordinates.get(shapes.indexOf(shape)));
+        });
     }
     @Override
-    public void addRobots(List<Robot> robots, List<CartesianCoordinate> coordinates) {
+    public void addRobots(List<R> robots, List<Coordinate> coordinates) {
         robots.forEach(robot -> {
             robotsDetails.put(robot, coordinates.get(robots.indexOf(robot)));
         });
     }
 
+
+    // TODO: 05/11/2023 faccio lo stesso calcolo in lastrobotdirection
+    @Override
+    public double getDistanceBetweenTwoCoordinates(Coordinate firstCoordinate, Coordinate secondCoordinate) {
+        return Math.sqrt(Math.pow(firstCoordinate.getX() - secondCoordinate.getX(), 2) + Math.pow(firstCoordinate.getY() - secondCoordinate.getY(), 2));
+    }
+
     //todo: scrivere test e controllare condizione per il triangolo
     @Override
-    public HashMap<Shape, CartesianCoordinate> isTheRobotInsideAShape(Robot robot) {
-        Map.Entry<Robot, CartesianCoordinate> robotEntry = this.robotsDetails.entrySet()
+    public List<Shape> checkIfRobotIsInsideShapes(R robot) {
+        Map.Entry<R, Coordinate> robotEntry = this.robotsDetails.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().equals(robot))
                 .findFirst().orElse(null);
         if (robotEntry == null) {
-            return new HashMap<>();
+            return new ArrayList<>();
         }
         return this.shapesDetails.entrySet()
                 .stream()
@@ -64,13 +78,11 @@ public class SimulationArea implements Environment<CartesianCoordinate> {
                     }
                     return false;
                 })
-                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue, (e1, e2) -> e1, HashMap::new));
+                .map(Map.Entry::getKey)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public double getDistanceBetweenTwoCoordinates(CartesianCoordinate firstCoordinate, CartesianCoordinate secondCoordinate) {
-        return Math.sqrt(Math.pow(firstCoordinate.xValue() - secondCoordinate.xValue(), 2) + Math.pow(firstCoordinate.yValue() - secondCoordinate.yValue(), 2));
-    }
+
 }
 
 

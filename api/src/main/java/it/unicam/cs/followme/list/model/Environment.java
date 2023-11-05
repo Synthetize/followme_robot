@@ -1,18 +1,50 @@
 package it.unicam.cs.followme.list.model;
 
+import it.unicam.cs.followme.list.model.robots.Robot;
+import it.unicam.cs.followme.list.model.shapes.Shape;
+import it.unicam.cs.followme.list.model.utils.Coordinate;
 import java.util.List;
 import java.util.Map;
 
-public interface Environment<C extends Coordinate> {
-    Map<Shape, C> getShapesDetails();
+/**
+ * This interface is used to rappresent a generic environment
+ * @param <R> the type of robot
+ */
+public interface Environment<R extends Robot> {
+    /**
+     * @return a map that contains the shapes and their coordinates
+     */
+    Map<Shape, Coordinate> getShapesDetails();
+    /**
+     * @return a map that contains the robots and their coordinates
+     */
+    Map<R, Coordinate> getRobotsDetails();
 
-    Map<Robot, C> getRobotsDetails();
-
-    void addShapes(List<Shape> shapes, List<C> coordinates);
-
-    void addRobots(List<Robot> robots, List<C> coordinates);
-
-    Map<Shape, C> isTheRobotInsideAShape(Robot robot);
-
-    double getDistanceBetweenTwoCoordinates(C firstCoordinate, C secondCoordinate);
+    // TODO: 05/11/2023 potrebbero non serivire add shapes e add robots
+    /**
+     * Add the shapes and their coordinates to the environment
+     * @param shapes the shapes to add
+     * @param coordinates the coordinates of the shapes to add
+     */
+    void addShapes(List<Shape> shapes, List<Coordinate> coordinates);
+    /**
+     * Add the robots and their coordinates to the environment
+     * @param robots the robots to add
+     * @param coordinates the coordinates of the robots to add
+     */
+    void addRobots(List<R> robots, List<Coordinate> coordinates);
+    /**
+     * Calculate the distance between two coordinates
+     * @param firstCoordinate the first coordinate
+     * @param secondCoordinate the second coordinate
+     * @return the distance between the two coordinates
+     */
+    double getDistanceBetweenTwoCoordinates(Coordinate firstCoordinate, Coordinate secondCoordinate);
+    /**
+     * Check if a robot is inside a shape
+     * @param robot the robot to check
+     * @return a list of shapes that contains the robot
+     */
+    List<Shape> checkIfRobotIsInsideShapes(R robot);
 }
+
