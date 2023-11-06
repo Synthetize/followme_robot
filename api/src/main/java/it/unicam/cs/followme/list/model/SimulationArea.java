@@ -4,11 +4,9 @@ import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.CircleShape;
 import it.unicam.cs.followme.list.model.shapes.RectangleShape;
 import it.unicam.cs.followme.list.model.shapes.Shape;
-import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.utils.Coordinate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -35,15 +33,11 @@ public class SimulationArea<R extends Robot> implements Environment<R> {
 
     @Override
     public void addShapes(List<Shape> shapes, List<Coordinate> coordinates) {
-        shapes.forEach(shape -> {
-            shapesDetails.put(shape, coordinates.get(shapes.indexOf(shape)));
-        });
+        shapes.forEach(shape -> shapesDetails.put(shape, coordinates.get(shapes.indexOf(shape))));
     }
     @Override
     public void addRobots(List<R> robots, List<Coordinate> coordinates) {
-        robots.forEach(robot -> {
-            robotsDetails.put(robot, coordinates.get(robots.indexOf(robot)));
-        });
+        robots.forEach(robot -> robotsDetails.put(robot, coordinates.get(robots.indexOf(robot))));
     }
 
 
@@ -53,7 +47,6 @@ public class SimulationArea<R extends Robot> implements Environment<R> {
         return Math.sqrt(Math.pow(firstCoordinate.getX() - secondCoordinate.getX(), 2) + Math.pow(firstCoordinate.getY() - secondCoordinate.getY(), 2));
     }
 
-    //todo: scrivere test e controllare condizione per il triangolo
     @Override
     public List<Shape> checkIfRobotIsInsideShapes(R robot) {
         Map.Entry<R, Coordinate> robotEntry = this.robotsDetails.entrySet()
@@ -68,13 +61,9 @@ public class SimulationArea<R extends Robot> implements Environment<R> {
                 .filter(shapeEntry -> {
                     double distanceBetweenRobotAndShapeCenter = getDistanceBetweenTwoCoordinates(robotEntry.getValue(), shapeEntry.getValue());
                     if (shapeEntry.getKey() instanceof RectangleShape rectangleShape) {
-                        if (rectangleShape.getShapeArea() >= distanceBetweenRobotAndShapeCenter) { // da controllare
-                            return true;
-                        }
+                        return checkIfRobotIsInsideRectangleShape(robotEntry.getValue(), Map.entry(rectangleShape, shapeEntry.getValue()));
                     } else if (shapeEntry.getKey() instanceof CircleShape circleShape) {
-                        if (circleShape.getRadius() >= distanceBetweenRobotAndShapeCenter) {
-                            return true;
-                        }
+                        return circleShape.radius() >= distanceBetweenRobotAndShapeCenter;
                     }
                     return false;
                 })
@@ -82,7 +71,16 @@ public class SimulationArea<R extends Robot> implements Environment<R> {
                 .collect(Collectors.toList());
     }
 
-
+    private boolean checkIfRobotIsInsideRectangleShape(Coordinate robotCoordinate, Map.Entry<RectangleShape, Coordinate> shapeEntry) {
+        Coordinate rectangleCenter = shapeEntry.getValue();
+        RectangleShape rectangleShape = shapeEntry.getKey();
+        double topLeftAngleX = rectangleCenter.getX() - rectangleShape.width() / 2;
+        double topLeftAngleY = rectangleCenter.getY() + rectangleShape.height() / 2;
+        double bottomRightAngleX = rectangleCenter.getX() + rectangleShape.width() / 2;
+        double bottomRightAngleY = rectangleCenter.getY() - rectangleShape.height() / 2;
+        return topLeftAngleX <= robotCoordinate.getX() && robotCoordinate.getX() <= bottomRightAngleX
+                && bottomRightAngleY <= robotCoordinate.getY() && robotCoordinate.getY() <= topLeftAngleY;
+    }
 }
 
 
