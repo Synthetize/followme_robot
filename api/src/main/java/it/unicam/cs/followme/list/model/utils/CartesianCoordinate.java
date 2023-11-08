@@ -11,4 +11,12 @@ public record CartesianCoordinate(double xValue, double yValue) implements Coord
     public double getY() {
         return this.yValue;
     }
+
+    @Override
+    public String toString() {
+        return "CartesianCoordinate(" +
+                "(" + xValue +
+                " ," + yValue +
+                ')';
+    }
 }

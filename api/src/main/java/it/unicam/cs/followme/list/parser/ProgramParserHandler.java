@@ -1,7 +1,9 @@
 package it.unicam.cs.followme.list.parser;
+import it.unicam.cs.followme.list.LinkedList;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 
 public class ProgramParserHandler implements  FollowMeParserHandler{
+
     @Override
     public void parsingStarted() {
 
