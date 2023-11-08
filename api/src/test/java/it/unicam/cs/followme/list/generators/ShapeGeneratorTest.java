@@ -6,16 +6,11 @@ import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.model.utils.Coordinate;
 import it.unicam.cs.followme.list.parser.ProgramParserHandler;
 import it.unicam.cs.followme.utilities.FollowMeParser;
-import it.unicam.cs.followme.utilities.FollowMeParserException;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import it.unicam.cs.followme.utilities.FollowMeShapeChecker;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -55,7 +50,7 @@ public class ShapeGeneratorTest {
 
     @Test
     public void shouldThrowRunTimeExceptionIfShapeTypeDoesNotExist() {
-        assertThrows(RuntimeException.class, () -> shapesGenerator.generateShapes("C:\\Users\\leona\\Desktop\\followme\\api\\src\\test\\resources\\non_exixting_shape.txt"));
+        assertThrows(RuntimeException.class, () -> shapesGenerator.generateShapes("src/test/resources/non_exixting_shape.txt"));
     }
 
     @Test
