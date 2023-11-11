@@ -1,14 +1,16 @@
-package it.unicam.cs.followme.list.model.utils.commands;
+package it.unicam.cs.followme.list.model.commands.basic;
 
+import it.unicam.cs.followme.list.model.commands.Command;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class FollowCommand implements Command {
+public class Follow implements Command {
     private final RobotCommand commandType;
     private final String signal;
     private final int distance;
     private final int speed;
 
-    public FollowCommand(String label, double[] args) {
+    public Follow(String label, double[] args) {
         this.commandType = RobotCommand.FOLLOW;
         this.signal = label;
         this.distance = (int) args[0];
@@ -18,6 +20,11 @@ public class FollowCommand implements Command {
     @Override
     public RobotCommand getCommandType() {
         return commandType;
+    }
+
+    @Override
+    public void Run(Robot robot) {
+
     }
 
     public String getLabel(){

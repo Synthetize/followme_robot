@@ -1,22 +1,36 @@
 package it.unicam.cs.followme.list.parser;
-import it.unicam.cs.followme.list.LinkedList;
+import it.unicam.cs.followme.list.executor.ProgramExecutor;
+import it.unicam.cs.followme.list.model.Environment;
+import it.unicam.cs.followme.list.model.commands.Command;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 
-public class ProgramParserHandler implements  FollowMeParserHandler{
+import java.util.List;
+
+public class ProgramParserHandler<R extends Robot> implements  FollowMeParserHandler {
+
+    private final List<Command> program;
+    private final ProgramExecutor executor;
+    private final Environment<R> environment;
+
+    public ProgramParserHandler(Environment<R> environment, ProgramExecutor executor, List<Command> program) {
+        this.environment = environment;
+        this.executor = executor;
+        this.program = program;
+    }
 
     @Override
     public void parsingStarted() {
-
+        program.clear();
     }
 
     @Override
     public void parsingDone() {
-
+        //chiama il metodo che esegue il programma
     }
 
     @Override
     public void moveCommand(double[] args) {
-
     }
 
     @Override

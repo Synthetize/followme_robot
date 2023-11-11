@@ -11,20 +11,20 @@ public class LastRobotDirectionTest {
     DecimalFormat df;
     @BeforeEach
     void setUp() {
-        lastRobotDirection = new LastRobotDirection(5,7,2);
+        lastRobotDirection = new RobotDirection(5,7,2);
         df = new DecimalFormat("#.##");
     }
 
     @Test
     void shouldCreateLastRobotDirection() {
-        assertDoesNotThrow(() -> new LastRobotDirection(5,7,2));
-        assertDoesNotThrow(() -> new LastRobotDirection(-5,-7,2));
-        assertDoesNotThrow(() -> new LastRobotDirection(5,5,0));
+        assertDoesNotThrow(() -> new RobotDirection(5,7,2));
+        assertDoesNotThrow(() -> new RobotDirection(-5,-7,2));
+        assertDoesNotThrow(() -> new RobotDirection(5,5,0));
     }
 
     @Test
     void shouldNotCreateLastRobotDirection() {
-        assertThrows(IllegalArgumentException.class, () -> new LastRobotDirection(5,7,-2));
+        assertThrows(IllegalArgumentException.class, () -> new RobotDirection(5,7,-2));
     }
 
     @Test

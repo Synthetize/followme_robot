@@ -71,6 +71,25 @@ public class SimulationArea<R extends Robot> implements Environment<R> {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public void setRobotPosition(R robot, Coordinate coordinate) {
+        this.robotsDetails.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(robot))
+                .findFirst()
+                .ifPresent(entry -> entry.setValue(coordinate));
+    }
+
+    @Override
+    public Coordinate getRobotPosition(R robot) {
+        return this.robotsDetails.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(robot))
+                .findFirst()
+                .map(Map.Entry::getValue)
+                .orElse(null);
+    }
+
     private boolean checkIfRobotIsInsideRectangleShape(Coordinate robotCoordinate, Map.Entry<RectangleShape, Coordinate> shapeEntry) {
         Coordinate rectangleCenter = shapeEntry.getValue();
         RectangleShape rectangleShape = shapeEntry.getKey();

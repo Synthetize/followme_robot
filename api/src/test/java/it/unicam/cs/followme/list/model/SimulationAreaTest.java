@@ -1,6 +1,7 @@
 package it.unicam.cs.followme.list.model;
 
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.CircleShape;
 import it.unicam.cs.followme.list.model.shapes.RectangleShape;
 import it.unicam.cs.followme.list.model.shapes.Shape;
@@ -9,6 +10,7 @@ import it.unicam.cs.followme.list.model.utils.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -121,5 +123,24 @@ public class SimulationAreaTest {
        assertEquals(7.211102550927978, environment.getDistanceBetweenTwoCoordinates(cartesianCoordinates, cartesianCoordinates3));
        CartesianCoordinate cartesianCoordinates4 = new CartesianCoordinate(-4.0, 10);
        assertEquals(10.29563014098700, environment.getDistanceBetweenTwoCoordinates(cartesianCoordinates, cartesianCoordinates4));
+    }
+
+    @Test
+    void shouldReturnRobotPosition() {
+        BasicRobot robot = new BasicRobot();
+        CartesianCoordinate coordinate = new CartesianCoordinate(1, 1);
+        environment.addRobots(Collections.singletonList(robot), Collections.singletonList(coordinate));
+        assertEquals(coordinate, environment.getRobotPosition(robot));
+    }
+
+    @Test
+    void shouldSetRobotPosition() {
+        BasicRobot robot = new BasicRobot();
+        environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(0, 0)));
+        CartesianCoordinate coordinate = new CartesianCoordinate(5, 5);
+        environment.setRobotPosition(robot, coordinate);
+        assertEquals(coordinate, environment.getRobotPosition(robot));
+        assertEquals(5, environment.getRobotsDetails().get(robot).getX());
+        assertEquals(5, environment.getRobotsDetails().get(robot).getY());
     }
 }

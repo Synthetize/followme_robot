@@ -46,5 +46,17 @@ public interface Environment<R extends Robot> {
      * @return a list of shapes that contains the robot
      */
     List<Shape> checkIfRobotIsInsideShapes(R robot);
+    /**
+     * Set the position of a robot
+     * @param robot the robot to move
+     * @param coordinate the new position of the robot
+     */
+    void setRobotPosition(R robot, Coordinate coordinate);
+    /**
+     * Get the position of a robot
+     * @param robot the robot to get the position
+     * @return the position of the robot
+     */
+    Coordinate getRobotPosition(R robot);
 }
 
