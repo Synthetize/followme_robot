@@ -14,6 +14,6 @@ public interface Command<R extends Robot> {
     /**
      * Executes the command.
      */
-    void Run(R robot);
+    void run(R robot);
 }
 

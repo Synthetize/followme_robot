@@ -18,7 +18,7 @@ public class Repeat_DoForever extends LoopCommand {
     }
 
     @Override
-    public void Run(Robot robot) {
+    public void run(Robot robot) {
 
     }
 

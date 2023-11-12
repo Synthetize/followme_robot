@@ -25,7 +25,7 @@ public class Move<R extends Robot> implements Command<R> {
     }
 
     @Override
-    public void Run(R robot) {
+    public void run(R robot) {
         double distance = environment.getDistanceBetweenTwoCoordinates(targetCoordinates, environment.getRobotPosition(robot));
         double time = distance / speed;
         int numberOfSteps = (int) (time * 1);
@@ -35,13 +35,5 @@ public class Move<R extends Robot> implements Command<R> {
             Coordinate currentPosition = environment.getRobotPosition(robot);
             environment.setRobotPosition(robot, new CartesianCoordinate(currentPosition.getX() + stepX, currentPosition.getY() + stepY));
         }
-    }
-
-    public Coordinate getTargetCoordinate(){
-        return targetCoordinates;
-    }
-
-    public int getSpeed(){
-        return speed;
     }
 }

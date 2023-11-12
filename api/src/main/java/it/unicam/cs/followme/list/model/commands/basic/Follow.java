@@ -23,7 +23,7 @@ public class Follow implements Command {
     }
 
     @Override
-    public void Run(Robot robot) {
+    public void run(Robot robot) {
 
     }
 

@@ -2,12 +2,10 @@ package it.unicam.cs.followme.list.model.commands.basic;
 
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationArea;
-import it.unicam.cs.followme.list.model.commands.basic.Move;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.utils.Coordinate;
-import it.unicam.cs.followme.utilities.RobotCommand;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -32,11 +30,11 @@ public class MoveCommandTest {
         Move<BasicRobot> moveCommand = new Move<>(new CartesianCoordinate(9, 6), 3, environment);
         BasicRobot robot = new BasicRobot();
         environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(0,0)));
-        moveCommand.Run(robot);
+        moveCommand.run(robot);
         assertEquals(9, environment.getRobotPosition(robot).getX());
         assertEquals(6, environment.getRobotPosition(robot).getY());
         Move<BasicRobot> moveCommand2 = new Move<>(new CartesianCoordinate(-7, 14), 3, environment);
-        moveCommand2.Run(robot);
+        moveCommand2.run(robot);
         assertEquals(-7, Math.round((environment.getRobotPosition(robot).getX()*100)/100));
         assertEquals(14, Math.round((environment.getRobotPosition(robot).getY()*100)/100));
     }

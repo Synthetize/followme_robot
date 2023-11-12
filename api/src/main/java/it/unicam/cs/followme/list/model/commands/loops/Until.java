@@ -17,7 +17,7 @@ public class Until extends LoopCommand {
     }
 
     @Override
-    public void Run(Robot robot) {
+    public void run(Robot robot) {
 
     }
 
