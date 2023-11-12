@@ -15,7 +15,7 @@ import java.util.HashMap;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class MoveCommandTest {
+public class MoveTest {
 
     Environment<BasicRobot> environment;
 
@@ -37,6 +37,16 @@ public class MoveCommandTest {
         moveCommand2.run(robot);
         assertEquals(-7, Math.round((environment.getRobotCoordinate(robot).getX()*100)/100));
         assertEquals(14, Math.round((environment.getRobotCoordinate(robot).getY()*100)/100));
+    }
+
+    @Test
+    void shouldSetRobotLastDirectionAfterMovement() {
+        Move<BasicRobot> moveCommand = new Move<>(new CartesianCoordinate(9, 6), 3, environment);
+        BasicRobot robot = new BasicRobot();
+        environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(0,0)));
+        moveCommand.run(robot);
+        assertEquals(3, robot.getLastMovementDirection().getX());
+        assertEquals(2, robot.getLastMovementDirection().getY());
     }
 
 }
