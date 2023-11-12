@@ -1,7 +1,6 @@
 package it.unicam.cs.followme.list.model;
 
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
-import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.CircleShape;
 import it.unicam.cs.followme.list.model.shapes.RectangleShape;
 import it.unicam.cs.followme.list.model.shapes.Shape;
@@ -10,7 +9,6 @@ import it.unicam.cs.followme.list.model.utils.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -55,10 +53,11 @@ public class SimulationAreaTest {
         assertEquals(0, environment.getRobotsDetails().size());
         BasicRobot robot = new BasicRobot();
         CartesianCoordinate robotCoordinate = new CartesianCoordinate(1, 1);
-        List<BasicRobot> robots = List.of(robot);
-        List<Coordinate> coordinates = List.of(robotCoordinate);
+        BasicRobot robot2 = new BasicRobot();
+        List<BasicRobot> robots = List.of(robot,robot2);
+        List<Coordinate> coordinates = List.of(robotCoordinate, robotCoordinate);
         environment.addRobots(robots, coordinates);
-        assertEquals(environment.getRobotsDetails().size(), 1);
+        assertEquals(environment.getRobotsDetails().size(), 2);
         assertEquals(environment.getRobotsDetails().get(robot), robotCoordinate);
     }
 
@@ -130,7 +129,14 @@ public class SimulationAreaTest {
         BasicRobot robot = new BasicRobot();
         CartesianCoordinate coordinate = new CartesianCoordinate(1, 1);
         environment.addRobots(Collections.singletonList(robot), Collections.singletonList(coordinate));
-        assertEquals(coordinate, environment.getRobotPosition(robot));
+        assertEquals(coordinate, environment.getRobotCoordinate(robot));
+    }
+
+    @Test
+    void shouldReturnShapePosition() {
+        CartesianCoordinate coordinate = new CartesianCoordinate(1, 1);
+        environment.addShapes(Collections.singletonList(rectangleShape), Collections.singletonList(coordinate));
+        assertEquals(coordinate, environment.getShapeCoordinate(rectangleShape));
     }
 
     @Test
@@ -139,8 +145,9 @@ public class SimulationAreaTest {
         environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(0, 0)));
         CartesianCoordinate coordinate = new CartesianCoordinate(5, 5);
         environment.setRobotPosition(robot, coordinate);
-        assertEquals(coordinate, environment.getRobotPosition(robot));
+        assertEquals(coordinate, environment.getRobotCoordinate(robot));
         assertEquals(5, environment.getRobotsDetails().get(robot).getX());
         assertEquals(5, environment.getRobotsDetails().get(robot).getY());
     }
+
 }

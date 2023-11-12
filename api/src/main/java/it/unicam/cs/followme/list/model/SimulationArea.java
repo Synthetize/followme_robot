@@ -81,10 +81,20 @@ public class SimulationArea<R extends Robot> implements Environment<R> {
     }
 
     @Override
-    public Coordinate getRobotPosition(R robot) {
+    public Coordinate getRobotCoordinate(R robot) {
         return this.robotsDetails.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().equals(robot))
+                .findFirst()
+                .map(Map.Entry::getValue)
+                .orElse(null);
+    }
+
+    @Override
+    public Coordinate getShapeCoordinate(Shape shape) {
+        return this.shapesDetails.entrySet()
+                .stream()
+                .filter(entry -> entry.getKey().equals(shape))
                 .findFirst()
                 .map(Map.Entry::getValue)
                 .orElse(null);

@@ -31,12 +31,12 @@ public class MoveCommandTest {
         BasicRobot robot = new BasicRobot();
         environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(0,0)));
         moveCommand.run(robot);
-        assertEquals(9, environment.getRobotPosition(robot).getX());
-        assertEquals(6, environment.getRobotPosition(robot).getY());
+        assertEquals(9, environment.getRobotCoordinate(robot).getX());
+        assertEquals(6, environment.getRobotCoordinate(robot).getY());
         Move<BasicRobot> moveCommand2 = new Move<>(new CartesianCoordinate(-7, 14), 3, environment);
         moveCommand2.run(robot);
-        assertEquals(-7, Math.round((environment.getRobotPosition(robot).getX()*100)/100));
-        assertEquals(14, Math.round((environment.getRobotPosition(robot).getY()*100)/100));
+        assertEquals(-7, Math.round((environment.getRobotCoordinate(robot).getX()*100)/100));
+        assertEquals(14, Math.round((environment.getRobotCoordinate(robot).getY()*100)/100));
     }
 
 }

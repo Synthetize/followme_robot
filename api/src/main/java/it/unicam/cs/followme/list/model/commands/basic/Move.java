@@ -26,13 +26,13 @@ public class Move<R extends Robot> implements Command<R> {
 
     @Override
     public void run(R robot) {
-        double distance = environment.getDistanceBetweenTwoCoordinates(targetCoordinates, environment.getRobotPosition(robot));
+        double distance = environment.getDistanceBetweenTwoCoordinates(targetCoordinates, environment.getRobotCoordinate(robot));
         double time = distance / speed;
         int numberOfSteps = (int) (time * 1);
-        double stepX = (targetCoordinates.getX() - environment.getRobotPosition(robot).getX()) / numberOfSteps;
-        double stepY = (targetCoordinates.getY() - environment.getRobotPosition(robot).getY()) / numberOfSteps;
+        double stepX = (targetCoordinates.getX() - environment.getRobotCoordinate(robot).getX()) / numberOfSteps;
+        double stepY = (targetCoordinates.getY() - environment.getRobotCoordinate(robot).getY()) / numberOfSteps;
         for (int i = 1; i <= numberOfSteps; i++) {
-            Coordinate currentPosition = environment.getRobotPosition(robot);
+            Coordinate currentPosition = environment.getRobotCoordinate(robot);
             environment.setRobotPosition(robot, new CartesianCoordinate(currentPosition.getX() + stepX, currentPosition.getY() + stepY));
         }
     }

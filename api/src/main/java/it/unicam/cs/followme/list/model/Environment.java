@@ -53,10 +53,16 @@ public interface Environment<R extends Robot> {
      */
     void setRobotPosition(R robot, Coordinate coordinate);
     /**
-     * Get the position of a robot
+     * Get the position of the given robot
      * @param robot the robot to get the position
      * @return the position of the robot
      */
-    Coordinate getRobotPosition(R robot);
+    Coordinate getRobotCoordinate(R robot);
+    /**
+     * Get the position of the given shape
+     * @param shape the shape to get the position
+     * @return the position of the shape
+     */
+    Coordinate getShapeCoordinate(Shape shape);
 }
 
