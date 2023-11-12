@@ -50,8 +50,8 @@ public class Follow<R extends Robot> implements Command<R> {
         final AtomicReference<Double> yAvgValue = new AtomicReference<>((double) 0);
         if (robotWithLabelBetweenDistance.isEmpty()) {
             Random random = new Random();
-            xAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distance + 1) - this.distance);
-            yAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distance + 1) - this.distance);
+            xAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distance) - this.distance);
+            yAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distance) - this.distance);
         } else {
             robotWithLabelBetweenDistance.forEach((shape, coordinate) -> {
                 xAvgValue.updateAndGet(v -> v + coordinate.getX());
