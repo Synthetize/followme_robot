@@ -15,14 +15,15 @@ import java.util.concurrent.atomic.AtomicReference;
 public class Follow<R extends Robot> implements Command<R> {
     private final Environment<R> environment;
     private final String signal;
-    private final int distanceFromRobot;
-    private final int speed;
+    private final double distanceFromRobot;
+    private final double speed;
+
 
     public Follow(String label, double[] args, Environment<R> environment) {
         this.environment = environment;
         this.signal = label;
-        this.distanceFromRobot = (int) args[0];
-        this.speed = (int) args[1];
+        this.distanceFromRobot = args[0];
+        this.speed = args[1];
     }
 
     @Override
