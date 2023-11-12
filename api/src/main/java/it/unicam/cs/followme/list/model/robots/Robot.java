@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.model.robots;
 
+import it.unicam.cs.followme.list.model.utils.Coordinate;
 import it.unicam.cs.followme.list.model.utils.MovementDirection;
 import java.util.List;
 
@@ -28,11 +29,11 @@ public interface Robot {
      * Gets the current direction of the robot.
      * @return The direction of the robot.
      */
-    MovementDirection getLastMovementDirection();
+    Coordinate getLastMovementDirection();
 
     /**
      * Sets the direction and speed of the robot.
      * @param direction The direction of the robot.
      */
-    void setLastMovementDirection(MovementDirection direction);
+    void setLastMovementDirection(Coordinate direction);
 }

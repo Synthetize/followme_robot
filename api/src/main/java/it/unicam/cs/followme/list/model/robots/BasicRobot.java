@@ -1,17 +1,19 @@
 package it.unicam.cs.followme.list.model.robots;
 
-import it.unicam.cs.followme.list.model.utils.MovementDirection;
+import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
+import it.unicam.cs.followme.list.model.utils.Coordinate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class BasicRobot implements Robot {
 
     List<String> conditionLabels;
-    MovementDirection lastMovementDirection;
+    Coordinate lastMovementDirection;
 
+    // TODO: 12/11/2023 da cambiare costruttore
     public BasicRobot() {
         this.conditionLabels = new ArrayList<>();
-        this.lastMovementDirection = null;
+        this.lastMovementDirection = new CartesianCoordinate(0,0);
     }
 
     @Override
@@ -30,12 +32,12 @@ public class BasicRobot implements Robot {
     }
 
     @Override
-    public MovementDirection getLastMovementDirection() {
+    public Coordinate getLastMovementDirection() {
         return this.lastMovementDirection;
     }
 
     @Override
-    public void setLastMovementDirection(MovementDirection direction) {
+    public void setLastMovementDirection(Coordinate direction) {
         this.lastMovementDirection = direction;
     }
 }
