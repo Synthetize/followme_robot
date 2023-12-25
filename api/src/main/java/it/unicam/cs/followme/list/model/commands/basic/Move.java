@@ -10,7 +10,6 @@ import it.unicam.cs.followme.utilities.RobotCommand;
 public class Move<R extends Robot> implements Command<R> {
     private final Coordinate targetCoordinates;
     private final double speed;
-
     private final Environment<R> environment;
 
     public Move(Coordinate targetCoordinates, double speed, Environment<R> environment) {

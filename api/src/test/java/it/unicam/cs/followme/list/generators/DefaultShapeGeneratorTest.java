@@ -1,20 +1,6 @@
 package it.unicam.cs.followme.list.generators;
 
-import it.unicam.cs.followme.list.model.shapes.CircleShape;
-import it.unicam.cs.followme.list.model.shapes.RectangleShape;
-import it.unicam.cs.followme.list.model.shapes.Shape;
-import it.unicam.cs.followme.list.model.utils.Coordinate;
-import it.unicam.cs.followme.list.parser.ProgramParserHandler;
-import it.unicam.cs.followme.utilities.FollowMeParser;
-import it.unicam.cs.followme.utilities.FollowMeParserHandler;
-import it.unicam.cs.followme.utilities.FollowMeShapeChecker;
-import org.junit.jupiter.api.Test;
-import java.util.ArrayList;
-import java.util.HashMap;
-
-import static org.junit.jupiter.api.Assertions.*;
-
-public class ShapeGeneratorTest {
+public class DefaultShapeGeneratorTest {
 
 
 //    FollowMeParserHandler handler = new ProgramParserHandler();

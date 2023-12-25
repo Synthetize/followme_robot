@@ -7,10 +7,7 @@ import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
 public class Stop<R extends Robot> implements Command<R> {
-    private final Environment<R> environment;
-    public Stop(Environment<R> environment) {
-        this.environment = environment;
-    }
+
     @Override
     public RobotCommand getCommandType() {
         return RobotCommand.STOP;
