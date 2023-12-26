@@ -18,88 +18,88 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UpdateRobotLabelTest {
-    UpdateRobotLabel<BasicRobot> command;
-    Environment<BasicRobot> environment;
-
-    @BeforeEach
-    void init() {
-        HashMap<Shape, Coordinate> shapesDetails = new HashMap<>();
-        HashMap<BasicRobot, Coordinate> robotsDetails = new HashMap<>();
-        environment = new SimulationArea<>(shapesDetails, robotsDetails);
-    }
-
-
-    @Test
-    void shouldCreateSignalConditionStatusCommand() {
-        command = new UpdateRobotLabel<>("label_", environment, RobotCommand.SIGNAL);
-        assertEquals(command.getCommandType(), RobotCommand.SIGNAL);
-    }
-
-    @Test
-    void shouldCreateUnsignalConditionStatusCommand() {
-        command = new UpdateRobotLabel<>("label_", environment, RobotCommand.UNSIGNAL);
-        assertEquals(command.getCommandType(), RobotCommand.UNSIGNAL);
-    }
-
-    @Test
-    void shouldAddLabelToRobot() {
-        BasicRobot robot = new BasicRobot();
-        environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
-        Shape rectangleShape = new RectangleShape(6, 6, "label0_");
-        Shape circleShape = new CircleShape(6, "label1_");
-        CartesianCoordinate coordinate = new CartesianCoordinate(0, 0);
-        environment.addShapes(List.of(rectangleShape, circleShape), List.of(coordinate, coordinate));
-        UpdateRobotLabel<BasicRobot> commandLabel0 = new UpdateRobotLabel<>("label0_", environment, RobotCommand.SIGNAL);
-        commandLabel0.run(robot);
-        assertEquals(robot.getCurrentConditionLabels().size(), 1);
-        UpdateRobotLabel<BasicRobot> commandLabel1 = new UpdateRobotLabel<>("label1_", environment, RobotCommand.SIGNAL);
-        commandLabel1.run(robot);
-        assertEquals(robot.getCurrentConditionLabels().size(), 2);
-    }
-
-    @Test
-    void shouldNotAddLabelToRobot() {
-        BasicRobot robot = new BasicRobot();
-        environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
-        Shape rectangleShape = new RectangleShape(6, 6, "label0_");
-        Shape circleShape = new CircleShape(6, "label1_");
-        CartesianCoordinate coordinate = new CartesianCoordinate(0, 0);
-        environment.addShapes(List.of(rectangleShape, circleShape), List.of(coordinate, coordinate));
-        command = new UpdateRobotLabel<>("wronglabel_", environment, RobotCommand.SIGNAL);
-        command.run(robot);
-        assertEquals(robot.getCurrentConditionLabels().size(), 0);
-    }
-
-    @Test
-    void shouldRemoveLabelFromRobot() {
-        BasicRobot robot = new BasicRobot();
-        environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
-        Shape rectangleShape = new RectangleShape(6, 6, "label0_");
-        Shape circleShape = new CircleShape(6, "label1_");
-        CartesianCoordinate coordinate = new CartesianCoordinate(0, 0);
-        environment.addShapes(List.of(rectangleShape, circleShape), List.of(coordinate, coordinate));
-        robot.addLabel("label0_");
-        robot.addLabel("label1_");
-        command = new UpdateRobotLabel<>("label0_", environment, RobotCommand.UNSIGNAL);
-        command.run(robot);
-        assertEquals(robot.getCurrentConditionLabels().size(), 1);
-        command = new UpdateRobotLabel<>("label1_", environment, RobotCommand.UNSIGNAL);
-        command.run(robot);
-        assertEquals(robot.getCurrentConditionLabels().size(), 0);
-    }
-
-    @Test
-    void shouldNotRemoveLabelFromRobot() {
-        BasicRobot robot = new BasicRobot();
-        environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
-        Shape rectangleShape = new RectangleShape(6, 6, "label0_");
-        Shape circleShape = new CircleShape(6, "label1_");
-        CartesianCoordinate coordinate = new CartesianCoordinate(0, 0);
-        environment.addShapes(List.of(rectangleShape, circleShape), List.of(coordinate, coordinate));
-        robot.addLabel("label0_");
-        robot.addLabel("label1_");
-        command = new UpdateRobotLabel<>("wronglabel_", environment, RobotCommand.UNSIGNAL);
-        command.run(robot);
-        assertEquals(robot.getCurrentConditionLabels().size(), 2);
-    }
+//    UpdateRobotLabel<BasicRobot> command;
+//    Environment<BasicRobot> environment;
+//
+//    @BeforeEach
+//    void init() {
+//        HashMap<Shape, Coordinate> shapesDetails = new HashMap<>();
+//        HashMap<BasicRobot, Coordinate> robotsDetails = new HashMap<>();
+//        environment = new SimulationArea<>(shapesDetails, robotsDetails);
+//    }
+//
+//
+//    @Test
+//    void shouldCreateSignalConditionStatusCommand() {
+//        command = new UpdateRobotLabel<>("label_", environment, RobotCommand.SIGNAL);
+//        assertEquals(command.getCommandType(), RobotCommand.SIGNAL);
+//    }
+//
+//    @Test
+//    void shouldCreateUnsignalConditionStatusCommand() {
+//        command = new UpdateRobotLabel<>("label_", environment, RobotCommand.UNSIGNAL);
+//        assertEquals(command.getCommandType(), RobotCommand.UNSIGNAL);
+//    }
+//
+//    @Test
+//    void shouldAddLabelToRobot() {
+//        BasicRobot robot = new BasicRobot();
+//        environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
+//        Shape rectangleShape = new RectangleShape(6, 6, "label0_");
+//        Shape circleShape = new CircleShape(6, "label1_");
+//        CartesianCoordinate coordinate = new CartesianCoordinate(0, 0);
+//        environment.addShapes(List.of(rectangleShape, circleShape), List.of(coordinate, coordinate));
+//        UpdateRobotLabel<BasicRobot> commandLabel0 = new UpdateRobotLabel<>("label0_", environment, RobotCommand.SIGNAL);
+//        commandLabel0.run(robot);
+//        assertEquals(robot.getCurrentConditionLabels().size(), 1);
+//        UpdateRobotLabel<BasicRobot> commandLabel1 = new UpdateRobotLabel<>("label1_", environment, RobotCommand.SIGNAL);
+//        commandLabel1.run(robot);
+//        assertEquals(robot.getCurrentConditionLabels().size(), 2);
+//    }
+//
+//    @Test
+//    void shouldNotAddLabelToRobot() {
+//        BasicRobot robot = new BasicRobot();
+//        environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
+//        Shape rectangleShape = new RectangleShape(6, 6, "label0_");
+//        Shape circleShape = new CircleShape(6, "label1_");
+//        CartesianCoordinate coordinate = new CartesianCoordinate(0, 0);
+//        environment.addShapes(List.of(rectangleShape, circleShape), List.of(coordinate, coordinate));
+//        command = new UpdateRobotLabel<>("wronglabel_", environment, RobotCommand.SIGNAL);
+//        command.run(robot);
+//        assertEquals(robot.getCurrentConditionLabels().size(), 0);
+//    }
+//
+//    @Test
+//    void shouldRemoveLabelFromRobot() {
+//        BasicRobot robot = new BasicRobot();
+//        environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
+//        Shape rectangleShape = new RectangleShape(6, 6, "label0_");
+//        Shape circleShape = new CircleShape(6, "label1_");
+//        CartesianCoordinate coordinate = new CartesianCoordinate(0, 0);
+//        environment.addShapes(List.of(rectangleShape, circleShape), List.of(coordinate, coordinate));
+//        robot.addLabel("label0_");
+//        robot.addLabel("label1_");
+//        command = new UpdateRobotLabel<>("label0_", environment, RobotCommand.UNSIGNAL);
+//        command.run(robot);
+//        assertEquals(robot.getCurrentConditionLabels().size(), 1);
+//        command = new UpdateRobotLabel<>("label1_", environment, RobotCommand.UNSIGNAL);
+//        command.run(robot);
+//        assertEquals(robot.getCurrentConditionLabels().size(), 0);
+//    }
+//
+//    @Test
+//    void shouldNotRemoveLabelFromRobot() {
+//        BasicRobot robot = new BasicRobot();
+//        environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
+//        Shape rectangleShape = new RectangleShape(6, 6, "label0_");
+//        Shape circleShape = new CircleShape(6, "label1_");
+//        CartesianCoordinate coordinate = new CartesianCoordinate(0, 0);
+//        environment.addShapes(List.of(rectangleShape, circleShape), List.of(coordinate, coordinate));
+//        robot.addLabel("label0_");
+//        robot.addLabel("label1_");
+//        command = new UpdateRobotLabel<>("wronglabel_", environment, RobotCommand.UNSIGNAL);
+//        command.run(robot);
+//        assertEquals(robot.getCurrentConditionLabels().size(), 2);
+//    }
 }

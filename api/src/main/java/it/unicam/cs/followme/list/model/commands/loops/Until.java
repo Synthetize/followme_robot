@@ -1,27 +1,25 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
+import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class Until extends LoopCommand {
-    private final RobotCommand commandType;
+public class Until<R extends Robot> extends LoopCommand<R> {
+    private final Environment<R> environment;
     private final String label;
-    private int endingLoopIndex;
-    public Until(RobotCommand commandType , String label) {
-        this.commandType = commandType;
+
+    public Until(String label, int startingLoopIndex, int endingLoopIndex, Environment<R> environment) {
+        super(startingLoopIndex, endingLoopIndex);
+        this.environment = environment;
         this.label = label;
     }
     @Override
     public RobotCommand getCommandType() {
-        return this.commandType;
+        return null;
     }
 
     @Override
-    public void run(Robot robot) {
+    public void run(R robot, double delta_t) {
 
-    }
-
-    public String getLabel(){
-        return this.label;
     }
 }

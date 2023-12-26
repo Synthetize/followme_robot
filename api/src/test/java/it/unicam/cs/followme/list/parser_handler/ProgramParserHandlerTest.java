@@ -6,7 +6,9 @@ import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationArea;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.basic.*;
+import it.unicam.cs.followme.list.model.commands.loops.Repeat;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,6 +23,7 @@ public class ProgramParserHandlerTest {
     ProgramExecutor<BasicRobot> programExecutor;
     List<Command<BasicRobot>> program;
     FollowMeParserHandler programParserHandler;
+
     @BeforeEach
     void setUp() {
         environment = new SimulationArea<>(null, null);
@@ -35,7 +38,7 @@ public class ProgramParserHandlerTest {
     void shouldParseMoveCommand() {
         programParserHandler.moveCommand(new double[]{1, 1, 4});
         programParserHandler.moveCommand(new double[]{-1, -1, 3});
-        programParserHandler.moveCommand(new double[]{0.5,-0.67, 1});
+        programParserHandler.moveCommand(new double[]{0.5, -0.67, 1});
         programParserHandler.moveCommand(new double[]{0, 1, 5});
         programParserHandler.moveCommand(new double[]{1, 0, 2});
         programParserHandler.parsingDone();
@@ -76,7 +79,7 @@ public class ProgramParserHandlerTest {
     void shouldParseMoveRandomCommand() {
         programParserHandler.moveRandomCommand(new double[]{1, 1, 2, 2, 1});
         programParserHandler.moveRandomCommand(new double[]{-1, -1, -2, -2, 1});
-        programParserHandler.moveRandomCommand(new double[]{0.5,-0.67, 0.5, -0.67, 1});
+        programParserHandler.moveRandomCommand(new double[]{0.5, -0.67, 0.5, -0.67, 1});
         programParserHandler.moveRandomCommand(new double[]{0, 1, 0, 1, 1});
         programParserHandler.moveRandomCommand(new double[]{0, 0, 1, 0.5, 1});
         programParserHandler.parsingDone();
@@ -149,16 +152,17 @@ public class ProgramParserHandlerTest {
         programParserHandler.parsingDone();
         assertEquals(0, program.size());
     }
-    
+
     @Test
     void shouldParseStopCommand() {
         programParserHandler.stopCommand();
         programParserHandler.parsingDone();
         assertEquals(1, program.size());
-        assertTrue(program.get(0) instanceof Stop);
+        assertInstanceOf(Stop.class, program.get(0));
     }
 
-   void shouldParseContinueCommand() {
+    @Test
+    void shouldParseContinueCommand() {
         programParserHandler.continueCommand(1);
         programParserHandler.parsingDone();
         assertEquals(1, program.size());
@@ -171,5 +175,81 @@ public class ProgramParserHandlerTest {
         assertThrows(IllegalArgumentException.class, () -> programParserHandler.continueCommand(-1));
         programParserHandler.parsingDone();
         assertEquals(0, program.size());
+    }
+
+    @Test
+    void shouldParseRepeatCommand() {
+        programParserHandler.repeatCommandStart(3);
+        programParserHandler.moveCommand(new double[]{1, 1, 4});
+        programParserHandler.moveRandomCommand(new double[]{1, 1, 2, 2, 1});
+        programParserHandler.doneCommand();
+        programParserHandler.parsingDone();
+        assertEquals(4, program.size());
+        assertInstanceOf(Repeat.class, program.get(0));
+        Repeat<BasicRobot> repeat = (Repeat<BasicRobot>) program.get(0);
+        assertEquals(repeat.getStartingLoopIndex(), 0);
+        assertEquals(repeat.getEndingLoopIndex(), 3);
+
+        program.clear();
+        programParserHandler.parsingStarted();
+        programParserHandler.moveCommand(new double[]{1, 1, 4});
+        programParserHandler.repeatCommandStart(3);
+        programParserHandler.doneCommand();
+        programParserHandler.parsingDone();
+
+        assertEquals(3, program.size());
+        assertInstanceOf(Repeat.class, program.get(1));
+        repeat = (Repeat<BasicRobot>) program.get(1);
+        assertEquals(repeat.getStartingLoopIndex(), 1);
+        assertEquals(repeat.getEndingLoopIndex(), 2);
+
+        program.clear();
+        programParserHandler.parsingStarted();
+        programParserHandler.repeatCommandStart(4);
+        programParserHandler.moveCommand(new double[]{1, 1, 4});
+        programParserHandler.repeatCommandStart(2);
+        programParserHandler.moveCommand(new double[]{1, 1, 4});
+        programParserHandler.doneCommand();
+        programParserHandler.moveCommand(new double[]{1, 1, 4});
+        programParserHandler.doneCommand();
+        programParserHandler.parsingDone();
+        assertEquals(7, program.size());
+        assertInstanceOf(Repeat.class, program.get(0));
+        repeat = (Repeat<BasicRobot>) program.get(0);
+        assertEquals(repeat.getStartingLoopIndex(), 0);
+        assertEquals(repeat.getEndingLoopIndex(), 6);
+        assertInstanceOf(Repeat.class, program.get(2));
+        repeat = (Repeat<BasicRobot>) program.get(2);
+        assertEquals(repeat.getStartingLoopIndex(), 2);
+        assertEquals(repeat.getEndingLoopIndex(), 4);
+    }
+
+    @Test
+    void shouldNotParseRepeatCommand() {
+        assertThrows(IllegalArgumentException.class, () -> programParserHandler.repeatCommandStart(0));
+        assertThrows(IllegalArgumentException.class, () -> programParserHandler.repeatCommandStart(-2));
+        programParserHandler.parsingDone();
+        assertEquals(0, program.size());
+    }
+
+    @Test
+    void shouldParseDoForeverCommand() {
+        programParserHandler.moveCommand(new double[]{1, 1, 4});
+        programParserHandler.doForeverStart();
+        programParserHandler.moveCommand(new double[]{1, 1, 4});
+        programParserHandler.repeatCommandStart(2);
+        programParserHandler.doneCommand();
+        programParserHandler.signalCommand("label_");
+        programParserHandler.doneCommand();
+        programParserHandler.parsingDone();
+        assertEquals(7, program.size());
+        assertInstanceOf(Repeat.class, program.get(1));
+        Repeat<BasicRobot> repeat = (Repeat<BasicRobot>) program.get(1);
+        assertEquals(repeat.getStartingLoopIndex(), 1);
+        assertEquals(repeat.getEndingLoopIndex(), 6);
+
+        repeat = (Repeat<BasicRobot>) program.get(3);
+        assertEquals(repeat.getStartingLoopIndex(), 3);
+        assertEquals(repeat.getEndingLoopIndex(), 4);
     }
 }

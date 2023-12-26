@@ -24,17 +24,19 @@ public class Move<R extends Robot> implements Command<R> {
     }
 
     @Override
-    public void run(R robot) {
+    public void run(R robot, double delta_t) {
         double distance = environment.getDistanceBetweenTwoCoordinates(targetCoordinates, environment.getRobotCoordinate(robot));
-        double time = distance / speed;
-        int numberOfSteps = (int) (time * 1);
-        double stepX = (targetCoordinates.getX() - environment.getRobotCoordinate(robot).getX()) / numberOfSteps;
-        double stepY = (targetCoordinates.getY() - environment.getRobotCoordinate(robot).getY()) / numberOfSteps;
-        robot.setLastMovementDirection(new CartesianCoordinate(stepX, stepY));
-        System.out.println("stepX: " + stepX + " stepY: " + stepY);
-        for (int i = 1; i <= numberOfSteps; i++) {
-            Coordinate currentPosition = environment.getRobotCoordinate(robot);
-            environment.setRobotPosition(robot, new CartesianCoordinate(currentPosition.getX() + stepX, currentPosition.getY() + stepY));
-        }
+        // Calculate the change in position
+        double delta_d = speed * delta_t;
+        // Calculate the ratio to get the proportion of the change along the desired direction
+        double ratio = delta_d / distance;
+        // Apply the ratio to get the change along the desired direction
+        double deltaX = (targetCoordinates.getX() - environment.getRobotCoordinate(robot).getX()) * ratio;
+        double deltaY = (targetCoordinates.getY() - environment.getRobotCoordinate(robot).getY()) * ratio;
+        environment.setRobotPosition(robot, new CartesianCoordinate(
+                environment.getRobotCoordinate(robot).getX() + deltaX,
+                environment.getRobotCoordinate(robot).getY() + deltaY
+        ));
+        robot.setLastMovementDirection(new CartesianCoordinate(deltaX, deltaY));
     }
 }

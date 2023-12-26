@@ -25,7 +25,7 @@ public class UpdateRobotLabel<R extends Robot> implements Command<R> {
     }
 
     @Override
-    public void run(R robot) {
+    public void run(R robot, double delta_t) {
         switch (this.commandType) {
             case SIGNAL:
                 List<Shape> shapes = environment.checkIfRobotIsInsideShapes(robot);

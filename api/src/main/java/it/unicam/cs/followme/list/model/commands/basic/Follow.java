@@ -32,24 +32,24 @@ public class Follow<R extends Robot> implements Command<R> {
     }
 
     @Override
-    public void run(R robot) {
-        HashMap<R, Coordinate> robotList = getRobotsWithLabelBetweenDistance(robot);
-        final AtomicReference<Double> xAvgValue = new AtomicReference<>((double) 0);
-        final AtomicReference<Double> yAvgValue = new AtomicReference<>((double) 0);
-        if (robotList.isEmpty()) {
-            Random random = new Random();
-            xAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
-            yAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
-        } else {
-            robotList.forEach((shape, coordinate) -> {
-                xAvgValue.updateAndGet(v -> v + coordinate.getX());
-                yAvgValue.updateAndGet(v -> v + coordinate.getY());
-            });
-            xAvgValue.updateAndGet(v -> v / robotList.size());
-            yAvgValue.updateAndGet(v -> v / robotList.size());
-        }
-        Move<R> move = new Move<>(new CartesianCoordinate(xAvgValue.get(), yAvgValue.get()), speed, environment);
-        move.run(robot);
+    public void run(R robot, double delta_t) {
+//        HashMap<R, Coordinate> robotList = getRobotsWithLabelBetweenDistance(robot);
+//        final AtomicReference<Double> xAvgValue = new AtomicReference<>((double) 0);
+//        final AtomicReference<Double> yAvgValue = new AtomicReference<>((double) 0);
+//        if (robotList.isEmpty()) {
+//            Random random = new Random();
+//            xAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
+//            yAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
+//        } else {
+//            robotList.forEach((shape, coordinate) -> {
+//                xAvgValue.updateAndGet(v -> v + coordinate.getX());
+//                yAvgValue.updateAndGet(v -> v + coordinate.getY());
+//            });
+//            xAvgValue.updateAndGet(v -> v / robotList.size());
+//            yAvgValue.updateAndGet(v -> v / robotList.size());
+//        }
+//        Move<R> move = new Move<>(new CartesianCoordinate(xAvgValue.get(), yAvgValue.get()), speed, environment);
+//        move.run(robot);
     }
 
     private HashMap<R, Coordinate> getRobotsWithLabelBetweenDistance(R robot) {

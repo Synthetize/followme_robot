@@ -22,14 +22,13 @@ public class Continue<R extends Robot> implements Command<R> {
         return RobotCommand.CONTINUE;
     }
     @Override
-    public void run(R robot) {
+    public void run(R robot, double delta_t) {
         for(int i=0; i<seconds; i++){
+            //TODO: 1 second = 1 step, system pause needed?
             Coordinate robotCoordinate = environment.getRobotCoordinate(robot);
             double addStepX = robotCoordinate.getX() + robot.getLastMovementDirection().getX();
             double addStepY = robotCoordinate.getY() + robot.getLastMovementDirection().getY();
             environment.setRobotPosition(robot, new CartesianCoordinate(addStepX, addStepY));
         }
-
-
     }
 }

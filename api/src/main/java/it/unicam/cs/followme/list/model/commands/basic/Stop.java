@@ -14,7 +14,7 @@ public class Stop<R extends Robot> implements Command<R> {
     }
 
     @Override
-    public void run(R robot) {
+    public void run(R robot, double delta_t) {
         robot.setLastMovementDirection(new CartesianCoordinate(0,0));
     }
 }

@@ -4,6 +4,9 @@ import it.unicam.cs.followme.list.executor.ProgramExecutor;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.basic.*;
+import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
+import it.unicam.cs.followme.list.model.commands.loops.Repeat;
+import it.unicam.cs.followme.list.model.commands.loops.Until;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.utils.Coordinate;
@@ -19,7 +22,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
     private List<Command<R>> program;
     private final ProgramExecutor<R> executor;
     private final Environment<R> environment;
-    private Stack<Integer> startingLoopIndex;
+    private Stack<Integer> startingLoopIndexStack;
 
     public ProgramParserHandler(Environment<R> environment, ProgramExecutor<R> executor) {
         this.environment = environment;
@@ -29,7 +32,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
     @Override
     public void parsingStarted() {
         program = new ArrayList<>();
-        startingLoopIndex = new Stack<>();
+        startingLoopIndexStack = new Stack<>();
     }
 
     @Override
@@ -98,7 +101,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
     public void followCommand(String label, double[] args) {
         validateLabel(label);
         validateSpeed(args[1]);
-        if(args[0] <= 0) {
+        if (args[0] <= 0) {
             throw new IllegalArgumentException("Distance must be greater than 0");
         }
         Follow<R> follow = new Follow<>(label, args, environment);
@@ -113,32 +116,52 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
 
     @Override
     public void continueCommand(int s) {
-        if(s <= 0) {
+        if (s <= 0) {
             throw new IllegalArgumentException("Number of seconds must be greater than 0");
         }
-        Command<R> continueCommand = new Continue<>(s, environment);
+        Continue<R> continueCommand = new Continue<>(s, environment);
         program.add(continueCommand);
     }
 
     @Override
     public void repeatCommandStart(int n) {
-        startingLoopIndex.push(program.size()); // push the starting index of the loop
-
-
+        if (n == 0 || n < -1) {
+            throw new IllegalArgumentException("Number of repetitions must be greater than 0");
+        }
+        // the index of the loop is the size of the program list because the loopCommand is not yet added
+        int loopStartIndex = program.size();
+        Repeat<R> repeatCommand = new Repeat<>(n, loopStartIndex, -1, environment);
+        program.add(repeatCommand);
+        startingLoopIndexStack.push(loopStartIndex);
     }
 
     @Override
     public void untilCommandStart(String label) {
+        validateLabel(label);
+        // the index of the loop is the size of the program list because the loopCommand is not yet added
+        int loopStartIndex = program.size();
+        Until<R> untilCommand = new Until<>(label, loopStartIndex, -1, environment);
+        program.add(untilCommand);
+        startingLoopIndexStack.push(loopStartIndex);
 
     }
 
     @Override
     public void doForeverStart() {
-
+        //if the number of repetitions is -1 means that the loop is infinite
+        repeatCommandStart(-1);
     }
 
     @Override
     public void doneCommand() {
-
+        // the index of the end is the size of the program list because the doneCommand is not yet added
+        int loopEndIndex = program.size();
+        Command<R> startingLoopCommand = program.get(startingLoopIndexStack.pop());
+        if (!(startingLoopCommand instanceof LoopCommand<R> loopCommand)) {
+            throw new IllegalArgumentException("The starting loop command must be a loop command");
+        }
+        loopCommand.setEndingLoopIndex(loopEndIndex);
+        Done<R> doneCommand = new Done<>();
+        program.add(doneCommand);
     }
 }

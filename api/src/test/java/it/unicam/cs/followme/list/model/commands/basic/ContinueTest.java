@@ -28,7 +28,7 @@ public class ContinueTest {
         robot.setLastMovementDirection(new CartesianCoordinate(3,2));
         environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(0,0)));
         Continue<BasicRobot> continueCommand = new Continue<>(3, environment);
-        continueCommand.run(robot);
+        continueCommand.run(robot, 1);
         assertEquals(9, environment.getRobotCoordinate(robot).getX());
         assertEquals(6, environment.getRobotCoordinate(robot).getY());
     }
@@ -39,7 +39,7 @@ public class ContinueTest {
         robot.setLastMovementDirection(new CartesianCoordinate(0,0));
         environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(0,0)));
         Continue<BasicRobot> continueCommand = new Continue<>(3, environment);
-        continueCommand.run(robot);
+        continueCommand.run(robot,1);
         assertEquals(0, environment.getRobotCoordinate(robot).getX());
         assertEquals(0, environment.getRobotCoordinate(robot).getY());
     }
