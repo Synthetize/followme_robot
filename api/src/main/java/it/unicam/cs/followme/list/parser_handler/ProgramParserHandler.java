@@ -43,8 +43,6 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
     @Override
     public void moveCommand(double[] args) {
         Coordinate targetCoordinate = new CartesianCoordinate(args[0], args[1]);
-        if (args[0] == 0 && args[1] == 0)
-            throw new IllegalArgumentException("At least one coordinate must be different from 0");
         checkIfCoordinatesAreInRange(args[0], args[1]);
         validateSpeed(args[2]);
         Move<R> move = new Move<>(targetCoordinate, args[2], environment);
@@ -130,7 +128,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
         }
         // the index of the loop is the size of the program list because the loopCommand is not yet added
         int loopStartIndex = program.size();
-        Repeat<R> repeatCommand = new Repeat<>(n, loopStartIndex, -1, environment);
+        Repeat<R> repeatCommand = new Repeat<>(n, loopStartIndex, -1, environment, program);
         program.add(repeatCommand);
         startingLoopIndexStack.push(loopStartIndex);
     }
