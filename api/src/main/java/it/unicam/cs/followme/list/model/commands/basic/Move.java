@@ -26,7 +26,6 @@ public class Move<R extends Robot> implements Command<R> {
 
     @Override
     public void run(R robot, double delta_t) {
-        //relative coordinates of the robot on the plane are taken, not absolute coordinates
         Coordinate robotRelativeCoordinates = new CartesianCoordinate(0, 0);
         double distance = environment.getDistanceBetweenTwoCoordinates(targetCoordinates, robotRelativeCoordinates);
         // Calculate the change in position
