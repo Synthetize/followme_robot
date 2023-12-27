@@ -29,30 +29,30 @@ public class MoveTest {
 
     @Test
     void shouldMoveTheRobotInTheDirectionOfTargetPosition() {
-        Move<BasicRobot> moveCommand = new Move<>(new CartesianCoordinate(9, 6), 5, environment);
+        Move<BasicRobot> moveCommand = new Move<>(new CartesianCoordinate(1, 1), 5, environment);
         BasicRobot robot = new BasicRobot();
-        environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(0, 0)));
+        environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(9, 6)));
         moveCommand.run(robot, 1);
         DecimalFormat df = new DecimalFormat("#.##");
 
         String formatted = df.format(environment.getRobotCoordinate(robot).getX());
-        assertEquals("4,16", formatted);
+        assertEquals("12,54", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
-        assertEquals("2,77", formatted);
+        assertEquals("9,54", formatted);
         formatted = df.format(robot.getLastMovementDirection().getX());
-        assertEquals("4,16", formatted);
+        assertEquals("3,54", formatted);
         formatted = df.format(robot.getLastMovementDirection().getY());
-        assertEquals("2,77", formatted);
+        assertEquals("3,54", formatted);
 
-        Move<BasicRobot> moveCommand2 = new Move<>(new CartesianCoordinate(-7, 14), 3, environment);
+        Move<BasicRobot> moveCommand2 = new Move<>(new CartesianCoordinate(-1, 1), 6, environment);
         moveCommand2.run(robot, 0.5);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
-        assertEquals("3,1", formatted);
+        assertEquals("10,41", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
-        assertEquals("3,84", formatted);
+        assertEquals("11,66", formatted);
         formatted = df.format(robot.getLastMovementDirection().getX());
-        assertEquals("-1,06", formatted);
+        assertEquals("-2,12", formatted);
         formatted = df.format(robot.getLastMovementDirection().getY());
-        assertEquals("1,06", formatted);
+        assertEquals("2,12", formatted);
     }
 }

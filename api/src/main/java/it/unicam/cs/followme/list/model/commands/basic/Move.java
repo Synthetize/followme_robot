@@ -18,6 +18,7 @@ public class Move<R extends Robot> implements Command<R> {
         this.environment = environment;
     }
 
+
     @Override
     public RobotCommand getCommandType() {
         return RobotCommand.MOVE;
@@ -25,14 +26,16 @@ public class Move<R extends Robot> implements Command<R> {
 
     @Override
     public void run(R robot, double delta_t) {
-        double distance = environment.getDistanceBetweenTwoCoordinates(targetCoordinates, environment.getRobotCoordinate(robot));
+        //relative coordinates of the robot on the plane are taken, not absolute coordinates
+        Coordinate robotRelativeCoordinates = new CartesianCoordinate(0, 0);
+        double distance = environment.getDistanceBetweenTwoCoordinates(targetCoordinates, robotRelativeCoordinates);
         // Calculate the change in position
         double delta_d = speed * delta_t;
         // Calculate the ratio to get the proportion of the change along the desired direction
         double ratio = delta_d / distance;
         // Apply the ratio to get the change along the desired direction
-        double deltaX = (targetCoordinates.getX() - environment.getRobotCoordinate(robot).getX()) * ratio;
-        double deltaY = (targetCoordinates.getY() - environment.getRobotCoordinate(robot).getY()) * ratio;
+        double deltaX = (targetCoordinates.getX() - robotRelativeCoordinates.getX()) * ratio;
+        double deltaY = (targetCoordinates.getY() - robotRelativeCoordinates.getY()) * ratio;
         environment.setRobotPosition(robot, new CartesianCoordinate(
                 environment.getRobotCoordinate(robot).getX() + deltaX,
                 environment.getRobotCoordinate(robot).getY() + deltaY
