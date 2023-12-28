@@ -138,7 +138,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
         validateLabel(label);
         // the index of the loop is the size of the program list because the loopCommand is not yet added
         int loopStartIndex = program.size();
-        Until<R> untilCommand = new Until<>(label, loopStartIndex, -1, environment);
+        Until<R> untilCommand = new Until<>(label, loopStartIndex, -1, environment, program);
         program.add(untilCommand);
         startingLoopIndexStack.push(loopStartIndex);
 
