@@ -74,6 +74,8 @@ public class RepeatTest {
         DecimalFormat df = new DecimalFormat("#.##");
         String formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("8,49", formatted);
+        formatted = df.format(environment.getRobotCoordinate(robot).getY());
+        assertEquals("8,49", formatted);
     }
 
     @Test
