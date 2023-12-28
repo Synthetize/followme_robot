@@ -22,7 +22,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RepeatTest {
+public class UntilTest {
     Environment<BasicRobot> environment;
     ProgramExecutor<BasicRobot> programExecutor;
     List<Command<BasicRobot>> program;
@@ -40,55 +40,34 @@ public class RepeatTest {
     }
 
     @Test
-    void shouldRunRepeatCommandWithNoOtherLoopInside() {
-        BasicRobot robot = new BasicRobot();
-        CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
-        environment.addRobots(List.of(robot), List.of(robotCoordinate));
-        programParserHandler.moveCommand(new double[]{1, 1, 1});
-        programParserHandler.repeatCommandStart(2);
-        programParserHandler.moveCommand(new double[]{1, 1, 1});
-        programParserHandler.moveCommand(new double[]{1, 1, 1});
-        programParserHandler.doneCommand();
-        programParserHandler.parsingDone();
-        program.get(1).run(robot, 1);
-        DecimalFormat df = new DecimalFormat("#.##");
-        String formatted = df.format(environment.getRobotCoordinate(robot).getX());
-        assertEquals("2,83", formatted);
-    }
-
-    @Test
-    void shouldRunRepeatCommandWithTheSameTypeOfLoopInside() {
-        BasicRobot robot = new BasicRobot();
-        CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
-        environment.addRobots(List.of(robot), List.of(robotCoordinate));
-        programParserHandler.moveCommand(new double[]{1, 1, 1});
-        programParserHandler.repeatCommandStart(2);
-        programParserHandler.moveCommand(new double[]{1, 1, 1});
-        programParserHandler.moveCommand(new double[]{1, 1, 1});
-        programParserHandler.repeatCommandStart(2);
-        programParserHandler.moveCommand(new double[]{1, 1, 1});
-        programParserHandler.moveCommand(new double[]{1, 1, 1});
-        programParserHandler.doneCommand();
-        programParserHandler.doneCommand();
-        programParserHandler.parsingDone();
-        program.get(1).run(robot, 1);
-        DecimalFormat df = new DecimalFormat("#.##");
-        String formatted = df.format(environment.getRobotCoordinate(robot).getX());
-        assertEquals("8,49", formatted);
-        formatted = df.format(environment.getRobotCoordinate(robot).getY());
-        assertEquals("8,49", formatted);
-    }
-
-    @Test
-    void shouldRunRepeatCommandWithDifferentTypeOfLoopInside() {
+    void shouldRunUntilCommandWithNoOtherLoopInside() {
         BasicRobot robot = new BasicRobot();
         robot.addLabel("label_");
-        CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
-        environment.addRobots(List.of(robot), List.of(robotCoordinate));
         environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
-        CircleShape circleShape = new CircleShape(2, "label_");
+        CircleShape circleShape = new CircleShape(5, "label_");
         environment.addShapes(List.of(circleShape), List.of(new CartesianCoordinate(0, 0)));
-        programParserHandler.repeatCommandStart(2);
+        programParserHandler.untilCommandStart("label_");
+        programParserHandler.moveCommand(new double[]{1, 1, 1});
+        programParserHandler.doneCommand();
+        programParserHandler.parsingDone();
+        program.get(0).run(robot, 1);
+        DecimalFormat df = new DecimalFormat("#.##");
+        String formatted = df.format(environment.getRobotCoordinate(robot).getX());
+        assertEquals("4,24", formatted);
+        formatted = df.format(environment.getRobotCoordinate(robot).getY());
+        assertEquals("4,24", formatted);
+    }
+
+    @Test
+    void shouldRunUntilCommandWithTheSameTypeOfLoopInside() {
+        BasicRobot robot = new BasicRobot();
+        robot.addLabel("label_");
+        robot.addLabel("label2_");
+        environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
+        CircleShape circleShape = new CircleShape(5, "label_");
+        CircleShape circleShape2 = new CircleShape(3, "label2_");
+        environment.addShapes(List.of(circleShape, circleShape2), List.of(new CartesianCoordinate(0, 0), new CartesianCoordinate(0, 0)));
+        programParserHandler.untilCommandStart("label2_");
         programParserHandler.moveCommand(new double[]{1, 1, 1});
         programParserHandler.untilCommandStart("label_");
         programParserHandler.moveCommand(new double[]{1, 1, 1});
@@ -98,8 +77,30 @@ public class RepeatTest {
         program.get(0).run(robot, 1);
         DecimalFormat df = new DecimalFormat("#.##");
         String formatted = df.format(environment.getRobotCoordinate(robot).getX());
-        assertEquals("2,83", formatted);
+        assertEquals("4,24", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
-        assertEquals("2,83", formatted);
+        assertEquals("4,24", formatted);
+    }
+
+    @Test
+    void shouldRunUntilCommandWithDifferentTypeOfLoopInside() {
+        BasicRobot robot = new BasicRobot();
+        robot.addLabel("label_");
+        environment.addRobots(List.of(robot), List.of(new CartesianCoordinate(0, 0)));
+        CircleShape circleShape = new CircleShape(6, "label_");
+        environment.addShapes(List.of(circleShape), List.of(new CartesianCoordinate(0, 0)));
+        programParserHandler.untilCommandStart("label_");
+        programParserHandler.moveCommand(new double[]{1, 1, 1});
+        programParserHandler.repeatCommandStart(2);
+        programParserHandler.moveCommand(new double[]{1, 1, 1});
+        programParserHandler.doneCommand();
+        programParserHandler.doneCommand();
+        programParserHandler.parsingDone();
+        program.get(0).run(robot, 1);
+        DecimalFormat df = new DecimalFormat("#.##");
+        String formatted = df.format(environment.getRobotCoordinate(robot).getX());
+        assertEquals("6,36", formatted);
+        formatted = df.format(environment.getRobotCoordinate(robot).getY());
+        assertEquals("6,36", formatted);
     }
 }
