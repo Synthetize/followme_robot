@@ -20,7 +20,7 @@ public class Until<R extends Robot> extends LoopCommand<R> {
     }
     @Override
     public RobotCommand getCommandType() {
-        return null;
+        return RobotCommand.UNTIL;
     }
 
     @Override
@@ -37,11 +37,10 @@ public class Until<R extends Robot> extends LoopCommand<R> {
                 currentCommandIndex++;
             }
         }
-
     }
 
     private boolean conditionStatus(R robot){
         return environment.checkIfRobotIsInsideShapes(robot).stream()
-                .anyMatch(shape -> shape.getConditionLabel().equals(label) && robot.getCurrentConditionLabels().contains(label) );
+                .anyMatch(shape -> shape.getConditionLabel().equals(label) && robot.getCurrentConditionLabels().contains(label));
     }
 }
