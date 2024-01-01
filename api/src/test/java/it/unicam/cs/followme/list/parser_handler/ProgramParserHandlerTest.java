@@ -1,14 +1,13 @@
 package it.unicam.cs.followme.list.parser_handler;
 
-import it.unicam.cs.followme.list.executor.ProgramExecutor;
-import it.unicam.cs.followme.list.executor.RobotProgramExecutor;
+import it.unicam.cs.followme.list.executor.Simulator;
+import it.unicam.cs.followme.list.executor.RobotSimulator;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationArea;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.basic.*;
 import it.unicam.cs.followme.list.model.commands.loops.Repeat;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
-import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ProgramParserHandlerTest {
     Environment<BasicRobot> environment;
-    ProgramExecutor<BasicRobot> programExecutor;
+    Simulator<BasicRobot> simulator;
     List<Command<BasicRobot>> program;
     FollowMeParserHandler programParserHandler;
 
@@ -28,8 +27,8 @@ public class ProgramParserHandlerTest {
     void setUp() {
         environment = new SimulationArea<>(null, null);
         program = new ArrayList<>();
-        programExecutor = new RobotProgramExecutor<>(program);
-        programParserHandler = new ProgramParserHandler<>(environment, programExecutor);
+        simulator = new RobotSimulator<>(program);
+        programParserHandler = new ProgramParserHandler<>(environment, simulator);
         programParserHandler.parsingStarted();
 
     }

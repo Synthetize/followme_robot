@@ -1,6 +1,6 @@
 package it.unicam.cs.followme.list.parser_handler;
 
-import it.unicam.cs.followme.list.executor.ProgramExecutor;
+import it.unicam.cs.followme.list.executor.Simulator;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.basic.*;
@@ -20,11 +20,11 @@ import java.util.Stack;
 public class ProgramParserHandler<R extends Robot> implements FollowMeParserHandler {
 
     private List<Command<R>> program;
-    private final ProgramExecutor<R> executor;
+    private final Simulator<R> executor;
     private final Environment<R> environment;
     private Stack<Integer> startingLoopIndexStack;
 
-    public ProgramParserHandler(Environment<R> environment, ProgramExecutor<R> executor) {
+    public ProgramParserHandler(Environment<R> environment, Simulator<R> executor) {
         this.environment = environment;
         this.executor = executor;
     }

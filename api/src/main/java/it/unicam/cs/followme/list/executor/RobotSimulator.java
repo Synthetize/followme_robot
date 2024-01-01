@@ -3,14 +3,15 @@ package it.unicam.cs.followme.list.executor;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
+import it.unicam.cs.followme.list.utils.ExecutionTimer;
 
 import java.util.List;
 
-public class RobotProgramExecutor<R extends Robot> extends ExecutionTimer implements ProgramExecutor<R> {
+public class RobotSimulator<R extends Robot> extends ExecutionTimer implements Simulator<R> {
     private final List<Command<R>> programList;
     protected int currentCommandIndex = 0;
 
-    public RobotProgramExecutor(List<Command<R>> programList/*, R robot, Environment<R> environment*/) {
+    public RobotSimulator(List<Command<R>> programList/*, R robot, Environment<R> environment*/) {
         this.programList = programList;
     }
 
@@ -20,7 +21,7 @@ public class RobotProgramExecutor<R extends Robot> extends ExecutionTimer implem
     }
 
     @Override
-    public void executeProgram(R robot, double delta_t, double execution_time) {
+    public void simulate(R robot, double delta_t, double execution_time) {
         setStartTime(0);
         setEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
         while (currentCommandIndex < programList.size()) {

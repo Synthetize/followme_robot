@@ -1,4 +1,4 @@
-package it.unicam.cs.followme.list.executor;
+package it.unicam.cs.followme.list.utils;
 /**
  * This class is used to keep track of the execution time of a program
  * and to stop the execution when the time is over

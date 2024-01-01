@@ -1,8 +1,8 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
-import it.unicam.cs.followme.list.executor.ExecutionTimer;
-import it.unicam.cs.followme.list.executor.ProgramExecutor;
-import it.unicam.cs.followme.list.executor.RobotProgramExecutor;
+import it.unicam.cs.followme.list.utils.ExecutionTimer;
+import it.unicam.cs.followme.list.executor.Simulator;
+import it.unicam.cs.followme.list.executor.RobotSimulator;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationArea;
 import it.unicam.cs.followme.list.model.commands.Command;
@@ -25,7 +25,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class UntilTest {
     Environment<BasicRobot> environment;
-    ProgramExecutor<BasicRobot> programExecutor;
+    Simulator<BasicRobot> simulator;
     List<Command<BasicRobot>> program;
     FollowMeParserHandler programParserHandler;
 
@@ -35,8 +35,8 @@ public class UntilTest {
         HashMap<Shape, Coordinate> shapes = new HashMap<>();
         environment = new SimulationArea<>(shapes, robots);
         program = new ArrayList<>();
-        programExecutor = new RobotProgramExecutor<>(program);
-        programParserHandler = new ProgramParserHandler<>(environment, programExecutor);
+        simulator = new RobotSimulator<>(program);
+        programParserHandler = new ProgramParserHandler<>(environment, simulator);
         programParserHandler.parsingStarted();
         ExecutionTimer.setEndTime(1000);
     }
