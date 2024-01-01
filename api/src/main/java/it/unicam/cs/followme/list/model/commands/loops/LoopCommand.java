@@ -1,12 +1,12 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
-import it.unicam.cs.followme.list.utils.ExecutionTimer;
+import it.unicam.cs.followme.list.utils.SimulationTimer;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 
 import java.util.List;
 
-public abstract class LoopCommand<R extends Robot> extends ExecutionTimer implements Command<R> {
+public abstract class LoopCommand<R extends Robot> extends SimulationTimer implements Command<R> {
     private int startingLoopIndex = 0;
     private int endingLoopIndex = 0;
     private final List<Command<R>> programList;

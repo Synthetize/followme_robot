@@ -1,6 +1,6 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
-import it.unicam.cs.followme.list.utils.ExecutionTimer;
+import it.unicam.cs.followme.list.utils.SimulationTimer;
 import it.unicam.cs.followme.list.simulator.Simulator;
 import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.model.Environment;
@@ -38,7 +38,7 @@ public class RepeatTest {
         simulator = new RobotSimulator<>(program);
         programParserHandler = new ProgramParserHandler<>(environment, simulator);
         programParserHandler.parsingStarted();
-        ExecutionTimer.setSimulationEndTime(1000);
+        SimulationTimer.setSimulationEndTime(1000);
     }
 
     @Test

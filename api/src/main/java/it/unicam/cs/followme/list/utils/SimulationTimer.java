@@ -3,7 +3,7 @@ package it.unicam.cs.followme.list.utils;
  * This class is used to keep track of the execution time of a program
  * and to stop the execution when the time is over
  */
-public class ExecutionTimer {
+public class SimulationTimer {
 
         private static long simulationCurrentTime = 0;
         private static long simulationEndTime = 0;
@@ -33,7 +33,7 @@ public class ExecutionTimer {
          * @param simulationEndTime the end time of the execution
          */
         public static void setSimulationEndTime(long simulationEndTime) {
-            ExecutionTimer.simulationEndTime = simulationEndTime;
+            SimulationTimer.simulationEndTime = simulationEndTime;
         }
 
         /**
@@ -41,7 +41,7 @@ public class ExecutionTimer {
          * @param simulationCurrentTime the current time of the execution
          */
         public static void setSimulationCurrentTime(long simulationCurrentTime) {
-            ExecutionTimer.simulationCurrentTime = simulationCurrentTime;
+            SimulationTimer.simulationCurrentTime = simulationCurrentTime;
         }
 
 }

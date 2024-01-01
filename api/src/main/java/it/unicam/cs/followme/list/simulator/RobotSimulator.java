@@ -3,15 +3,15 @@ package it.unicam.cs.followme.list.simulator;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
-import it.unicam.cs.followme.list.utils.ExecutionTimer;
+import it.unicam.cs.followme.list.utils.SimulationTimer;
 
 import java.util.List;
 
-public class RobotSimulator<R extends Robot> extends ExecutionTimer implements Simulator<R> {
+public class RobotSimulator<R extends Robot> extends SimulationTimer implements Simulator<R> {
     private final List<Command<R>> programList;
     protected int currentCommandIndex = 0;
 
-    public RobotSimulator(List<Command<R>> programList/*, R robot, Environment<R> environment*/) {
+    public RobotSimulator(List<Command<R>> programList) {
         this.programList = programList;
     }
 
