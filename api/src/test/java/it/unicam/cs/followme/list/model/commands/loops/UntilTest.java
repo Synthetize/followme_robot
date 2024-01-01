@@ -38,7 +38,7 @@ public class UntilTest {
         simulator = new RobotSimulator<>(program);
         programParserHandler = new ProgramParserHandler<>(environment, simulator);
         programParserHandler.parsingStarted();
-        ExecutionTimer.setEndTime(1000);
+        ExecutionTimer.setSimulationEndTime(1000);
     }
 
     @Test

@@ -22,8 +22,8 @@ public class RobotSimulator<R extends Robot> extends ExecutionTimer implements S
 
     @Override
     public void simulate(R robot, double delta_t, double execution_time) {
-        setStartTime(0);
-        setEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
+        setSimulationCurrentTime(0);
+        setSimulationEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
         while (currentCommandIndex < programList.size()) {
             if(incrementTimerIfNotOver()) {
                 stopExecution();

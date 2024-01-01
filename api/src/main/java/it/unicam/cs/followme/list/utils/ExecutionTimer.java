@@ -3,20 +3,20 @@ package it.unicam.cs.followme.list.utils;
  * This class is used to keep track of the execution time of a program
  * and to stop the execution when the time is over
  */
-public abstract class ExecutionTimer {
+public class ExecutionTimer {
 
-        private static long startTime = 0;
-        private static long endTime = 0;
+        private static long simulationCurrentTime = 0;
+        private static long simulationEndTime = 0;
 
         /**
          * Increments the timer if the execution is not over
          * @return true if the execution is over, false otherwise
          */
         public boolean incrementTimerIfNotOver() {
-            if(startTime >= endTime) {
+            if(simulationCurrentTime >= simulationEndTime) {
                 return true;
             }
-            startTime++;
+            simulationCurrentTime++;
             return false;
         }
 
@@ -25,23 +25,23 @@ public abstract class ExecutionTimer {
          * @return true if the execution is over, false otherwise
          */
         public boolean isExecutionOver() {
-            return startTime >= endTime;
+            return simulationCurrentTime >= simulationEndTime;
         }
 
         /**
          * Sets the end time of the execution
-         * @param endTime the end time of the execution
+         * @param simulationEndTime the end time of the execution
          */
-        public static void setEndTime(long endTime) {
-            ExecutionTimer.endTime = endTime;
+        public static void setSimulationEndTime(long simulationEndTime) {
+            ExecutionTimer.simulationEndTime = simulationEndTime;
         }
-        public static void setStartTime(long startTime) {
-            ExecutionTimer.startTime = startTime;
+
+        /**
+         * Sets the current time of the execution
+         * @param simulationCurrentTime the current time of the execution
+         */
+        public static void setSimulationCurrentTime(long simulationCurrentTime) {
+            ExecutionTimer.simulationCurrentTime = simulationCurrentTime;
         }
-        public static long getEndTime() {
-            return endTime;
-        }
-        public static long getStartTime() {
-            return startTime;
-        }
+
 }
