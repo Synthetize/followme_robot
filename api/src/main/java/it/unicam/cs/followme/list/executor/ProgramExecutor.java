@@ -15,5 +15,5 @@ public interface ProgramExecutor<R extends Robot> {
      * Executes the program on the given robot
      * @param robot the robot on which the program will be executed
      */
-    void executeProgram(R robot);
+    void executeProgram(R robot, double delta_t, double execution_time);
 }

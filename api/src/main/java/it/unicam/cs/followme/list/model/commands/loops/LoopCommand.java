@@ -26,9 +26,9 @@ public abstract class LoopCommand<R extends Robot> implements Command<R> {
     protected void executeCommand(R robot, double delta_t) {
         int currentCommandIndex = getStartingLoopIndex() + 1;
         while (currentCommandIndex < getEndingLoopIndex()) {
-            if (programList.get(currentCommandIndex) instanceof LoopCommand) {
+            if (programList.get(currentCommandIndex) instanceof LoopCommand<R> loopCommand) {
                 programList.get(currentCommandIndex).run(robot, delta_t);
-                currentCommandIndex = ((LoopCommand<R>) programList.get(currentCommandIndex)).getEndingLoopIndex();
+                currentCommandIndex = loopCommand.getEndingLoopIndex();
             } else {
                 programList.get(currentCommandIndex).run(robot, delta_t);
             }

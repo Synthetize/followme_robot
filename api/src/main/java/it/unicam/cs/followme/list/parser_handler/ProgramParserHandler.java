@@ -43,6 +43,9 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
     @Override
     public void moveCommand(double[] args) {
         Coordinate targetCoordinate = new CartesianCoordinate(args[0], args[1]);
+        if(targetCoordinate.getX() == 0 && targetCoordinate.getY() == 0) {
+            throw new IllegalArgumentException("The target coordinate cannot be (0,0)");
+        }
         checkIfCoordinatesAreInRange(args[0], args[1]);
         validateSpeed(args[2]);
         Move<R> move = new Move<>(targetCoordinate, args[2], environment);

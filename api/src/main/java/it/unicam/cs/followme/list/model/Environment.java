@@ -20,7 +20,6 @@ public interface Environment<R extends Robot> {
      */
     Map<R, Coordinate> getRobotsDetails();
 
-    // TODO: 05/11/2023 potrebbero non serivire add shapes e add robots
     /**
      * Add the shapes and their coordinates to the environment
      * @param shapes the shapes to add
