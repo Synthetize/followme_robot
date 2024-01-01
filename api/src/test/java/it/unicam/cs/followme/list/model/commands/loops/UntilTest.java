@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
+import it.unicam.cs.followme.list.executor.ExecutionTimer;
 import it.unicam.cs.followme.list.executor.ProgramExecutor;
 import it.unicam.cs.followme.list.executor.RobotProgramExecutor;
 import it.unicam.cs.followme.list.model.Environment;
@@ -37,6 +38,7 @@ public class UntilTest {
         programExecutor = new RobotProgramExecutor<>(program);
         programParserHandler = new ProgramParserHandler<>(environment, programExecutor);
         programParserHandler.parsingStarted();
+        ExecutionTimer.setEndTime(1000);
     }
 
     @Test

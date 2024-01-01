@@ -5,20 +5,15 @@ package it.unicam.cs.followme.list.executor;
  */
 public abstract class ExecutionTimer {
 
-        private static long startTime;
-        private static long endTime;
-
-        public ExecutionTimer(long startTime, long endTime) {
-            ExecutionTimer.startTime = startTime;
-            ExecutionTimer.endTime = endTime;
-        }
+        private static long startTime = 0;
+        private static long endTime = 0;
 
         /**
          * Increments the timer if the execution is not over
          * @return true if the execution is over, false otherwise
          */
         public boolean incrementTimerIfNotOver() {
-            if(startTime > endTime) {
+            if(startTime >= endTime) {
                 return true;
             }
             startTime++;
@@ -30,14 +25,17 @@ public abstract class ExecutionTimer {
          * @return true if the execution is over, false otherwise
          */
         public boolean isExecutionOver() {
-            return startTime > endTime;
+            return startTime >= endTime;
         }
 
         /**
-         * Sets the start time of the execution
+         * Sets the end time of the execution
          * @param endTime the end time of the execution
          */
-        public void setEndTime(long endTime) {
+        public static void setEndTime(long endTime) {
             ExecutionTimer.endTime = endTime;
+        }
+        public static long getEndTime() {
+            return endTime;
         }
 }

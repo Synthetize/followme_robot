@@ -11,7 +11,6 @@ public class RobotProgramExecutor<R extends Robot> extends ExecutionTimer implem
     protected int currentCommandIndex = 0;
 
     public RobotProgramExecutor(List<Command<R>> programList/*, R robot, Environment<R> environment*/) {
-        super(0, 0);
         this.programList = programList;
     }
 

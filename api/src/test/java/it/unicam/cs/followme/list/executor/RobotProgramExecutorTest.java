@@ -66,7 +66,7 @@ public class RobotProgramExecutorTest {
 
     //TODO: test with loop all loop types, and loop inside loop
     @Test
-    void shouldStopExecutionIfTimeIsOver() {
+    void shouldStopExecutionIfTimeIsOverWhileExecutingARepeatCommand() {
         BasicRobot robot = new BasicRobot();
         CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
         environment.addRobots(List.of(robot), List.of(robotCoordinate));
@@ -77,8 +77,52 @@ public class RobotProgramExecutorTest {
         programExecutor.executeProgram(robot, 0.5, 7);
         DecimalFormat df = new DecimalFormat("#.##");
         String formatted = df.format(environment.getRobotCoordinate(robot).getX());
-        assertEquals("1,41", formatted);
+        assertEquals("4,95", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
-        assertEquals("1,41", formatted);
+        assertEquals("4,95", formatted);
+    }
+
+    @Test
+    void shouldStopExecutionIfTimeIsOverWhileExecutingAnUntilCommand() {
+        BasicRobot robot = new BasicRobot();
+        robot.addLabel("label_");
+        CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
+        environment.addRobots(List.of(robot), List.of(robotCoordinate));
+        CircleShape circleShape = new CircleShape(10, "label_");
+        environment.addShapes(List.of(circleShape), List.of(new CartesianCoordinate(0, 0)));
+        programParserHandler.untilCommandStart("label_");
+        programParserHandler.moveCommand(new double[]{0, 1, 1});
+        programParserHandler.moveCommand(new double[]{1, 0, 1});
+        programParserHandler.moveCommand(new double[]{0, -1, 1});
+        programParserHandler.moveCommand(new double[]{-1, 0, 1});
+        programParserHandler.doneCommand();
+        programParserHandler.parsingDone();
+        programExecutor.executeProgram(robot, 1, 5);
+        DecimalFormat df = new DecimalFormat("#.##");
+        String formatted = df.format(environment.getRobotCoordinate(robot).getX());
+        assertEquals("0", formatted);
+        formatted = df.format(environment.getRobotCoordinate(robot).getY());
+        assertEquals("0", formatted);
+
+        environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
+        programExecutor.executeProgram(robot, 1, 6);
+        formatted = df.format(environment.getRobotCoordinate(robot).getX());
+        assertEquals("0", formatted);
+        formatted = df.format(environment.getRobotCoordinate(robot).getY());
+        assertEquals("0", formatted);
+
+        environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
+        programExecutor.executeProgram(robot, 1, 7);
+        formatted = df.format(environment.getRobotCoordinate(robot).getX());
+        assertEquals("1", formatted);
+        formatted = df.format(environment.getRobotCoordinate(robot).getY());
+        assertEquals("1", formatted);
+
+        environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
+        programExecutor.executeProgram(robot, 1, 9);
+        formatted = df.format(environment.getRobotCoordinate(robot).getX());
+        assertEquals("0", formatted);
+        formatted = df.format(environment.getRobotCoordinate(robot).getY());
+        assertEquals("0", formatted);
     }
 }

@@ -13,7 +13,6 @@ public abstract class LoopCommand<R extends Robot> extends ExecutionTimer implem
     protected int currentCommandIndex = 0;
 
     public LoopCommand(int startingLoopIndex, int endingLoopIndex, List<Command<R>> programList) {
-        super(0, 0);
         this.startingLoopIndex = startingLoopIndex;
         this.endingLoopIndex = endingLoopIndex;
         this.programList = programList;
@@ -32,6 +31,7 @@ public abstract class LoopCommand<R extends Robot> extends ExecutionTimer implem
         while (currentCommandIndex < getEndingLoopIndex()) {
             if(incrementTimerIfNotOver()) {
                 stopLoopExecution();
+                return;
             }
             if (programList.get(currentCommandIndex) instanceof LoopCommand<R> loopCommand) {
                 programList.get(currentCommandIndex).run(robot, delta_t);
