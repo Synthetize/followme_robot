@@ -1,7 +1,7 @@
 package it.unicam.cs.followme.list.model.robots;
 
-import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
-import it.unicam.cs.followme.list.model.utils.Coordinate;
+import it.unicam.cs.followme.list.model.CartesianCoordinate;
+import it.unicam.cs.followme.list.model.Coordinate;
 import java.util.ArrayList;
 import java.util.List;
 

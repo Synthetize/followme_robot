@@ -2,7 +2,7 @@ package it.unicam.cs.followme.list.model;
 
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
-import it.unicam.cs.followme.list.model.utils.Coordinate;
+
 import java.util.List;
 import java.util.Map;
 

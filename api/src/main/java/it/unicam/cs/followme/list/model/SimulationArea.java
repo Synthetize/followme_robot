@@ -4,7 +4,6 @@ import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.CircleShape;
 import it.unicam.cs.followme.list.model.shapes.RectangleShape;
 import it.unicam.cs.followme.list.model.shapes.Shape;
-import it.unicam.cs.followme.list.model.utils.Coordinate;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,14 +1,13 @@
 package it.unicam.cs.followme.list.simulator;
 
-import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationArea;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.list.model.shapes.CircleShape;
 import it.unicam.cs.followme.list.model.shapes.Shape;
-import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
-import it.unicam.cs.followme.list.model.utils.Coordinate;
+import it.unicam.cs.followme.list.model.CartesianCoordinate;
+import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.parser_handler.ProgramParserHandler;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import org.junit.jupiter.api.BeforeEach;

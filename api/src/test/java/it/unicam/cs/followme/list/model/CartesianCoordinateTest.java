@@ -1,5 +1,4 @@
 package it.unicam.cs.followme.list.model;
-import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

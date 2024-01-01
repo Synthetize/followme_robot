@@ -2,8 +2,8 @@ package it.unicam.cs.followme.list.model.commands.basic;
 
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.robots.Robot;
-import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
-import it.unicam.cs.followme.list.model.utils.Coordinate;
+import it.unicam.cs.followme.list.model.CartesianCoordinate;
+import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.utilities.RobotCommand;
 

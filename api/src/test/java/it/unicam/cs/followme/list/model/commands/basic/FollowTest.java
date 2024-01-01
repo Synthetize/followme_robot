@@ -4,8 +4,8 @@ import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationArea;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
-import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
-import it.unicam.cs.followme.list.model.utils.Coordinate;
+import it.unicam.cs.followme.list.model.CartesianCoordinate;
+import it.unicam.cs.followme.list.model.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

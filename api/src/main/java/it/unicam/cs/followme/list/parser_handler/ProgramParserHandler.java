@@ -8,8 +8,8 @@ import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.commands.loops.Repeat;
 import it.unicam.cs.followme.list.model.commands.loops.Until;
 import it.unicam.cs.followme.list.model.robots.Robot;
-import it.unicam.cs.followme.list.model.utils.CartesianCoordinate;
-import it.unicam.cs.followme.list.model.utils.Coordinate;
+import it.unicam.cs.followme.list.model.CartesianCoordinate;
+import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
