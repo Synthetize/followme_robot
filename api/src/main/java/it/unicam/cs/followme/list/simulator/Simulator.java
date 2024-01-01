@@ -1,4 +1,4 @@
-package it.unicam.cs.followme.list.executor;
+package it.unicam.cs.followme.list.simulator;
 
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;

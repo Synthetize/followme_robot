@@ -1,8 +1,8 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
 import it.unicam.cs.followme.list.utils.ExecutionTimer;
-import it.unicam.cs.followme.list.executor.Simulator;
-import it.unicam.cs.followme.list.executor.RobotSimulator;
+import it.unicam.cs.followme.list.simulator.Simulator;
+import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationArea;
 import it.unicam.cs.followme.list.model.commands.Command;

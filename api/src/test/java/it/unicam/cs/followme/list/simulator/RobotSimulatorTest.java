@@ -1,5 +1,6 @@
-package it.unicam.cs.followme.list.executor;
+package it.unicam.cs.followme.list.simulator;
 
+import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationArea;
 import it.unicam.cs.followme.list.model.commands.Command;

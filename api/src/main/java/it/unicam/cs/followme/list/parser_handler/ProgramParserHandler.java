@@ -1,6 +1,6 @@
 package it.unicam.cs.followme.list.parser_handler;
 
-import it.unicam.cs.followme.list.executor.Simulator;
+import it.unicam.cs.followme.list.simulator.Simulator;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.basic.*;
