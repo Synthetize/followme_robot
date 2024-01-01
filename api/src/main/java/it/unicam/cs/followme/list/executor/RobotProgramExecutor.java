@@ -21,6 +21,7 @@ public class RobotProgramExecutor<R extends Robot> extends ExecutionTimer implem
 
     @Override
     public void executeProgram(R robot, double delta_t, double execution_time) {
+        setStartTime(0);
         setEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
         while (currentCommandIndex < programList.size()) {
             if(incrementTimerIfNotOver()) {

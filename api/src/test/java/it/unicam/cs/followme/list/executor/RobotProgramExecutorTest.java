@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class RobotProgramExecutorTest {
     Environment<BasicRobot> environment;
-    ProgramExecutor<BasicRobot> programExecutor;
+    RobotProgramExecutor<BasicRobot> programExecutor;
     List<Command<BasicRobot>> program;
     FollowMeParserHandler programParserHandler;
     @BeforeEach
@@ -64,7 +64,6 @@ public class RobotProgramExecutorTest {
         assertEquals("2,12", formatted);
     }
 
-    //TODO: test with loop all loop types, and loop inside loop
     @Test
     void shouldStopExecutionIfTimeIsOverWhileExecutingARepeatCommand() {
         BasicRobot robot = new BasicRobot();
@@ -77,13 +76,13 @@ public class RobotProgramExecutorTest {
         programExecutor.executeProgram(robot, 0.5, 7);
         DecimalFormat df = new DecimalFormat("#.##");
         String formatted = df.format(environment.getRobotCoordinate(robot).getX());
-        assertEquals("4,95", formatted);
+        assertEquals("4,6", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
-        assertEquals("4,95", formatted);
+        assertEquals("4,6", formatted);
     }
 
     @Test
-    void shouldStopExecutionIfTimeIsOverWhileExecutingAnUntilCommand() {
+    void shouldStopExecutionIfTimeIsOverWhileExecutingAnUntilCommandAndLabelConditionIsStillSatisfied() {
         BasicRobot robot = new BasicRobot();
         robot.addLabel("label_");
         CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
@@ -105,13 +104,15 @@ public class RobotProgramExecutorTest {
         assertEquals("0", formatted);
 
         environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
+        programExecutor.currentCommandIndex = 0;
         programExecutor.executeProgram(robot, 1, 6);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("0", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
-        assertEquals("0", formatted);
+        assertEquals("1", formatted);
 
         environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
+        programExecutor.currentCommandIndex = 0;
         programExecutor.executeProgram(robot, 1, 7);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("1", formatted);
@@ -119,6 +120,7 @@ public class RobotProgramExecutorTest {
         assertEquals("1", formatted);
 
         environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
+        programExecutor.currentCommandIndex = 0;
         programExecutor.executeProgram(robot, 1, 9);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("0", formatted);

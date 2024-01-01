@@ -35,7 +35,13 @@ public abstract class ExecutionTimer {
         public static void setEndTime(long endTime) {
             ExecutionTimer.endTime = endTime;
         }
+        public static void setStartTime(long startTime) {
+            ExecutionTimer.startTime = startTime;
+        }
         public static long getEndTime() {
             return endTime;
+        }
+        public static long getStartTime() {
+            return startTime;
         }
 }
