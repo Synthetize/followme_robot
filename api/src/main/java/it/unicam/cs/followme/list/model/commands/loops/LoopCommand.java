@@ -1,15 +1,19 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
+import it.unicam.cs.followme.list.executor.ExecutionTimer;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 
 import java.util.List;
 
-public abstract class LoopCommand<R extends Robot> implements Command<R> {
+public abstract class LoopCommand<R extends Robot> extends ExecutionTimer implements Command<R> {
     private int startingLoopIndex = 0;
     private int endingLoopIndex = 0;
     private final List<Command<R>> programList;
+    protected int currentCommandIndex = 0;
+
     public LoopCommand(int startingLoopIndex, int endingLoopIndex, List<Command<R>> programList) {
+        super(0, 0);
         this.startingLoopIndex = startingLoopIndex;
         this.endingLoopIndex = endingLoopIndex;
         this.programList = programList;
@@ -24,8 +28,11 @@ public abstract class LoopCommand<R extends Robot> implements Command<R> {
         this.endingLoopIndex = index;
     }
     protected void executeCommand(R robot, double delta_t) {
-        int currentCommandIndex = getStartingLoopIndex() + 1;
+        currentCommandIndex = getStartingLoopIndex() + 1;
         while (currentCommandIndex < getEndingLoopIndex()) {
+            if(incrementTimerIfNotOver()) {
+                stopLoopExecution();
+            }
             if (programList.get(currentCommandIndex) instanceof LoopCommand<R> loopCommand) {
                 programList.get(currentCommandIndex).run(robot, delta_t);
                 currentCommandIndex = loopCommand.getEndingLoopIndex();
@@ -34,5 +41,9 @@ public abstract class LoopCommand<R extends Robot> implements Command<R> {
             }
             currentCommandIndex++;
         }
+    }
+
+    private void stopLoopExecution() {
+        currentCommandIndex = getEndingLoopIndex();
     }
 }

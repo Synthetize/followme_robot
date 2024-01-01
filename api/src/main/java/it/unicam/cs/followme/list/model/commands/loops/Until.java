@@ -23,7 +23,7 @@ public class Until<R extends Robot> extends LoopCommand<R> {
 
     @Override
     public void run(R robot, double delta_t) {
-        while (conditionStatus(robot)) {
+        while (conditionStatus(robot) && !isExecutionOver()) {
             executeCommand(robot, delta_t);
         }
     }

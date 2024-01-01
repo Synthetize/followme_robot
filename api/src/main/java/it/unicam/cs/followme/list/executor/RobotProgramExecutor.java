@@ -1,17 +1,17 @@
 package it.unicam.cs.followme.list.executor;
 
-import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
 
 import java.util.List;
 
-public class RobotProgramExecutor<R extends Robot> implements ProgramExecutor<R> {
+public class RobotProgramExecutor<R extends Robot> extends ExecutionTimer implements ProgramExecutor<R> {
     private final List<Command<R>> programList;
-    private int currentCommandIndex = 0;
+    protected int currentCommandIndex = 0;
 
     public RobotProgramExecutor(List<Command<R>> programList/*, R robot, Environment<R> environment*/) {
+        super(0, 0);
         this.programList = programList;
     }
 
@@ -22,19 +22,17 @@ public class RobotProgramExecutor<R extends Robot> implements ProgramExecutor<R>
 
     @Override
     public void executeProgram(R robot, double delta_t, double execution_time) {
-        int executedCommands = 0;
+        setEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
         while (currentCommandIndex < programList.size()) {
-//            if(numberOfCommandsThatCanBeExecuted(execution_time, delta_t) == executedCommands) {
-//                stopExecution();
-//                return;
-//            }
+            if(incrementTimerIfNotOver()) {
+                stopExecution();
+                return;
+            }
             if (programList.get(currentCommandIndex) instanceof LoopCommand<R> loopCommand) {
                 programList.get(currentCommandIndex).run(robot, delta_t);
                 currentCommandIndex = loopCommand.getEndingLoopIndex();
-                executedCommands += loopCommand.getEndingLoopIndex() - loopCommand.getStartingLoopIndex();
             } else {
                 programList.get(currentCommandIndex).run(robot, delta_t);
-                executedCommands++;
             }
             currentCommandIndex++;
         }

@@ -28,7 +28,7 @@ public class Repeat<R extends Robot> extends LoopCommand<R> {
     @Override
     public void run(R robot, double delta_t) {
         if (repetitionNumbers == -1) {
-            while (true)
+            while (!isExecutionOver())
                 executeCommand(robot, delta_t);
         } else {
             for (int i = 0; i < repetitionNumbers; i++)
