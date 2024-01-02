@@ -25,13 +25,15 @@ public class RobotSimulatorTest {
     RobotSimulator<BasicRobot> programExecutor;
     List<Command<BasicRobot>> program;
     FollowMeParserHandler programParserHandler;
+    List<BasicRobot> robotsList;
     @BeforeEach
     void setUp() {
         HashMap<BasicRobot, Coordinate> robots = new HashMap<>();
         HashMap<Shape, Coordinate> shapes = new HashMap<>();
         environment = new SimulationArea<>(shapes, robots);
         program = new ArrayList<>();
-        programExecutor = new RobotSimulator<>(program);
+        robotsList = new ArrayList<>();
+        programExecutor = new RobotSimulator<>(program, robotsList);
         programParserHandler = new ProgramParserHandler<>(environment, programExecutor);
         programParserHandler.parsingStarted();
     }
@@ -44,6 +46,7 @@ public class RobotSimulatorTest {
         CircleShape circleShape = new CircleShape(5, "label_");
         CartesianCoordinate circleCoordinate = new CartesianCoordinate(0, 0);
         environment.addShapes(List.of(circleShape), List.of(circleCoordinate));
+        robotsList.add(robot);
         programParserHandler.signalCommand("label_");
         programParserHandler.untilCommandStart("label_");
         programParserHandler.moveCommand(new double[]{1, 1, 1});
@@ -55,7 +58,7 @@ public class RobotSimulatorTest {
         programParserHandler.unsignalCommand("label_");
         programParserHandler.doneCommand();
         programParserHandler.parsingDone();
-        programExecutor.simulate(robot, 1, 1000);
+        programExecutor.simulate(1, 1000);
         DecimalFormat df = new DecimalFormat("#.##");
         String formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("2,12", formatted);
@@ -68,11 +71,12 @@ public class RobotSimulatorTest {
         BasicRobot robot = new BasicRobot();
         CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
         environment.addRobots(List.of(robot), List.of(robotCoordinate));
+        robotsList.add(robot);
         programParserHandler.repeatCommandStart(-1);
         programParserHandler.moveCommand(new double[]{1, 1, 1});
         programParserHandler.doneCommand();
         programParserHandler.parsingDone();
-        programExecutor.simulate(robot, 0.5, 7);
+        programExecutor.simulate(0.5, 7);
         DecimalFormat df = new DecimalFormat("#.##");
         String formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("4,6", formatted);
@@ -88,6 +92,7 @@ public class RobotSimulatorTest {
         environment.addRobots(List.of(robot), List.of(robotCoordinate));
         CircleShape circleShape = new CircleShape(10, "label_");
         environment.addShapes(List.of(circleShape), List.of(new CartesianCoordinate(0, 0)));
+        robotsList.add(robot);
         programParserHandler.untilCommandStart("label_");
         programParserHandler.moveCommand(new double[]{0, 1, 1});
         programParserHandler.moveCommand(new double[]{1, 0, 1});
@@ -95,7 +100,7 @@ public class RobotSimulatorTest {
         programParserHandler.moveCommand(new double[]{-1, 0, 1});
         programParserHandler.doneCommand();
         programParserHandler.parsingDone();
-        programExecutor.simulate(robot, 1, 5);
+        programExecutor.simulate(1, 5);
         DecimalFormat df = new DecimalFormat("#.##");
         String formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("0", formatted);
@@ -104,7 +109,7 @@ public class RobotSimulatorTest {
 
         environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
         programExecutor.currentCommandIndex = 0;
-        programExecutor.simulate(robot, 1, 6);
+        programExecutor.simulate(1, 6);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("0", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
@@ -112,7 +117,7 @@ public class RobotSimulatorTest {
 
         environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
         programExecutor.currentCommandIndex = 0;
-        programExecutor.simulate(robot, 1, 7);
+        programExecutor.simulate(1, 7);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("1", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
@@ -120,7 +125,7 @@ public class RobotSimulatorTest {
 
         environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
         programExecutor.currentCommandIndex = 0;
-        programExecutor.simulate(robot, 1, 9);
+        programExecutor.simulate(1, 9);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("0", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());

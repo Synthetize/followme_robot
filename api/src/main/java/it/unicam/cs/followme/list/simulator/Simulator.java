@@ -15,5 +15,5 @@ public interface Simulator<R extends Robot> {
      * Executes the program on the given robot
      * @param robot the robot on which the program will be executed
      */
-    void simulate(R robot, double delta_t, double execution_time);
+    void simulate(double delta_t, double execution_time);
 }

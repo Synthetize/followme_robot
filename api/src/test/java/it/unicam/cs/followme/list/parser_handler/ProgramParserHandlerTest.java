@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.parser_handler;
 
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.simulator.Simulator;
 import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.model.Environment;
@@ -22,12 +23,14 @@ public class ProgramParserHandlerTest {
     Simulator<BasicRobot> simulator;
     List<Command<BasicRobot>> program;
     FollowMeParserHandler programParserHandler;
+    List<BasicRobot> robotsList;
 
     @BeforeEach
     void setUp() {
         environment = new SimulationArea<>(null, null);
         program = new ArrayList<>();
-        simulator = new RobotSimulator<>(program);
+        robotsList = new ArrayList<>();
+        simulator = new RobotSimulator<>(program, robotsList);
         programParserHandler = new ProgramParserHandler<>(environment, simulator);
         programParserHandler.parsingStarted();
 

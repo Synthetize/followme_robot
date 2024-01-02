@@ -10,8 +10,10 @@ import java.util.List;
 public class RobotSimulator<R extends Robot> extends SimulationTimer implements Simulator<R> {
     private final List<Command<R>> programList;
     protected int currentCommandIndex = 0;
+    private final List<R> robotsList;
 
-    public RobotSimulator(List<Command<R>> programList) {
+    public RobotSimulator(List<Command<R>> programList, List<R> robotsList) {
+        this.robotsList = robotsList;
         this.programList = programList;
     }
 
@@ -21,7 +23,13 @@ public class RobotSimulator<R extends Robot> extends SimulationTimer implements 
     }
 
     @Override
-    public void simulate(R robot, double delta_t, double execution_time) {
+    public void simulate(double delta_t, double execution_time) {
+        for(R r : robotsList) {
+            runProgram(r, delta_t, execution_time);
+        }
+    }
+
+    private void runProgram(R robot, double delta_t, double execution_time) {
         setSimulationCurrentTime(0);
         setSimulationEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
         while (currentCommandIndex < programList.size()) {

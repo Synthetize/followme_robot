@@ -35,7 +35,7 @@ public class RepeatTest {
         HashMap<Shape, Coordinate> shapes = new HashMap<>();
         environment = new SimulationArea<>(shapes, robots);
         program = new ArrayList<>();
-        simulator = new RobotSimulator<>(program);
+        simulator = new RobotSimulator<>(program, new ArrayList<>());
         programParserHandler = new ProgramParserHandler<>(environment, simulator);
         programParserHandler.parsingStarted();
         SimulationTimer.setSimulationEndTime(1000);
