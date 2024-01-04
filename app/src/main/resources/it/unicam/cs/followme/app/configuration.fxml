@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="it.unicam.cs.followme.app.ConfigurationController">
+   <children>
+      <Button layoutX="106.0" layoutY="143.0" mnemonicParsing="false" onMouseClicked="#getShapesFile" text="Shapes File" />
+      <TextField layoutX="55.0" layoutY="220.0" prefHeight="25.0" prefWidth="53.0" fx:id="xCoordinate" />
+      <TextField fx:id="yCoordinate" layoutX="55.0" layoutY="257.0" prefHeight="25.0" prefWidth="53.0" />
+      <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Text" />
+      <Text layoutX="55.0" layoutY="205.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Add Robot" />
+      <Text layoutX="29.0" layoutY="237.0" strokeType="OUTSIDE" strokeWidth="0.0" text="X" />
+      <Text layoutX="29.0" layoutY="274.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Y" />
+      <Button layoutX="65.0" layoutY="291.0" mnemonicParsing="false" onMouseClicked="#addRobot" text="Add" />
+      <TextArea fx:id="showRobotsArea" layoutX="300.0" layoutY="92.0" prefHeight="200.0" prefWidth="200.0" />
+      <Button layoutX="106.0" layoutY="80.0" mnemonicParsing="false" onMouseClicked="#getProgram" text="Program File" />
+      <Button layoutX="210.0" layoutY="334.0" mnemonicParsing="false" onMouseClicked="#openSimulationScene" text="Next" />
+   </children>
+</AnchorPane>
