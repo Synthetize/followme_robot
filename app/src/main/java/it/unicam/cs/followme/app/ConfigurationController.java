@@ -23,7 +23,7 @@ import java.util.*;
 public class ConfigurationController implements Initializable {
 
     FileChooser fileChooser = new FileChooser();
-    HashMap<BasicRobot,Coordinate> robots = new HashMap<>();
+    HashMap<BasicRobot, Coordinate> robots = new HashMap<>();
     File shapesConfigFile;
     File programFile;
     Alert alert;
@@ -42,9 +42,10 @@ public class ConfigurationController implements Initializable {
 
     @FXML
     private TextField yCoordinate;
+
     @FXML
     void getShapesFile(MouseEvent event) {
-       shapesConfigFile = fileChooser.showOpenDialog(new Stage());
+        shapesConfigFile = fileChooser.showOpenDialog(new Stage());
     }
 
     @FXML
@@ -54,21 +55,33 @@ public class ConfigurationController implements Initializable {
 
     @FXML
     void addRobot(MouseEvent event) {
-        if(xCoordinate.getText().isBlank() || yCoordinate.getText().isBlank() || !xCoordinate.getText().matches("-?\\d+(\\.\\d+)?") || !yCoordinate.getText().matches("-?\\d+(\\.\\d+)?")){
+        if (xCoordinate.getText().isBlank() || yCoordinate.getText().isBlank() || !xCoordinate.getText().matches("-?\\d+(\\.\\d+)?") || !yCoordinate.getText().matches("-?\\d+(\\.\\d+)?")) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Invalid coordinate");
             alert.setContentText("Please insert a valid coordinate");
             alert.showAndWait();
         }
-        CartesianCoordinate coordinate =  new CartesianCoordinate(Double.parseDouble(xCoordinate.getText()), Double.parseDouble(yCoordinate.getText()));
+        CartesianCoordinate coordinate = new CartesianCoordinate(Double.parseDouble(xCoordinate.getText()), Double.parseDouble(yCoordinate.getText()));
         robots.put(new BasicRobot(), coordinate);
 
         showRobotsArea.appendText("Robot " + robots.size() + ": " + coordinate + "\n");
     }
 
+    public Map<BasicRobot, Coordinate> getRobots() {
+        return robots;
+    }
+
+    public File getShapesConfigFile() {
+        return shapesConfigFile;
+    }
+
+    public File getProgramFile() {
+        return programFile;
+    }
+
     @FXML
     void openSimulationScene(MouseEvent event) {
-        if(shapesConfigFile == null || programFile == null || robots.isEmpty()){
+        if (shapesConfigFile == null || programFile == null || robots.isEmpty()) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing configuration");
             alert.setContentText("Please insert all the required configuration files");
@@ -78,9 +91,11 @@ public class ConfigurationController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("simulation.fxml"));
                 Parent root = loader.load();
                 SimulationController simulationController = loader.getController();
+
                 simulationController.setRobotsCoordinates(robots);
                 simulationController.setShapesConfigFile(shapesConfigFile);
                 simulationController.setProgramFile(programFile);
+                simulationController.initializeEnvironment();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();

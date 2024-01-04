@@ -14,32 +14,41 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
-public class SimulationController implements Initializable{
-    private HashMap<BasicRobot,Coordinate> robotsCoordinates;
+public class SimulationController implements Initializable {
+    private HashMap<BasicRobot, Coordinate> robotsCoordinates;
     private File shapesConfigFile;
     private File programFile;
     ModelController<BasicRobot> modelController = new ModelController<>();
+
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+    }
+
+   protected void initializeEnvironment() {
         modelController.initialize();
-       modelController.setRobotsHashMap(robotsCoordinates);
+        System.out.println("PATH SIMULATION CONTROLLER SHAPE CONFIG FILE");
+        System.out.println(robotsCoordinates);
+        System.out.println(shapesConfigFile.getPath());
+        System.out.println(programFile.getPath());
+        modelController.setRobotsHashMap(robotsCoordinates);
+        //modelController.generateShapesFromFile(shapesConfigFile);
         try {
             modelController.generateCommandsFromFile(programFile);
         } catch (FollowMeParserException | IOException e) {
             throw new RuntimeException(e);
         }
-        modelController.generateShapesFromFile(shapesConfigFile);
     }
 
-    protected void setRobotsCoordinates(HashMap<BasicRobot,Coordinate> robotsCoordinates){
+    protected void setRobotsCoordinates(HashMap<BasicRobot, Coordinate> robotsCoordinates) {
         this.robotsCoordinates = robotsCoordinates;
     }
 
-    protected void setShapesConfigFile(File shapesConfigFile){
+    protected void setShapesConfigFile(File shapesConfigFile) {
         this.shapesConfigFile = shapesConfigFile;
     }
 
-    protected void setProgramFile(File programFile){
+    protected void setProgramFile(File programFile) {
         this.programFile = programFile;
     }
 

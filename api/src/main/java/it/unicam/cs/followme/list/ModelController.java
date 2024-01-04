@@ -55,7 +55,7 @@ public class ModelController <R extends Robot> {
     }
 
     public void generateShapesFromFile(File shapesConfigFile) {
-        this.shapesHashMap = shapesGenerator.generateShapes(shapesConfigFile);
+        this.shapesHashMap.putAll(shapesGenerator.generateShapes(shapesConfigFile));
     }
 
     public void generateCommandsFromFile(File programFile) throws FollowMeParserException, IOException {
