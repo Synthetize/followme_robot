@@ -1,7 +1,7 @@
 package it.unicam.cs.followme.list.model.commands.basic;
 
 import it.unicam.cs.followme.list.model.Environment;
-import it.unicam.cs.followme.list.model.SimulationArea;
+import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
@@ -24,7 +24,7 @@ public class FollowTest {
     void setUp() {
         HashMap<Shape, Coordinate> shapesDetails = new HashMap<>();
         HashMap<BasicRobot, Coordinate> robotsDetails = new HashMap<>();
-        environment = new SimulationArea<>(shapesDetails, robotsDetails);
+        environment = new SimulationEnvironment<>(shapesDetails, robotsDetails);
     }
 
     @Test

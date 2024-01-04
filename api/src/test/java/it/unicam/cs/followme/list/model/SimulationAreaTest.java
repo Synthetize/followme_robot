@@ -15,7 +15,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SimulationAreaTest {
-    SimulationArea<BasicRobot> environment;
+    SimulationEnvironment<BasicRobot> environment;
     RectangleShape rectangleShape;
     CartesianCoordinate rectangleCoordinate;
     CircleShape circleShape;
@@ -23,7 +23,7 @@ public class SimulationAreaTest {
 
     @BeforeEach
     void init() {
-        environment = new SimulationArea<>(new HashMap<>(), new HashMap<>());
+        environment = new SimulationEnvironment<>(new HashMap<>(), new HashMap<>());
         rectangleShape = new RectangleShape(6, 4, "LABEL_");
         rectangleCoordinate = new CartesianCoordinate(5, 3);
         circleShape = new CircleShape(5, "LABEL_");

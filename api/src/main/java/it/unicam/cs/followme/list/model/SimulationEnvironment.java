@@ -10,14 +10,19 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class SimulationArea<R extends Robot> implements Environment<R> {
+public class SimulationEnvironment<R extends Robot> implements Environment<R> {
 
     private final Map<Shape, Coordinate> shapesDetails;
     private final Map<R, Coordinate> robotsDetails;
 
-    public SimulationArea(Map<Shape, Coordinate> shapesDetails, Map<R, Coordinate> robotsDetails) {
+    public SimulationEnvironment(Map<Shape, Coordinate> shapesDetails, Map<R, Coordinate> robotsDetails) {
         this.shapesDetails = shapesDetails;
         this.robotsDetails = robotsDetails;
+    }
+
+    public SimulationEnvironment() {
+        this.shapesDetails = null;
+        this.robotsDetails = null;
     }
 
     @Override
@@ -39,8 +44,6 @@ public class SimulationArea<R extends Robot> implements Environment<R> {
         robots.forEach(robot -> robotsDetails.put(robot, coordinates.get(robots.indexOf(robot))));
     }
 
-
-    // TODO: 05/11/2023 faccio lo stesso calcolo in lastrobotdirection
     @Override
     public double getDistanceBetweenTwoCoordinates(Coordinate firstCoordinate, Coordinate secondCoordinate) {
         return Math.sqrt(Math.pow(firstCoordinate.getX() - secondCoordinate.getX(), 2) + Math.pow(firstCoordinate.getY() - secondCoordinate.getY(), 2));

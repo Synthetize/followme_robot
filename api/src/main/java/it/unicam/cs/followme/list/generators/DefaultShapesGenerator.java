@@ -22,10 +22,10 @@ public class DefaultShapesGenerator implements ShapesGenerator{
         this.parser = parser;
     }
 
-    public Map<Shape, Coordinate> generateShapes(String shapesFilePath) {
+    public Map<Shape, Coordinate> generateShapes(File shapesFile) {
         try {
-            File env_conf = new File(shapesFilePath);
-            List<ShapeData> shapes = parser.parseEnvironment(env_conf);
+            //File env_conf = new File(shapesFilePath);
+            List<ShapeData> shapes = parser.parseEnvironment(shapesFile);
             return shapes.stream()
                     .map(shapeData -> {
                         Coordinate shapeCoordinate = new CartesianCoordinate(shapeData.args()[0], shapeData.args()[1]);

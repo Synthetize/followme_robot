@@ -1,7 +1,7 @@
 package it.unicam.cs.followme.list.model.commands.basic;
 
 import it.unicam.cs.followme.list.model.Environment;
-import it.unicam.cs.followme.list.model.SimulationArea;
+import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
@@ -20,7 +20,7 @@ public class ContinueTest {
     void setUp() {
         HashMap<BasicRobot, Coordinate> robots = new HashMap<>();
         HashMap<Shape, Coordinate> shapes = new HashMap<>();
-        environment = new SimulationArea<>(shapes, robots);
+        environment = new SimulationEnvironment<>(shapes, robots);
     }
     @Test
     void shouldMoveTowardsLastMovementDirection() {

@@ -4,6 +4,7 @@ import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.utilities.FollowMeParser;
 
+import java.io.File;
 import java.util.Map;
 
 
@@ -17,5 +18,5 @@ public interface ShapesGenerator {
      * @param shapesFilePath the path of the file.
      * @return a list of shapes.
      */
-    Map<Shape, Coordinate> generateShapes(String shapesFilePath);
+    Map<Shape, Coordinate> generateShapes(File shapesFile);
 }

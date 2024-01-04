@@ -20,13 +20,13 @@ import java.util.Stack;
 public class ProgramParserHandler<R extends Robot> implements FollowMeParserHandler {
 
     private List<Command<R>> program;
-    private final Simulator<R> executor;
-    private final Environment<R> environment;
+    private final Simulator<R> simulator;
+    private Environment<R> environment;
     private Stack<Integer> startingLoopIndexStack;
 
-    public ProgramParserHandler(Environment<R> environment, Simulator<R> executor) {
+    public ProgramParserHandler(Environment<R> environment, Simulator<R> simulator) {
         this.environment = environment;
-        this.executor = executor;
+        this.simulator = simulator;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
 
     @Override
     public void parsingDone() {
-        executor.setProgramList(program);
+        simulator.setProgramList(program);
     }
 
     @Override

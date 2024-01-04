@@ -4,7 +4,7 @@ import it.unicam.cs.followme.list.utils.SimulationTimer;
 import it.unicam.cs.followme.list.simulator.Simulator;
 import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.model.Environment;
-import it.unicam.cs.followme.list.model.SimulationArea;
+import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.list.model.shapes.CircleShape;
@@ -33,7 +33,7 @@ public class RepeatTest {
     void setUp() {
         HashMap<BasicRobot, Coordinate> robots = new HashMap<>();
         HashMap<Shape, Coordinate> shapes = new HashMap<>();
-        environment = new SimulationArea<>(shapes, robots);
+        environment = new SimulationEnvironment<>(shapes, robots);
         program = new ArrayList<>();
         simulator = new RobotSimulator<>(program, new ArrayList<>());
         programParserHandler = new ProgramParserHandler<>(environment, simulator);

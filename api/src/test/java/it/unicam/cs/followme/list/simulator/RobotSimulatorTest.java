@@ -1,7 +1,7 @@
 package it.unicam.cs.followme.list.simulator;
 
 import it.unicam.cs.followme.list.model.Environment;
-import it.unicam.cs.followme.list.model.SimulationArea;
+import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.list.model.shapes.CircleShape;
@@ -30,7 +30,7 @@ public class RobotSimulatorTest {
     void setUp() {
         HashMap<BasicRobot, Coordinate> robots = new HashMap<>();
         HashMap<Shape, Coordinate> shapes = new HashMap<>();
-        environment = new SimulationArea<>(shapes, robots);
+        environment = new SimulationEnvironment<>(shapes, robots);
         program = new ArrayList<>();
         robotsList = new ArrayList<>();
         programExecutor = new RobotSimulator<>(program, robotsList);
