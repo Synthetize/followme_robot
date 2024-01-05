@@ -34,7 +34,7 @@ public class RobotSimulator<R extends Robot> extends SimulationTimer implements 
         }
     }
 
-    private void runProgram(R robot, double delta_t, double execution_time) throws InterruptedException {
+    private void runProgram(R robot, double delta_t, double execution_time) {
         setSimulationCurrentTime(0);
         setSimulationEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
         while (currentCommandIndex < programList.size()) {
