@@ -26,7 +26,7 @@ public abstract class LoopCommand<R extends Robot> extends SimulationTimer imple
     public void setEndingLoopIndex(int index) {
         this.endingLoopIndex = index;
     }
-    protected void executeCommand(R robot, double delta_t) throws InterruptedException {
+    protected void executeCommand(R robot, double delta_t){
         currentCommandIndex = getStartingLoopIndex() + 1;
         while (currentCommandIndex < getEndingLoopIndex()) {
             if(incrementTimerIfNotOver()) {
