@@ -109,7 +109,7 @@ public class RobotSimulatorTest {
         assertEquals("0", formatted);
 
         environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
-        programExecutor.currentCommandIndex = 0;
+        programExecutor.currentCommandIndex.set(0);
         programExecutor.simulate(1, 6);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("0", formatted);
@@ -117,7 +117,7 @@ public class RobotSimulatorTest {
         assertEquals("1", formatted);
 
         environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
-        programExecutor.currentCommandIndex = 0;
+        programExecutor.currentCommandIndex.set(0);
         programExecutor.simulate(1, 7);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("1", formatted);
@@ -125,7 +125,7 @@ public class RobotSimulatorTest {
         assertEquals("1", formatted);
 
         environment.setRobotPosition(robot, new CartesianCoordinate(0, 0));
-        programExecutor.currentCommandIndex = 0;
+        programExecutor.currentCommandIndex.set(0);
         programExecutor.simulate(1, 9);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("0", formatted);

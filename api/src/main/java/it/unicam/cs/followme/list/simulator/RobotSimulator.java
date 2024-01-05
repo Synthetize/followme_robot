@@ -2,16 +2,18 @@ package it.unicam.cs.followme.list.simulator;
 
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
-import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
+import it.unicam.cs.followme.list.utils.HandleCommandToExecute;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class RobotSimulator<R extends Robot> extends SimulationTimer implements Simulator<R> {
     private final List<Command<R>> programList;
-    protected int currentCommandIndex = 0;
+    protected AtomicInteger currentCommandIndex = new AtomicInteger(0);
+    private HandleCommandToExecute<R> handleCommandToExecute;
     private final Map<R, Coordinate> robotsList;
 
     public RobotSimulator(List<Command<R>> programList, Map<R, Coordinate> robotsList) {
@@ -26,7 +28,7 @@ public class RobotSimulator<R extends Robot> extends SimulationTimer implements 
 
     @Override
     public void simulate(double delta_t, double execution_time) {
-        for(R r : robotsList.keySet()) {
+        for (R r : robotsList.keySet()) {
             runProgram(r, delta_t, execution_time);
         }
     }
@@ -34,26 +36,13 @@ public class RobotSimulator<R extends Robot> extends SimulationTimer implements 
     private void runProgram(R robot, double delta_t, double execution_time) {
         setSimulationCurrentTime(0);
         setSimulationEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
-        while (currentCommandIndex < programList.size()) {
-            if(incrementTimerIfNotOver()) {
-                stopExecution();
-                return;
-            }
-            if (programList.get(currentCommandIndex) instanceof LoopCommand<R> loopCommand) {
-                programList.get(currentCommandIndex).run(robot, delta_t);
-                currentCommandIndex = loopCommand.getEndingLoopIndex();
-            } else {
-                programList.get(currentCommandIndex).run(robot, delta_t);
-            }
-            currentCommandIndex++;
+        while (currentCommandIndex.get() < programList.size()) {
+            handleCommandToExecute = new HandleCommandToExecute<>(currentCommandIndex, programList);
+            handleCommandToExecute.findLoopOrBasicCommandAndCallRun(delta_t, robot, programList.size());
         }
     }
 
-    private long numberOfCommandsThatCanBeExecuted (double execution_time, double delta_t) {
+    private long numberOfCommandsThatCanBeExecuted(double execution_time, double delta_t) {
         return Math.round(execution_time / delta_t);
-    }
-
-    private void stopExecution() {
-        currentCommandIndex = programList.size();
     }
 }
