@@ -35,7 +35,7 @@ public class UntilTest {
         HashMap<Shape, Coordinate> shapes = new HashMap<>();
         environment = new SimulationEnvironment<>(shapes, robots);
         program = new ArrayList<>();
-        simulator = new RobotSimulator<>(program, new ArrayList<>());
+        simulator = new RobotSimulator<>(program, new HashMap<>());
         programParserHandler = new ProgramParserHandler<>(environment, simulator);
         programParserHandler.parsingStarted();
         SimulationTimer.setSimulationEndTime(1000);

@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.parser_handler;
 
+import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.simulator.Simulator;
 import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.model.Environment;
@@ -13,7 +14,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,13 +25,13 @@ public class ProgramParserHandlerTest {
     Simulator<BasicRobot> simulator;
     List<Command<BasicRobot>> program;
     FollowMeParserHandler programParserHandler;
-    List<BasicRobot> robotsList;
+    Map<BasicRobot, Coordinate> robotsList;
 
     @BeforeEach
     void setUp() {
         environment = new SimulationEnvironment<>(null, null);
         program = new ArrayList<>();
-        robotsList = new ArrayList<>();
+        robotsList = new HashMap<>();
         simulator = new RobotSimulator<>(program, robotsList);
         programParserHandler = new ProgramParserHandler<>(environment, simulator);
         programParserHandler.parsingStarted();
@@ -52,27 +55,6 @@ public class ProgramParserHandlerTest {
         assertThrows(IllegalArgumentException.class, () -> programParserHandler.moveCommand(new double[]{-2, 1, 1}));
         assertThrows(IllegalArgumentException.class, () -> programParserHandler.moveCommand(new double[]{1, 1, -1}));
         assertThrows(IllegalArgumentException.class, () -> programParserHandler.moveCommand(new double[]{0, 0, 4}));
-
-//        IllegalArgumentException thrown = assertThrows(
-//                IllegalArgumentException.class,
-//                () -> programParserHandler.moveCommand(new double[]{-2, 1, 4})
-//        );
-//        assertEquals("Coordinate must be between -1 and 1", thrown.getMessage());
-//        thrown = assertThrows(
-//                IllegalArgumentException.class,
-//                () -> programParserHandler.moveCommand(new double[]{1, -2, 4})
-//        );
-//        assertEquals("Coordinate must be between -1 and 1", thrown.getMessage());
-//        IllegalArgumentException thrown = assertThrows(
-//                IllegalArgumentException.class,
-//                () -> programParserHandler.moveCommand(new double[]{1, 1, -1})
-//        );
-//        assertEquals("Speed must be greater than 0", thrown.getMessage());
-//        thrown = assertThrows(
-//                IllegalArgumentException.class,
-//                () -> programParserHandler.moveCommand(new double[]{0, 0, 4})
-//        );
-//        assertEquals("At least one coordinate must be different from 0", thrown.getMessage());
         programParserHandler.parsingDone();
     }
 
@@ -91,17 +73,6 @@ public class ProgramParserHandlerTest {
     void shouldNotParseMoveRandomCommand() {
         assertThrows(IllegalArgumentException.class, () -> programParserHandler.moveRandomCommand(new double[]{0, 0, 0, 0, 7}));
         assertThrows(IllegalArgumentException.class, () -> programParserHandler.moveRandomCommand(new double[]{1, 1, 2, 2, -1}));
-//
-//        IllegalArgumentException thrown = assertThrows(
-//                IllegalArgumentException.class,
-//                () -> programParserHandler.moveRandomCommand(new double[]{0, 0, 0, 0, 7})
-//        );
-//        assertEquals("The mean values of the coordinates cannot both be 0", thrown.getMessage());
-//        thrown = assertThrows(
-//                IllegalArgumentException.class,
-//                () -> programParserHandler.moveRandomCommand(new double[]{1, 1, 2, 2, -1})
-//        );
-//        assertEquals("Speed must be greater than 0", thrown.getMessage());
         programParserHandler.parsingDone();
     }
 

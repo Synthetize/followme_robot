@@ -17,6 +17,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,14 +26,14 @@ public class RobotSimulatorTest {
     RobotSimulator<BasicRobot> programExecutor;
     List<Command<BasicRobot>> program;
     FollowMeParserHandler programParserHandler;
-    List<BasicRobot> robotsList;
+    Map<BasicRobot, Coordinate> robotsList;
     @BeforeEach
     void setUp() {
         HashMap<BasicRobot, Coordinate> robots = new HashMap<>();
         HashMap<Shape, Coordinate> shapes = new HashMap<>();
         environment = new SimulationEnvironment<>(shapes, robots);
         program = new ArrayList<>();
-        robotsList = new ArrayList<>();
+        robotsList = new HashMap<>();
         programExecutor = new RobotSimulator<>(program, robotsList);
         programParserHandler = new ProgramParserHandler<>(environment, programExecutor);
         programParserHandler.parsingStarted();
@@ -46,7 +47,7 @@ public class RobotSimulatorTest {
         CircleShape circleShape = new CircleShape(5, "label_");
         CartesianCoordinate circleCoordinate = new CartesianCoordinate(0, 0);
         environment.addShapes(List.of(circleShape), List.of(circleCoordinate));
-        robotsList.add(robot);
+        robotsList.put(robot, robotCoordinate);
         programParserHandler.signalCommand("label_");
         programParserHandler.untilCommandStart("label_");
         programParserHandler.moveCommand(new double[]{1, 1, 1});
@@ -71,7 +72,7 @@ public class RobotSimulatorTest {
         BasicRobot robot = new BasicRobot();
         CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
         environment.addRobots(List.of(robot), List.of(robotCoordinate));
-        robotsList.add(robot);
+        robotsList.put(robot, robotCoordinate);
         programParserHandler.repeatCommandStart(-1);
         programParserHandler.moveCommand(new double[]{1, 1, 1});
         programParserHandler.doneCommand();
@@ -92,7 +93,7 @@ public class RobotSimulatorTest {
         environment.addRobots(List.of(robot), List.of(robotCoordinate));
         CircleShape circleShape = new CircleShape(10, "label_");
         environment.addShapes(List.of(circleShape), List.of(new CartesianCoordinate(0, 0)));
-        robotsList.add(robot);
+        robotsList.put(robot, robotCoordinate);
         programParserHandler.untilCommandStart("label_");
         programParserHandler.moveCommand(new double[]{0, 1, 1});
         programParserHandler.moveCommand(new double[]{1, 0, 1});
