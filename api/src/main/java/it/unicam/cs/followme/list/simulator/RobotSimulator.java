@@ -21,10 +21,7 @@ public class RobotSimulator<R extends Robot> extends SimulationTimer implements 
 
     @Override
     public void setProgramList(List<Command<R>> programList) {
-        System.out.println("Setting program list");
-        System.out.println(programList.size());
         this.programList.addAll(programList);
-        System.out.println(this.programList.size());
     }
 
     @Override

@@ -64,6 +64,7 @@ public class ModelController <R extends Robot> {
     }
 
     public void runSimulation(double delta_t, double time) {
+
         simulator.simulate(delta_t, time);
     }
 
