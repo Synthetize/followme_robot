@@ -3,6 +3,7 @@ package it.unicam.cs.followme.app;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -63,24 +64,14 @@ public class ConfigurationController implements Initializable {
         }
         CartesianCoordinate coordinate = new CartesianCoordinate(Double.parseDouble(xCoordinate.getText()), Double.parseDouble(yCoordinate.getText()));
         robots.put(new BasicRobot(), coordinate);
-
         showRobotsArea.appendText("Robot " + robots.size() + ": " + coordinate + "\n");
-    }
-
-    public Map<BasicRobot, Coordinate> getRobots() {
-        return robots;
-    }
-
-    public File getShapesConfigFile() {
-        return shapesConfigFile;
-    }
-
-    public File getProgramFile() {
-        return programFile;
     }
 
     @FXML
     void openSimulationScene(MouseEvent event) {
+        shapesConfigFile = new File("configuration_files/shapes.txt");
+        programFile = new File("configuration_files/program.txt");
+        robots.put(new BasicRobot(), new CartesianCoordinate(0, 0));
         if (shapesConfigFile == null || programFile == null || robots.isEmpty()) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing configuration");
@@ -91,11 +82,11 @@ public class ConfigurationController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("simulation.fxml"));
                 Parent root = loader.load();
                 SimulationController simulationController = loader.getController();
-
                 simulationController.setRobotsCoordinates(robots);
                 simulationController.setShapesConfigFile(shapesConfigFile);
                 simulationController.setProgramFile(programFile);
                 simulationController.initializeEnvironment();
+                simulationController.initializeSimulationArea();
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();

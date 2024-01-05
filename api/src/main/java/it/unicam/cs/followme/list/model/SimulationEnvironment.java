@@ -20,11 +20,6 @@ public class SimulationEnvironment<R extends Robot> implements Environment<R> {
         this.robotsDetails = robotsDetails;
     }
 
-    public SimulationEnvironment() {
-        this.shapesDetails = null;
-        this.robotsDetails = null;
-    }
-
     @Override
     public Map<Shape, Coordinate> getShapesDetails() {
         return this.shapesDetails;

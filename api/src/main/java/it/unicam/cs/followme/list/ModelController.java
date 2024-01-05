@@ -42,7 +42,7 @@ public class ModelController <R extends Robot> {
         environment = new SimulationEnvironment<>(shapesHashMap, robotsHashMap);
 
         program = new ArrayList<>();
-        simulator = new RobotSimulator<>(program, new ArrayList<>(robotsHashMap.keySet()));
+        simulator = new RobotSimulator<>(program, robotsHashMap);
 
         handler = new ProgramParserHandler<>(environment, simulator);
         checker = FollowMeShapeChecker.DEFAULT_CHECKER;
@@ -51,7 +51,8 @@ public class ModelController <R extends Robot> {
     }
 
     public void setRobotsHashMap(Map<R, Coordinate> robotsHashMap) {
-        this.robotsHashMap = robotsHashMap;
+        this.robotsHashMap.clear();
+        this.robotsHashMap.putAll(robotsHashMap);
     }
 
     public void generateShapesFromFile(File shapesConfigFile) {
@@ -60,5 +61,13 @@ public class ModelController <R extends Robot> {
 
     public void generateCommandsFromFile(File programFile) throws FollowMeParserException, IOException {
         parser.parseRobotProgram(programFile);
+    }
+
+    public void runSimulation(double delta_t, double time) {
+        simulator.simulate(delta_t, time);
+    }
+
+    public Environment<R> getEnvironment() {
+        return environment;
     }
 }

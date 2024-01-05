@@ -12,4 +12,5 @@ public record RectangleShape(double width, double height, String conditionLabel)
     public String getConditionLabel() {
         return this.conditionLabel;
     }
+
 }

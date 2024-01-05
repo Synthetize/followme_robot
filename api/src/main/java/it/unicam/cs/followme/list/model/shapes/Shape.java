@@ -9,4 +9,5 @@ public interface Shape {
      * @return the condition label of the shape
      */
     String getConditionLabel();
+
 }

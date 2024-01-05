@@ -12,4 +12,7 @@ public record CircleShape(double radius, String conditionLabel) implements Shape
         return this.conditionLabel;
     }
 
+    public double getRadius() {
+        return this.radius;
+    }
 }
