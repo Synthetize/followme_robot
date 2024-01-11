@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
+import it.unicam.cs.followme.list.utils.CommandExecutionListener;
 import it.unicam.cs.followme.list.utils.HandleCommandToExecute;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
 import it.unicam.cs.followme.list.model.commands.Command;
@@ -13,7 +14,6 @@ public abstract class LoopCommand<R extends Robot> extends SimulationTimer imple
     private int endingLoopIndex = 0;
     private final List<Command<R>> programList;
     protected AtomicInteger currentCommandIndex = new AtomicInteger(0);
-
     private HandleCommandToExecute<R> handleCommandToExecute;
 
     public LoopCommand(int startingLoopIndex, int endingLoopIndex, List<Command<R>> programList) {

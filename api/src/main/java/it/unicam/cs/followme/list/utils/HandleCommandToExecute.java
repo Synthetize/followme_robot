@@ -10,8 +10,10 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HandleCommandToExecute<R extends Robot> extends SimulationTimer {
 
 
-    List<Command<R>> programList;
-    AtomicInteger currentCommandIndex;
+    private List<Command<R>> programList;
+    private AtomicInteger currentCommandIndex;
+
+    static private CommandExecutionListener commandExecutionListener;
 
     public HandleCommandToExecute(AtomicInteger startingLoopIndex, List<Command<R>> programList) {
         this.currentCommandIndex = startingLoopIndex;
@@ -27,7 +29,6 @@ public class HandleCommandToExecute<R extends Robot> extends SimulationTimer {
      * @param robot The robot that the command will be executed on.
      * @param endingIndex The index at which the execution of the loop or the program should stop.
      */
-
     public void findLoopOrBasicCommandAndCallRun(double delta_t, R robot, int endingIndex) {
         if(incrementTimerIfNotOver()) {
             //stop execution of the loop or the program based on the ending index
@@ -41,6 +42,17 @@ public class HandleCommandToExecute<R extends Robot> extends SimulationTimer {
             programList.get(currentCommandIndex.get()).run(robot, delta_t);
         }
         currentCommandIndex.incrementAndGet();
+        if (commandExecutionListener != null) {
+            commandExecutionListener.onCommandExecution();
+        }
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
+    static public void setCommandExecutionListener(CommandExecutionListener commandExecutionListener) {
+        HandleCommandToExecute.commandExecutionListener = commandExecutionListener;
+    }
 }

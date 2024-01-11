@@ -6,9 +6,14 @@ import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.shapes.*;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
+import it.unicam.cs.followme.list.utils.CommandExecutionListener;
 import it.unicam.cs.followme.utilities.FollowMeParserException;
+import javafx.animation.PauseTransition;
+import javafx.application.Platform;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.input.MouseEvent;
@@ -16,11 +21,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
+import java.util.concurrent.ScheduledExecutorService;
 
 public class SimulationController {
     private HashMap<BasicRobot, Coordinate> robotsCoordinates;
@@ -28,9 +36,11 @@ public class SimulationController {
     private File programFile;
     ModelController<BasicRobot> modelController = new ModelController<>();
     Environment<BasicRobot> environment;
+    CommandExecutionListener commandExecutionListener;
 
     Group elementToShow;
     Group linesGroup;
+
     public void initializeEnvironment() {
         modelController.initialize();
         modelController.setRobotsHashMap(robotsCoordinates);
@@ -44,9 +54,6 @@ public class SimulationController {
     public void initializeSimulationArea() {
         environment = modelController.getEnvironment();
         elementToShow = new Group();
-//        Line xAxis = new Line(0, 200, 400, 200);
-//        Line yAxis = new Line(200, 0, 200, 400);
-//        elementToShow.getChildren().addAll(xAxis, yAxis);
         addShapesToGroup();
         addRobotsToGroup();
         simulationArea.setContent(elementToShow);
@@ -118,10 +125,13 @@ public class SimulationController {
 
     @FXML
     void runSimulation(MouseEvent event) {
+        commandExecutionListener = () -> {
+            elementToShow.getChildren().clear();
+            addShapesToGroup();
+            addRobotsToGroup();
+        };
+        modelController.setCommandExecutionListener(commandExecutionListener);
         modelController.runSimulation(1, 10);
-        elementToShow.getChildren().clear();
-        addShapesToGroup();
-        addRobotsToGroup();
     }
 
     @FXML
