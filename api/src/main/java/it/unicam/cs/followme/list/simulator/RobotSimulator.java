@@ -3,7 +3,6 @@ package it.unicam.cs.followme.list.simulator;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
-import it.unicam.cs.followme.list.utils.CommandExecutionListener;
 import it.unicam.cs.followme.list.utils.HandleCommandToExecute;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
 
@@ -14,7 +13,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class RobotSimulator<R extends Robot> extends SimulationTimer implements Simulator<R> {
     private final List<Command<R>> programList;
     protected AtomicInteger currentCommandIndex = new AtomicInteger(0);
-    private HandleCommandToExecute<R> handleCommandToExecute;
     private final Map<R, Coordinate> robotsList;
 
     public RobotSimulator(List<Command<R>> programList, Map<R, Coordinate> robotsList) {
@@ -38,7 +36,7 @@ public class RobotSimulator<R extends Robot> extends SimulationTimer implements 
         setSimulationCurrentTime(0);
         setSimulationEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
         while (currentCommandIndex.get() < programList.size()) {
-            handleCommandToExecute = new HandleCommandToExecute<>(currentCommandIndex, programList);
+            HandleCommandToExecute<R> handleCommandToExecute = new HandleCommandToExecute<>(currentCommandIndex, programList);
             handleCommandToExecute.findLoopOrBasicCommandAndCallRun(delta_t, robot, programList.size());
         }
     }
