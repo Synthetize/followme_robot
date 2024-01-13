@@ -1,6 +1,5 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
-import it.unicam.cs.followme.list.utils.CommandExecutionListener;
 import it.unicam.cs.followme.list.utils.HandleCommandToExecute;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
 import it.unicam.cs.followme.list.model.commands.Command;

@@ -10,10 +10,8 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class HandleCommandToExecute<R extends Robot> extends SimulationTimer {
 
 
-    private List<Command<R>> programList;
-    private AtomicInteger currentCommandIndex;
-
-    static private CommandExecutionListener commandExecutionListener;
+    private final List<Command<R>> programList;
+    private final AtomicInteger currentCommandIndex;
 
     public HandleCommandToExecute(AtomicInteger startingLoopIndex, List<Command<R>> programList) {
         this.currentCommandIndex = startingLoopIndex;
@@ -42,17 +40,6 @@ public class HandleCommandToExecute<R extends Robot> extends SimulationTimer {
             programList.get(currentCommandIndex.get()).run(robot, delta_t);
         }
         currentCommandIndex.incrementAndGet();
-        if (commandExecutionListener != null) {
-            commandExecutionListener.onCommandExecution();
-        }
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
 
-    static public void setCommandExecutionListener(CommandExecutionListener commandExecutionListener) {
-        HandleCommandToExecute.commandExecutionListener = commandExecutionListener;
     }
 }

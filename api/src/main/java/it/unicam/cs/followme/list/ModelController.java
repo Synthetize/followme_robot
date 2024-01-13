@@ -11,7 +11,6 @@ import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.parser_handler.ProgramParserHandler;
 import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.simulator.Simulator;
-import it.unicam.cs.followme.list.utils.CommandExecutionListener;
 import it.unicam.cs.followme.list.utils.HandleCommandToExecute;
 import it.unicam.cs.followme.utilities.FollowMeParser;
 import it.unicam.cs.followme.utilities.FollowMeParserException;
@@ -33,8 +32,6 @@ public class ModelController <R extends Robot> {
     FollowMeParserHandler handler;
     FollowMeShapeChecker checker;
     ShapesGenerator shapesGenerator;
-
-
     Simulator<R> simulator;
     FollowMeParser parser;
 
@@ -72,8 +69,5 @@ public class ModelController <R extends Robot> {
     public Environment<R> getEnvironment() {
         return environment;
     }
-    //TODO: remove static
-    public void setCommandExecutionListener(CommandExecutionListener commandExecutionListener) {
-        HandleCommandToExecute.setCommandExecutionListener(commandExecutionListener);
-    }
+
 }
