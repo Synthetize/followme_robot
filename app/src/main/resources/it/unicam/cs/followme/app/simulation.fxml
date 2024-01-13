@@ -3,6 +3,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Text?>
 
@@ -13,10 +14,11 @@
           <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
         </content>
       </ScrollPane>
-      <Button layoutX="53.0" layoutY="675.0" mnemonicParsing="false" onMouseClicked="#runSimulation" text="Run" />
-      <Button layoutX="386.0" layoutY="669.0" mnemonicParsing="false" onMouseClicked="#setNormalSimulationSpeed" text="1x" />
-      <Button layoutX="386.0" layoutY="708.0" mnemonicParsing="false" onMouseClicked="#setDoubleSimulationSpeed" text="2x" />
-      <Text layoutX="354.0" layoutY="655.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Simulation speed" />
-      <TextArea fx:id="simulationLog" layoutX="118.0" layoutY="642.0" prefHeight="91.0" prefWidth="200.0" />
+      <Button fx:id="runButton" layoutX="95.0" layoutY="699.0" mnemonicParsing="false" onMouseClicked="#runSimulation" text="Run" />
+      <TextArea fx:id="simulationLog" layoutX="583.0" layoutY="642.0" prefHeight="91.0" prefWidth="200.0" />
+      <Text layoutX="72.0" layoutY="647.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Simulation time" />
+      <Text layoutX="23.0" layoutY="680.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Execution time for each command" />
+      <TextField fx:id="simulationTimeTextField" layoutX="213.0" layoutY="630.0" prefHeight="25.0" prefWidth="37.0" />
+      <TextField fx:id="deltaTimeTextField" layoutX="213.0" layoutY="663.0" prefHeight="25.0" prefWidth="37.0" />
    </children>
 </AnchorPane>

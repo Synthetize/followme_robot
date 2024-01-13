@@ -9,8 +9,10 @@ import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.utilities.FollowMeParserException;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -29,7 +31,19 @@ public class SimulationController {
     ModelController<BasicRobot> modelController = new ModelController<>();
     Environment<BasicRobot> environment;
     Group elementToShow;
-    Group linesGroup;
+
+
+    @FXML
+    private TextField deltaTimeTextField;
+    @FXML
+    private TextField simulationTimeTextField;
+    @FXML
+    private ScrollPane simulationArea;
+    @FXML
+    private TextArea simulationLog;
+    @FXML
+    private Button runButton;
+
 
     public void initializeEnvironment() {
         modelController.initialize();
@@ -48,13 +62,13 @@ public class SimulationController {
         addRobotsToGroup();
         simulationArea.setContent(elementToShow);
         simulationArea.setStyle("-fx-background: rgba(110,110,110,0.06);");
-
+        deltaTimeTextField.setText("1");
+        simulationTimeTextField.setText("10");
     }
 
     private void addRobotsToGroup() {
         Map<BasicRobot, Coordinate> robots = environment.getRobotsDetails();
         robots.forEach((robot, coordinates) -> {
-            System.out.println("Robot: " + robot + " Coordinates: " + coordinates);
             Circle circle = new Circle(3, Color.BLACK);
             circle.setCenterX(coordinates.getX());
             circle.setCenterY(-1 * coordinates.getY());
@@ -93,8 +107,6 @@ public class SimulationController {
         elementToShow.getChildren().add(rectangle);
     }
 
-
-
     protected void setRobotsCoordinates(HashMap<BasicRobot, Coordinate> robotsCoordinates) {
         this.robotsCoordinates = robotsCoordinates;
     }
@@ -108,32 +120,14 @@ public class SimulationController {
     }
 
     @FXML
-    private ScrollPane simulationArea;
-
-    @FXML
-    private TextArea simulationLog;
-
-    @FXML
     void runSimulation(MouseEvent event) {
-//        commandExecutionListener = () -> {
-//            elementToShow.getChildren().clear();
-//            addShapesToGroup();
-//            addRobotsToGroup();
-//        };
-//        modelController.setCommandExecutionListener(commandExecutionListener);
-        modelController.runSimulation(1, 10);
-
+        int deltaTime = Integer.parseInt(deltaTimeTextField.getText());
+        int simulationTime = Integer.parseInt(simulationTimeTextField.getText());
+        runButton.setDisable(true);
+        modelController.runSimulation(deltaTime, simulationTime);
+        elementToShow.getChildren().clear();
+        addShapesToGroup();
+        addRobotsToGroup();
     }
-
-    @FXML
-    void setDoubleSimulationSpeed(MouseEvent event) {
-
-    }
-
-    @FXML
-    void setNormalSimulationSpeed(MouseEvent event) {
-
-    }
-
 
 }
