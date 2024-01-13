@@ -17,25 +17,31 @@ import it.unicam.cs.followme.utilities.FollowMeParserException;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import it.unicam.cs.followme.utilities.FollowMeShapeChecker;
 
+import java.util.logging.FileHandler;
+import java.util.logging.Logger;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.SimpleFormatter;
 
-public class ModelController <R extends Robot> {
-    Map<R, Coordinate> robotsHashMap;
-    Map<Shape, Coordinate> shapesHashMap;
-    List<Command<R>> program;
-    Environment<R> environment;
-    FollowMeParserHandler handler;
-    FollowMeShapeChecker checker;
-    ShapesGenerator shapesGenerator;
-    Simulator<R> simulator;
-    FollowMeParser parser;
+public class ModelController<R extends Robot> {
+    private Map<R, Coordinate> robotsHashMap;
+    private Map<Shape, Coordinate> shapesHashMap;
+    private List<Command<R>> program;
+    private Environment<R> environment;
+    private FollowMeParserHandler handler;
+    private FollowMeShapeChecker checker;
+    private ShapesGenerator shapesGenerator;
+    private Simulator<R> simulator;
+    private FollowMeParser parser;
+    public static final Logger LOGGER = Logger.getLogger(ModelController.class.getName());
 
     public void initialize() {
+        loggerSetup();
         robotsHashMap = new HashMap<>();
         shapesHashMap = new HashMap<>();
         environment = new SimulationEnvironment<>(shapesHashMap, robotsHashMap);
@@ -47,6 +53,20 @@ public class ModelController <R extends Robot> {
         checker = FollowMeShapeChecker.DEFAULT_CHECKER;
         parser = new FollowMeParser(handler, checker);
         shapesGenerator = new DefaultShapesGenerator(parser);
+        LOGGER.info("ModelController initialized");
+    }
+
+    private void loggerSetup() {
+        try {
+            FileHandler fileHandler = new FileHandler("log.txt");
+            LOGGER.addHandler(fileHandler);
+            LOGGER.setLevel(java.util.logging.Level.ALL);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fileHandler.setFormatter(formatter);
+            LOGGER.info("LoggerHandler initialized");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     public void setRobotsHashMap(Map<R, Coordinate> robotsHashMap) {

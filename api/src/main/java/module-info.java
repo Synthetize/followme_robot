@@ -1,5 +1,6 @@
 module api {
     requires utilities;
+    requires java.logging;
     exports it.unicam.cs.followme.list.model;
     exports it.unicam.cs.followme.list.model.robots;
     exports it.unicam.cs.followme.list;
