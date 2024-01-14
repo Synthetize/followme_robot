@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
+import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
@@ -23,13 +24,18 @@ public class Until<R extends Robot> extends LoopCommand<R> {
 
     @Override
     public void run(R robot, double delta_t) {
+        ModelController.LOGGER.info("UNTIL | " + robot + " is executing the loop with condition: " + label);
         while (conditionStatus(robot) && !isExecutionOver()) {
             executeCommand(robot, delta_t);
         }
     }
 
     private boolean conditionStatus(R robot){
-        return environment.checkIfRobotIsInsideShapes(robot).stream()
+        boolean status = environment.checkIfRobotIsInsideShapes(robot).stream()
                 .anyMatch(shape -> shape.getConditionLabel().equals(label) && robot.getCurrentConditionLabels().contains(label));
+        if(!status){
+            ModelController.LOGGER.info("UNTIL | " + robot + " loop ended because the condition is not satisfied anymore");
+        }
+        return status;
     }
 }
