@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.simulator;
 
+import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
@@ -28,11 +29,13 @@ public class RobotSimulator<R extends Robot> extends SimulationTimer implements 
     @Override
     public void simulate(double delta_t, double execution_time) {
         for (R r : robotsList.keySet()) {
+            ModelController.LOGGER.info("RUNNING PROGRAM FOR ROBOT: " + r);
             runProgram(r, delta_t, execution_time);
         }
     }
 
     private void runProgram(R robot, double delta_t, double execution_time) {
+        currentCommandIndex.set(0);
         setSimulationCurrentTime(0);
         setSimulationEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
         while (currentCommandIndex.get() < programList.size()) {
