@@ -40,4 +40,17 @@ public class BasicRobot implements Robot {
     public void setLastMovementDirection(Coordinate direction) {
         this.lastMovementDirection = direction;
     }
+
+    @Override
+    public void clearCurrentConditionLabels() {
+        this.conditionLabels.clear();
+    }
+
+    @Override
+    public String toString() {
+        String superString = super.toString();
+        int index = superString.indexOf("@");
+        String subString = superString.substring(index);
+        return "BasicRobot " + subString + " {" + "signaling=" + conditionLabels + '}';
+    }
 }
