@@ -36,4 +36,9 @@ public interface Robot {
      * @param direction The direction of the robot.
      */
     void setLastMovementDirection(Coordinate direction);
+
+    /**
+     * Clears the current labels of the robot.
+     */
+    void clearCurrentConditionLabels();
 }

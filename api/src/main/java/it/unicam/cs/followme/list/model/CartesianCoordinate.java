@@ -14,9 +14,8 @@ public record CartesianCoordinate(double xValue, double yValue) implements Coord
 
     @Override
     public String toString() {
-        return "CartesianCoordinate(" +
-                "(" + xValue +
-                " ," + yValue +
+        return "(" + String.format("%.4f", xValue) +
+                " ," + String.format("%.4f", yValue) +
                 ')';
     }
 }
