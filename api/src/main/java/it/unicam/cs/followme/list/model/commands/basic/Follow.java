@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.model.commands.basic;
 
+import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
@@ -40,6 +41,7 @@ public class Follow<R extends Robot> implements Command<R> {
             Random random = new Random();
             xAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
             yAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
+            ModelController.LOGGER.info("FOLLOW | " + robot + " is moving randomly");
         } else {
             robotList.forEach((shape, coordinate) -> {
                 xAvgValue.updateAndGet(v -> v + coordinate.getX());
@@ -48,6 +50,7 @@ public class Follow<R extends Robot> implements Command<R> {
             xAvgValue.updateAndGet(v -> v / robotList.size());
             yAvgValue.updateAndGet(v -> v / robotList.size());
         }
+        ModelController.LOGGER.info("FOLLOW | " + robot + " is moving towards the average position of the robots with label: " + signal);
         Move<R> move = new Move<>(new CartesianCoordinate(xAvgValue.get(), yAvgValue.get()), speed, environment);
         move.run(robot, delta_t);
     }

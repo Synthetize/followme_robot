@@ -21,7 +21,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
 
     private List<Command<R>> program;
     private final Simulator<R> simulator;
-    private Environment<R> environment;
+    private final Environment<R> environment;
     private Stack<Integer> startingLoopIndexStack;
 
     public ProgramParserHandler(Environment<R> environment, Simulator<R> simulator) {
@@ -144,7 +144,6 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
         Until<R> untilCommand = new Until<>(label, loopStartIndex, -1, environment, program);
         program.add(untilCommand);
         startingLoopIndexStack.push(loopStartIndex);
-
     }
 
     @Override

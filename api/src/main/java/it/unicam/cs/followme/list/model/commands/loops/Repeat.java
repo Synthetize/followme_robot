@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
+import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
@@ -28,9 +29,11 @@ public class Repeat<R extends Robot> extends LoopCommand<R> {
     @Override
     public void run(R robot, double delta_t) {
         if (repetitionNumbers == -1) {
+            ModelController.LOGGER.info("REPEAT | " + robot + " is executing the loop forever");
             while (!isExecutionOver())
                 executeCommand(robot, delta_t);
         } else {
+            ModelController.LOGGER.info("REPEAT | " + robot + " is executing the loop for " + repetitionNumbers + " times");
             for (int i = 0; i < repetitionNumbers; i++)
                 executeCommand(robot, delta_t);
         }

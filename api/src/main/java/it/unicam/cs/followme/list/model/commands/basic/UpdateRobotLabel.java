@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.model.commands.basic;
 
+import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
@@ -34,12 +35,22 @@ public class UpdateRobotLabel<R extends Robot> implements Command<R> {
                         robot.addLabel(label);
                     }
                 });
+                addLog(robot);
                 break;
             case UNSIGNAL:
                 robot.removeLabel(label);
+                ModelController.LOGGER.info("UNSIGNAL | " + robot + " removed condition: " + label);
                 break;
             default:
                 throw new IllegalStateException("Unexpected command type: " + this.commandType);
         }
+    }
+
+    private void addLog(R robot) {
+        if(robot.getCurrentConditionLabels().contains(label))
+            ModelController.LOGGER.info("SIGNAL | " + robot + " added condition: " + label);
+        else
+            ModelController.LOGGER.info("SIGNAL | " + robot + "robot wasn't inside any shape with condition: " + label);
+
     }
 }
