@@ -42,12 +42,14 @@ public class RobotSimulatorTest {
     @Test
     void shouldRunTheEntireProgram() {
         BasicRobot robot = new BasicRobot();
+        BasicRobot robot2 = new BasicRobot();
         CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
-        environment.addRobots(List.of(robot), List.of(robotCoordinate));
+        environment.addRobots(List.of(robot, robot2), List.of(robotCoordinate, robotCoordinate));
         CircleShape circleShape = new CircleShape(5, "label_");
         CartesianCoordinate circleCoordinate = new CartesianCoordinate(0, 0);
         environment.addShapes(List.of(circleShape), List.of(circleCoordinate));
         robotsList.put(robot, robotCoordinate);
+        robotsList.put(robot2, robotCoordinate);
         programParserHandler.signalCommand("label_");
         programParserHandler.untilCommandStart("label_");
         programParserHandler.moveCommand(new double[]{1, 1, 1});
@@ -64,6 +66,10 @@ public class RobotSimulatorTest {
         String formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("2,12", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
+        assertEquals("2,12", formatted);
+        formatted = df.format(environment.getRobotCoordinate(robot2).getX());
+        assertEquals("2,12", formatted);
+        formatted = df.format(environment.getRobotCoordinate(robot2).getY());
         assertEquals("2,12", formatted);
     }
 
