@@ -131,7 +131,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
         }
         // the index of the loop is the size of the program list because the loopCommand is not yet added
         int loopStartIndex = program.size();
-        Repeat<R> repeatCommand = new Repeat<>(n, loopStartIndex, -1, environment, program);
+        Repeat<R> repeatCommand = new Repeat<>(n, loopStartIndex, 0);
         program.add(repeatCommand);
         startingLoopIndexStack.push(loopStartIndex);
     }
@@ -141,7 +141,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
         validateLabel(label);
         // the index of the loop is the size of the program list because the loopCommand is not yet added
         int loopStartIndex = program.size();
-        Until<R> untilCommand = new Until<>(label, loopStartIndex, -1, environment, program);
+        Until<R> untilCommand = new Until<>(label, loopStartIndex, -1, environment);
         program.add(untilCommand);
         startingLoopIndexStack.push(loopStartIndex);
     }
@@ -161,7 +161,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
             throw new IllegalArgumentException("The starting loop command must be a loop command");
         }
         loopCommand.setEndingLoopIndex(loopEndIndex);
-        Done<R> doneCommand = new Done<>();
+        Done<R> doneCommand = new Done<>(loopCommand);
         program.add(doneCommand);
     }
 }

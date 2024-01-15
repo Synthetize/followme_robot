@@ -2,13 +2,16 @@ package it.unicam.cs.followme.list.model.robots;
 
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
+import it.unicam.cs.followme.list.model.commands.Command;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BasicRobot implements Robot {
-
+    List<Command> program;
     List<String> conditionLabels;
     Coordinate lastMovementDirection;
+
 
     // TODO: 12/11/2023 da cambiare costruttore
     public BasicRobot() {
@@ -45,6 +48,12 @@ public class BasicRobot implements Robot {
     public void clearCurrentConditionLabels() {
         this.conditionLabels.clear();
     }
+
+    @Override
+    public void setProgram(List<Command> commands) {
+        this.program = commands;
+    }
+
 
     @Override
     public String toString() {

@@ -143,7 +143,6 @@ public class ProgramParserHandlerTest {
 
     @Test
     void shouldNotParseContinueCommand() {
-        //assertThrows(IllegalArgumentException.class, () -> programParserHandler.continueCommand(0)); //TODO: speed can be 0?
         assertThrows(IllegalArgumentException.class, () -> programParserHandler.continueCommand(-1));
         programParserHandler.parsingDone();
         assertEquals(0, program.size());
@@ -224,4 +223,18 @@ public class ProgramParserHandlerTest {
         assertEquals(repeat.getStartingLoopIndex(), 3);
         assertEquals(repeat.getEndingLoopIndex(), 4);
     }
+
+    @Test
+    void shouldParseDoneCommand() {
+        programParserHandler.untilCommandStart("label_");
+        programParserHandler.repeatCommandStart(2);
+        programParserHandler.doneCommand();
+        programParserHandler.doneCommand();
+        programParserHandler.parsingDone();
+        assertEquals(4, program.size());
+        assertInstanceOf(Done.class, program.get(2));
+        assertInstanceOf(Done.class, program.get(3));
+
+    }
+
 }

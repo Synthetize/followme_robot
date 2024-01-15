@@ -28,11 +28,11 @@ public class HandleCommandToExecute<R extends Robot> extends SimulationTimer {
      * @param endingIndex The index at which the execution of the loop or the program should stop.
      */
     public void findLoopOrBasicCommandAndCallRun(double delta_t, R robot, int endingIndex) {
-        if(incrementTimerIfNotOver()) {
-            //stop execution of the loop or the program based on the ending index
-            currentCommandIndex.set(endingIndex);
-            return;
-        }
+//        if(incrementTimerIfNotOver()) {
+//            //stop execution of the loop or the program based on the ending index
+//            currentCommandIndex.set(endingIndex);
+//            return;
+//        }
         if (programList.get(currentCommandIndex.get()) instanceof LoopCommand<R> loopCommand) {
             programList.get(currentCommandIndex.get()).run(robot, delta_t);
             currentCommandIndex.set(loopCommand.getEndingLoopIndex());

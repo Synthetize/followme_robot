@@ -1,8 +1,6 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
-import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.Environment;
-import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
@@ -12,30 +10,23 @@ public class Until<R extends Robot> extends LoopCommand<R> {
     private final Environment<R> environment;
     private final String label;
 
-    public Until(String label, int startingLoopIndex, int endingLoopIndex, Environment<R> environment,  List<Command<R>> programList) {
-        super(startingLoopIndex, endingLoopIndex, programList);
-        this.environment = environment;
+    public Until(String label, int startingLoopIndex, int endingLoopIndex, Environment<R> environment) {
+        super(startingLoopIndex, endingLoopIndex);
         this.label = label;
+        this.environment = environment;
     }
-    @Override
+
     public RobotCommand getCommandType() {
         return RobotCommand.UNTIL;
     }
 
+    public void run(R robot, double delta_t) {}
+
     @Override
-    public void run(R robot, double delta_t) {
-        ModelController.LOGGER.info("UNTIL | " + robot + " is executing the loop with condition: " + label);
-        while (conditionStatus(robot) && !isExecutionOver()) {
-            executeCommand(robot, delta_t);
-        }
+    public final boolean conditionStatus(R robot ) {
+        return environment.checkIfRobotIsInsideShapes(robot).stream()
+                .anyMatch(shape -> shape.getConditionLabel().equals(label) && robot.getCurrentConditionLabels().contains(label));
     }
 
-    private boolean conditionStatus(R robot){
-        boolean status = environment.checkIfRobotIsInsideShapes(robot).stream()
-                .anyMatch(shape -> shape.getConditionLabel().equals(label) && robot.getCurrentConditionLabels().contains(label));
-        if(!status){
-            ModelController.LOGGER.info("UNTIL | " + robot + " loop ended because the condition is not satisfied anymore");
-        }
-        return status;
-    }
+
 }
