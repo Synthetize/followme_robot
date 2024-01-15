@@ -6,7 +6,6 @@ import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.*;
-import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.utilities.FollowMeParserException;
 import javafx.fxml.FXML;
 import javafx.scene.Group;
@@ -58,6 +57,7 @@ public class SimulationController {
             throw new RuntimeException(e);
         }
     }
+
     public void initializeSimulationArea() {
         environment = modelController.getEnvironment();
         elementToShow = new Group();

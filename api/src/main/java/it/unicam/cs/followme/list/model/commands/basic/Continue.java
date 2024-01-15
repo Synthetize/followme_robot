@@ -12,6 +12,7 @@ public class Continue implements Command {
 
     private final int seconds;
     private final Environment environment;
+
     public Continue(int seconds, Environment environment) {
         this.seconds = seconds;
         this.environment = environment;
@@ -21,13 +22,14 @@ public class Continue implements Command {
     public RobotCommand getCommandType() {
         return RobotCommand.CONTINUE;
     }
+
     @Override
     public void run(Robot robot, double delta_t) {
         ModelController.LOGGER.info("CONTINUE | " + robot + " is executing the continue command for " + seconds + " seconds");
-        for(int i=0; i<seconds; i++){
+        for (int i = 0; i < seconds; i++) {
             Coordinate robotCoordinate = environment.getRobotCoordinate(robot);
-            double addStepX = robotCoordinate.getX() + robot.getLastMovementDirection().getX();
-            double addStepY = robotCoordinate.getY() + robot.getLastMovementDirection().getY();
+            double addStepX = robotCoordinate.getX() + robot.getLastMovementValues().getX();
+            double addStepY = robotCoordinate.getY() + robot.getLastMovementValues().getY();
             environment.setRobotPosition(robot, new CartesianCoordinate(addStepX, addStepY));
             ModelController.LOGGER.info("CONTINUE | " + robot + " moved from " + "(" + String.format("%.3f", robotCoordinate.getX())
                     + ";" + String.format("%.3f", robotCoordinate.getY()) + ")" + " to " + "(" + String.format("%.3f", addStepX) + ";" + String.format("%.3f", addStepY) + ")");

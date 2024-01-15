@@ -1,4 +1,4 @@
-package it.unicam.cs.followme.list.parser_handler;
+package it.unicam.cs.followme.list.parserHandler;
 
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.robots.Robot;
@@ -9,7 +9,6 @@ import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.basic.*;
 import it.unicam.cs.followme.list.model.commands.loops.Repeat;
-import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

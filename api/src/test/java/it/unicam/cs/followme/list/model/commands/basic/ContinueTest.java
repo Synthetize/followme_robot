@@ -2,7 +2,6 @@ package it.unicam.cs.followme.list.model.commands.basic;
 
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationEnvironment;
-import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
@@ -28,7 +27,7 @@ public class ContinueTest {
     @Test
     void shouldMoveTowardsLastMovementDirection() {
         BasicRobot robot = new BasicRobot();
-        robot.setLastMovementDirection(new CartesianCoordinate(3,2));
+        robot.setLastMovementValues(new CartesianCoordinate(3,2));
         environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(0,0)));
         Continue continueCommand = new Continue(3, environment);
         continueCommand.run(robot, 1);
@@ -39,7 +38,7 @@ public class ContinueTest {
     @Test
     void shouldRemainInTheSamePositionIfLastMovementDirectionIsZero() {
         BasicRobot robot = new BasicRobot();
-        robot.setLastMovementDirection(new CartesianCoordinate(0,0));
+        robot.setLastMovementValues(new CartesianCoordinate(0,0));
         environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(0,0)));
         Continue continueCommand = new Continue(3, environment);
         continueCommand.run(robot,1);

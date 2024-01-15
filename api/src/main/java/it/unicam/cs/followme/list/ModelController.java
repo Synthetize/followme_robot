@@ -8,7 +8,7 @@ import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
-import it.unicam.cs.followme.list.parser_handler.ProgramParserHandler;
+import it.unicam.cs.followme.list.parserHandler.ProgramParserHandler;
 import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.simulator.Simulator;
 import it.unicam.cs.followme.utilities.FollowMeParser;
@@ -30,10 +30,7 @@ import java.util.logging.SimpleFormatter;
 public class ModelController {
     private Map<Robot, Coordinate> robotsHashMap;
     private Map<Shape, Coordinate> shapesHashMap;
-    private List<Command> program;
     private Environment environment;
-    private FollowMeParserHandler handler;
-    private FollowMeShapeChecker checker;
     private ShapesGenerator shapesGenerator;
     private Simulator simulator;
     private FollowMeParser parser;
@@ -45,11 +42,11 @@ public class ModelController {
         shapesHashMap = new HashMap<>();
         environment = new SimulationEnvironment(shapesHashMap, robotsHashMap);
 
-        program = new ArrayList<>();
+        List<Command> program = new ArrayList<>();
         simulator = new RobotSimulator(program, robotsHashMap);
 
-        handler = new ProgramParserHandler(environment, simulator);
-        checker = FollowMeShapeChecker.DEFAULT_CHECKER;
+        FollowMeParserHandler handler = new ProgramParserHandler(environment, simulator);
+        FollowMeShapeChecker checker = FollowMeShapeChecker.DEFAULT_CHECKER;
         parser = new FollowMeParser(handler, checker);
         shapesGenerator = new DefaultShapesGenerator(parser);
         LOGGER.info("ModelController initialized");

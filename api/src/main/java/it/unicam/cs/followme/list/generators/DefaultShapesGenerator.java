@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DefaultShapesGenerator implements ShapesGenerator{
+public class DefaultShapesGenerator implements ShapesGenerator {
     FollowMeParser parser;
 
     public DefaultShapesGenerator(FollowMeParser parser) {
@@ -29,10 +29,10 @@ public class DefaultShapesGenerator implements ShapesGenerator{
             return shapes.stream()
                     .map(shapeData -> {
                         Coordinate shapeCoordinate = new CartesianCoordinate(shapeData.args()[0], shapeData.args()[1]);
-                        if(shapeData.shape().equals("RECTANGLE")){
+                        if (shapeData.shape().equals("RECTANGLE")) {
                             Shape rectangleShape = new RectangleShape(shapeData.args()[2], shapeData.args()[3], shapeData.label());
                             return Map.entry(rectangleShape, shapeCoordinate);
-                        } else if(shapeData.shape().equals("CIRCLE")) {
+                        } else if (shapeData.shape().equals("CIRCLE")) {
                             Shape circleShape = new CircleShape(shapeData.args()[2], shapeData.label());
                             return Map.entry(circleShape, shapeCoordinate);
                         }

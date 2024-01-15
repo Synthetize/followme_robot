@@ -27,7 +27,7 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
 
     @Override
     public void simulate(double delta_t, double execution_time) {
-        setSimulationEndTime(execution_time/delta_t);
+        setSimulationEndTime(execution_time / delta_t);
         for (Robot r : robotsList.keySet()) {
             ModelController.LOGGER.info("STARTING SIMULATION FOR ROBOT " + r);
             setSimulationCurrentTime(0);
@@ -49,7 +49,7 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
                 commandToExecute.run(r, delta_t);
             }
             incrementSimulationCurrentTime();
-            if(isExecutionOver()) {
+            if (isExecutionOver()) {
                 ModelController.LOGGER.info("TIME EXPIRED, PROGRAM EXECUTION STOPPED");
                 break;
             }

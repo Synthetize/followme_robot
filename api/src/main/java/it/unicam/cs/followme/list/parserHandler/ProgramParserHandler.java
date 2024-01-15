@@ -1,4 +1,4 @@
-package it.unicam.cs.followme.list.parser_handler;
+package it.unicam.cs.followme.list.parserHandler;
 
 import it.unicam.cs.followme.list.simulator.Simulator;
 import it.unicam.cs.followme.list.model.Environment;
@@ -7,7 +7,6 @@ import it.unicam.cs.followme.list.model.commands.basic.*;
 import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.commands.loops.Repeat;
 import it.unicam.cs.followme.list.model.commands.loops.Until;
-import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;

@@ -8,7 +8,7 @@ import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
-import it.unicam.cs.followme.list.parser_handler.ProgramParserHandler;
+import it.unicam.cs.followme.list.parserHandler.ProgramParserHandler;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

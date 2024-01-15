@@ -40,9 +40,9 @@ public class MoveTest {
         assertEquals("12,54", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
         assertEquals("9,54", formatted);
-        formatted = df.format(robot.getLastMovementDirection().getX());
+        formatted = df.format(robot.getLastMovementValues().getX());
         assertEquals("3,54", formatted);
-        formatted = df.format(robot.getLastMovementDirection().getY());
+        formatted = df.format(robot.getLastMovementValues().getY());
         assertEquals("3,54", formatted);
 
         Move moveCommand2 = new Move(new CartesianCoordinate(-1, 1), 6, environment);
@@ -51,9 +51,9 @@ public class MoveTest {
         assertEquals("10,41", formatted);
         formatted = df.format(environment.getRobotCoordinate(robot).getY());
         assertEquals("11,66", formatted);
-        formatted = df.format(robot.getLastMovementDirection().getX());
+        formatted = df.format(robot.getLastMovementValues().getX());
         assertEquals("-2,12", formatted);
-        formatted = df.format(robot.getLastMovementDirection().getY());
+        formatted = df.format(robot.getLastMovementValues().getY());
         assertEquals("2,12", formatted);
     }
 }

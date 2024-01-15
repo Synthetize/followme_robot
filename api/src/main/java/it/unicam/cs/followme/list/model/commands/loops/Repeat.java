@@ -1,10 +1,7 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
-import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
-
-import java.util.List;
 
 public class Repeat extends LoopCommand {
 
@@ -32,10 +29,7 @@ public class Repeat extends LoopCommand {
             return true;
         }
         repetitionNumbers--;
-        if (repetitionNumbers > 0) {
-            return true;
-        }
-        return false;
+        return repetitionNumbers > 0;
     }
 
     public int getRepetitions() {

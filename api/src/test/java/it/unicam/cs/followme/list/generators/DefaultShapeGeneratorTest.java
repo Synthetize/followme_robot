@@ -4,7 +4,7 @@ import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.shapes.CircleShape;
 import it.unicam.cs.followme.list.model.shapes.RectangleShape;
 import it.unicam.cs.followme.list.model.shapes.Shape;
-import it.unicam.cs.followme.list.parser_handler.ProgramParserHandler;
+import it.unicam.cs.followme.list.parserHandler.ProgramParserHandler;
 import it.unicam.cs.followme.utilities.FollowMeParser;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import it.unicam.cs.followme.utilities.FollowMeShapeChecker;

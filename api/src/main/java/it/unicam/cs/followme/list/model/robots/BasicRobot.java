@@ -3,20 +3,17 @@ package it.unicam.cs.followme.list.model.robots;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
-import it.unicam.cs.followme.list.model.commands.basic.Done;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BasicRobot implements Robot {
     private List<Command> program = new ArrayList<>();
-    private List<String> conditionLabels;
-    private Coordinate lastMovementDirection;
+    private final List<String> conditionLabels = new ArrayList<>();
+    private Coordinate lastMovementDirection = new CartesianCoordinate(0, 0);
     private int currentCommandIndex = 0;
 
     public BasicRobot() {
-        this.conditionLabels = new ArrayList<>();
-        this.lastMovementDirection = new CartesianCoordinate(0,0);
     }
 
     @Override
@@ -35,13 +32,13 @@ public class BasicRobot implements Robot {
     }
 
     @Override
-    public Coordinate getLastMovementDirection() {
+    public Coordinate getLastMovementValues() {
         return this.lastMovementDirection;
     }
 
     @Override
-    public void setLastMovementDirection(Coordinate direction) {
-        this.lastMovementDirection = direction;
+    public void setLastMovementValues(Coordinate movement) {
+        this.lastMovementDirection = movement;
     }
 
     @Override

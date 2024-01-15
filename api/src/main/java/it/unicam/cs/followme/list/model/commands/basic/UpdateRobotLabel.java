@@ -47,7 +47,7 @@ public class UpdateRobotLabel implements Command {
     }
 
     private void addLog(Robot robot) {
-        if(robot.getCurrentConditionLabels().contains(label))
+        if (robot.getCurrentConditionLabels().contains(label))
             ModelController.LOGGER.info("SIGNAL | " + robot + " added condition: " + label);
         else
             ModelController.LOGGER.info("SIGNAL | " + robot + "robot wasn't inside any shape with condition: " + label);

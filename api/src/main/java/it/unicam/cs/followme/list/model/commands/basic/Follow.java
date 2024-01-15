@@ -59,9 +59,10 @@ public class Follow implements Command {
         Map<Robot, Coordinate> robotList = environment.getRobotsDetails();
         HashMap<Robot, Coordinate> robotWithLabelBetweenDistance = new HashMap<>();
         robotList.forEach((robotElement, coordinate) -> {
-            if(robotElement.equals(robot)) return;
-            if(!(robotElement.getCurrentConditionLabels().contains(signal))) return;
-            if(environment.getDistanceBetweenTwoCoordinates(coordinate, environment.getRobotCoordinate(robot)) > this.distanceFromRobot) return;
+            if (robotElement.equals(robot)) return;
+            if (!(robotElement.getCurrentConditionLabels().contains(signal))) return;
+            if (environment.getDistanceBetweenTwoCoordinates(coordinate, environment.getRobotCoordinate(robot)) > this.distanceFromRobot)
+                return;
             robotWithLabelBetweenDistance.put(robotElement, coordinate);
         });
         return robotWithLabelBetweenDistance;

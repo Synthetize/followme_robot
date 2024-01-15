@@ -42,7 +42,7 @@ public class Move implements Command {
                 currentX + deltaX,
                 currentY + deltaY
         ));
-        robot.setLastMovementDirection(new CartesianCoordinate(deltaX, deltaY));
+        robot.setLastMovementValues(new CartesianCoordinate(deltaX, deltaY));
         addLog(robot, deltaX, deltaY, currentX, currentY);
     }
 
