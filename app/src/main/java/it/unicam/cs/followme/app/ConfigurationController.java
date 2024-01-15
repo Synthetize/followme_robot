@@ -24,7 +24,7 @@ import java.util.*;
 public class ConfigurationController implements Initializable {
 
     FileChooser fileChooser = new FileChooser();
-    HashMap<BasicRobot, Coordinate> robots = new HashMap<>();
+    HashMap<Robot, Coordinate> robots = new HashMap<>();
     File shapesConfigFile;
     File programFile;
     Alert alert;

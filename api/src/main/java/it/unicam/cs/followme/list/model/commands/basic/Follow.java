@@ -13,14 +13,14 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Follow<R extends Robot> implements Command<R> {
-    private final Environment<R> environment;
+public class Follow implements Command {
+    private final Environment environment;
     private final String signal;
     private final double distanceFromRobot;
     private final double speed;
 
 
-    public Follow(String label, double[] args, Environment<R> environment) {
+    public Follow(String label, double[] args, Environment environment) {
         this.environment = environment;
         this.signal = label;
         this.distanceFromRobot = args[0];
@@ -33,8 +33,8 @@ public class Follow<R extends Robot> implements Command<R> {
     }
 
     @Override
-    public void run(R robot, double delta_t) {
-        HashMap<R, Coordinate> robotList = getRobotsWithLabelBetweenDistance(robot);
+    public void run(Robot robot, double delta_t) {
+        HashMap<Robot, Coordinate> robotList = getRobotsWithLabelBetweenDistance(robot);
         final AtomicReference<Double> xAvgValue = new AtomicReference<>((double) 0);
         final AtomicReference<Double> yAvgValue = new AtomicReference<>((double) 0);
         if (robotList.isEmpty()) {
@@ -51,13 +51,13 @@ public class Follow<R extends Robot> implements Command<R> {
             yAvgValue.updateAndGet(v -> v / robotList.size());
         }
         ModelController.LOGGER.info("FOLLOW | " + robot + " is moving towards the average position of the robots with label: " + signal);
-        Move<R> move = new Move<>(new CartesianCoordinate(xAvgValue.get(), yAvgValue.get()), speed, environment);
+        Move move = new Move(new CartesianCoordinate(xAvgValue.get(), yAvgValue.get()), speed, environment);
         move.run(robot, delta_t);
     }
 
-    private HashMap<R, Coordinate> getRobotsWithLabelBetweenDistance(R robot) {
-        Map<R, Coordinate> robotList = environment.getRobotsDetails();
-        HashMap<R, Coordinate> robotWithLabelBetweenDistance = new HashMap<>();
+    private HashMap<Robot, Coordinate> getRobotsWithLabelBetweenDistance(Robot robot) {
+        Map<Robot, Coordinate> robotList = environment.getRobotsDetails();
+        HashMap<Robot, Coordinate> robotWithLabelBetweenDistance = new HashMap<>();
         robotList.forEach((robotElement, coordinate) -> {
             if(robotElement.equals(robot)) return;
             if(!(robotElement.getCurrentConditionLabels().contains(signal))) return;
@@ -65,5 +65,17 @@ public class Follow<R extends Robot> implements Command<R> {
             robotWithLabelBetweenDistance.put(robotElement, coordinate);
         });
         return robotWithLabelBetweenDistance;
+    }
+
+    public Environment getEnvironment() {
+        return environment;
+    }
+
+    public String getLabel() {
+        return signal;
+    }
+
+    public double[] getArgs() {
+        return new double[]{distanceFromRobot, speed};
     }
 }

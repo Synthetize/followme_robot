@@ -4,6 +4,7 @@ import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.Environment;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.*;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.utilities.FollowMeParserException;
@@ -20,16 +21,18 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
 
 public class SimulationController {
-    private HashMap<BasicRobot, Coordinate> robotsCoordinates;
+    private HashMap<Robot, Coordinate> robotsCoordinates;
     private File shapesConfigFile;
     private File programFile;
-    ModelController<BasicRobot> modelController = new ModelController<>();
-    Environment<BasicRobot> environment;
+    ModelController modelController = new ModelController();
+    Environment environment;
     Group elementToShow;
 
 
@@ -64,10 +67,11 @@ public class SimulationController {
         simulationArea.setStyle("-fx-background: rgba(110,110,110,0.06);");
         deltaTimeTextField.setText("1");
         simulationTimeTextField.setText("10");
+        simulationLog.setEditable(false);
     }
 
     private void addRobotsToGroup() {
-        Map<BasicRobot, Coordinate> robots = environment.getRobotsDetails();
+        Map<Robot, Coordinate> robots = environment.getRobotsDetails();
         robots.forEach((robot, coordinates) -> {
             Circle circle = new Circle(3, Color.BLACK);
             circle.setCenterX(coordinates.getX());
@@ -107,7 +111,7 @@ public class SimulationController {
         elementToShow.getChildren().add(rectangle);
     }
 
-    protected void setRobotsCoordinates(HashMap<BasicRobot, Coordinate> robotsCoordinates) {
+    protected void setRobotsCoordinates(HashMap<Robot, Coordinate> robotsCoordinates) {
         this.robotsCoordinates = robotsCoordinates;
     }
 
@@ -128,6 +132,17 @@ public class SimulationController {
         elementToShow.getChildren().clear();
         addShapesToGroup();
         addRobotsToGroup();
+        readSimulationLog();
+    }
+
+    private void readSimulationLog() {
+        String filePath = "configuration_files/log.txt";
+        try {
+            String content = new String(Files.readAllBytes(Paths.get(filePath)));
+            simulationLog.setText(content);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

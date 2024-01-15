@@ -4,6 +4,7 @@ import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
@@ -21,21 +22,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RobotSimulatorTest {
-    Environment<BasicRobot> environment;
-    RobotSimulator<BasicRobot> simulator;
-    List<Command<BasicRobot>> program;
+    Environment environment;
+    RobotSimulator simulator;
+    List<Command> program;
     FollowMeParserHandler programParserHandler;
-    Map<BasicRobot, Coordinate> robotsList;
-    HashMap<BasicRobot, Coordinate> robotTestList;
+    Map<Robot, Coordinate> robotsList;
+    HashMap<Robot, Coordinate> robotTestList;
 
     @BeforeEach
     void setUp() {
         robotTestList = new HashMap<>();
         HashMap<Shape, Coordinate> shapes = new HashMap<>();
-        environment = new SimulationEnvironment<>(shapes, robotTestList);
+        environment = new SimulationEnvironment(shapes, robotTestList);
         program = new ArrayList<>();
-        simulator = new RobotSimulator<>(program, robotTestList);
-        programParserHandler = new ProgramParserHandler<>(environment, simulator);
+        simulator = new RobotSimulator(program, robotTestList);
+        programParserHandler = new ProgramParserHandler(environment, simulator);
         programParserHandler.parsingStarted();
     }
 
@@ -56,10 +57,10 @@ public class RobotSimulatorTest {
         programParserHandler.unsignalCommand("label_");
         programParserHandler.parsingDone();
         simulator.simulate(1, 1000);
-        assertEquals("2,12",String.format("%.2f", environment.getRobotCoordinate(robot).getX()));
-        assertEquals("2,12",String.format("%.2f", environment.getRobotCoordinate(robot).getY()));
-        assertEquals("2,12",String.format("%.2f", environment.getRobotCoordinate(robot2).getX()));
-        assertEquals("2,12",String.format("%.2f", environment.getRobotCoordinate(robot2).getY()));
+        assertEquals("2,12", String.format("%.2f", environment.getRobotCoordinate(robot).getX()));
+        assertEquals("2,12", String.format("%.2f", environment.getRobotCoordinate(robot).getY()));
+        assertEquals("2,12", String.format("%.2f", environment.getRobotCoordinate(robot2).getX()));
+        assertEquals("2,12", String.format("%.2f", environment.getRobotCoordinate(robot2).getY()));
     }
 
     @Test
@@ -75,7 +76,32 @@ public class RobotSimulatorTest {
         programParserHandler.doneCommand();
         programParserHandler.parsingDone();
         simulator.simulate(1, 1000);
-        assertEquals("2,81",String.format("%.2f", environment.getRobotCoordinate(robot).getX()));
-        assertEquals("2,81",String.format("%.2f", environment.getRobotCoordinate(robot).getY()));
+        assertEquals("2,83", String.format("%.2f", environment.getRobotCoordinate(robot).getX()));
+        assertEquals("2,83", String.format("%.2f", environment.getRobotCoordinate(robot).getY()));
+        assertEquals("2,83", String.format("%.2f", environment.getRobotCoordinate(robot2).getX()));
+        assertEquals("2,83", String.format("%.2f", environment.getRobotCoordinate(robot2).getY()));
+    }
+
+    @Test
+    void shouldStopExecutionIfSimulationMaxTimeIsReached() {
+        BasicRobot robot = new BasicRobot();
+        BasicRobot robot2 = new BasicRobot();
+        BasicRobot robot3 = new BasicRobot();
+        CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
+        robotTestList.put(robot, robotCoordinate);
+        robotTestList.put(robot2, robotCoordinate);
+        robotTestList.put(robot3, new CartesianCoordinate(3, 7));
+        programParserHandler.repeatCommandStart(2);
+        programParserHandler.moveCommand(new double[]{1, 1, 1});
+        programParserHandler.doneCommand();
+        programParserHandler.parsingDone();
+        simulator.simulate(1, 3);
+        assertEquals("0,71", String.format("%.2f", environment.getRobotCoordinate(robot).getX()));
+        assertEquals("0,71", String.format("%.2f", environment.getRobotCoordinate(robot).getY()));
+        assertEquals("0,71", String.format("%.2f", environment.getRobotCoordinate(robot2).getX()));
+        assertEquals("0,71", String.format("%.2f", environment.getRobotCoordinate(robot2).getY()));
+        assertEquals("3,71", String.format("%.2f", environment.getRobotCoordinate(robot3).getX()));
+        assertEquals("7,71", String.format("%.2f", environment.getRobotCoordinate(robot3).getY()));
+
     }
 }

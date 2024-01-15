@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DefaultShapeGeneratorTest {
 
 
-    FollowMeParserHandler handler = new ProgramParserHandler<>(null, null);
+    FollowMeParserHandler handler = new ProgramParserHandler(null, null);
     FollowMeShapeChecker checker = FollowMeShapeChecker.DEFAULT_CHECKER;
     FollowMeParser parser = new FollowMeParser(handler, checker);
     ShapesGenerator shapesGenerator = new DefaultShapesGenerator(parser);

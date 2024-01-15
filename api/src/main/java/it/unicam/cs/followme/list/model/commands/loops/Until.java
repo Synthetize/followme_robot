@@ -1,16 +1,17 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
 import it.unicam.cs.followme.list.model.Environment;
+import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
 import java.util.List;
 
-public class Until<R extends Robot> extends LoopCommand<R> {
-    private final Environment<R> environment;
+public class Until extends LoopCommand {
+    private final Environment environment;
     private final String label;
 
-    public Until(String label, int startingLoopIndex, int endingLoopIndex, Environment<R> environment) {
+    public Until(String label, int startingLoopIndex, int endingLoopIndex, Environment environment) {
         super(startingLoopIndex, endingLoopIndex);
         this.label = label;
         this.environment = environment;
@@ -20,13 +21,20 @@ public class Until<R extends Robot> extends LoopCommand<R> {
         return RobotCommand.UNTIL;
     }
 
-    public void run(R robot, double delta_t) {}
+    public void run(Robot robot, double delta_t) {}
 
     @Override
-    public final boolean conditionStatus(R robot ) {
+    public final boolean conditionStatus(Robot robot ) {
         return environment.checkIfRobotIsInsideShapes(robot).stream()
                 .anyMatch(shape -> shape.getConditionLabel().equals(label) && robot.getCurrentConditionLabels().contains(label));
     }
 
 
+    public String getLabel() {
+        return label;
+    }
+
+    public Environment getEnvironment() {
+        return environment;
+    }
 }

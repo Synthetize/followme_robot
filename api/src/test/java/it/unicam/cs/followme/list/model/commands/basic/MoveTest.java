@@ -3,6 +3,7 @@ package it.unicam.cs.followme.list.model.commands.basic;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
@@ -18,18 +19,18 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class MoveTest {
 
-    Environment<BasicRobot> environment;
+    Environment environment;
 
     @BeforeEach
     void setUp() {
-        HashMap<BasicRobot, Coordinate> robots = new HashMap<>();
+        HashMap<Robot, Coordinate> robots = new HashMap<>();
         HashMap<Shape, Coordinate> shapes = new HashMap<>();
-        environment = new SimulationEnvironment<>(shapes, robots);
+        environment = new SimulationEnvironment(shapes, robots);
     }
 
     @Test
     void shouldMoveTheRobotInTheDirectionOfTargetPosition() {
-        Move<BasicRobot> moveCommand = new Move<>(new CartesianCoordinate(1, 1), 5, environment);
+        Move moveCommand = new Move(new CartesianCoordinate(1, 1), 5, environment);
         BasicRobot robot = new BasicRobot();
         environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(9, 6)));
         moveCommand.run(robot, 1);
@@ -44,7 +45,7 @@ public class MoveTest {
         formatted = df.format(robot.getLastMovementDirection().getY());
         assertEquals("3,54", formatted);
 
-        Move<BasicRobot> moveCommand2 = new Move<>(new CartesianCoordinate(-1, 1), 6, environment);
+        Move moveCommand2 = new Move(new CartesianCoordinate(-1, 1), 6, environment);
         moveCommand2.run(robot, 0.5);
         formatted = df.format(environment.getRobotCoordinate(robot).getX());
         assertEquals("10,41", formatted);

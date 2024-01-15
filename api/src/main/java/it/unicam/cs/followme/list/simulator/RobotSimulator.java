@@ -4,53 +4,56 @@ import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.basic.Done;
-import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
-import it.unicam.cs.followme.list.utils.HandleCommandToExecute;
+import it.unicam.cs.followme.list.utils.ProgramCloner;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class RobotSimulator<R extends Robot> extends SimulationTimer implements Simulator<R> {
-    private final List<Command<R>> programList;
-    protected AtomicInteger currentCommandIndex = new AtomicInteger(0);
-    protected final Map<R, Coordinate> robotsList;
+public class RobotSimulator extends SimulationTimer implements Simulator {
+    private final List<Command> programList;
+    protected final Map<Robot, Coordinate> robotsList;
 
-    public RobotSimulator(List<Command<R>> programList, Map<R, Coordinate> robotsList) {
+    public RobotSimulator(List<Command> programList, Map<Robot, Coordinate> robotsList) {
         this.robotsList = robotsList;
         this.programList = programList;
     }
 
     @Override
-    public void setProgramList(List<Command<R>> programList) {
+    public void setProgramList(List<Command> programList) {
         this.programList.addAll(programList);
     }
 
-//    @Override
-//    public void simulate(double delta_t, double execution_time) {
-//        for (R r : robotsList.keySet()) {
-//            ModelController.LOGGER.info("RUNNING PROGRAM FOR ROBOT: " + r);
-//            runProgram(r, delta_t, execution_time);
-//        }
-//    }
-//
-//    private void runProgram(R robot, double delta_t, double execution_time) {
-//        currentCommandIndex.set(0);
-//        setSimulationCurrentTime(0);
-//        setSimulationEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
-//        while (currentCommandIndex.get() < programList.size()) {
-//            HandleCommandToExecute<R> handleCommandToExecute = new HandleCommandToExecute<>(currentCommandIndex, programList);
-//            handleCommandToExecute.findLoopOrBasicCommandAndCallRun(delta_t, robot, programList.size());
-//        }
-//    }
-
     @Override
     public void simulate(double delta_t, double execution_time) {
-        currentCommandIndex.set(0);
-        for (R r : robotsList.keySet()) {
-            r.setProgram(programList);
+        setSimulationEndTime(execution_time/delta_t);
+        for (Robot r : robotsList.keySet()) {
+            ModelController.LOGGER.info("STARTING SIMULATION FOR ROBOT " + r);
+            setSimulationCurrentTime(0);
+            r.setProgram(ProgramCloner.clone(programList));
+            runRobotProgram(r, delta_t);
+        }
+        ModelController.LOGGER.info("ROBOT EXECUTION FINISHED");
+    }
+
+    void runRobotProgram(Robot r, double delta_t) {
+        while (r.getCurrentCommandIndex() < r.getProgram().size()) {
+            int executionIndex = r.getCurrentCommandIndex();
+            Command commandToExecute = r.getProgram().get(executionIndex);
+            if (commandToExecute instanceof Done done) {
+                if (done.getStartingLoopCommand().conditionStatus(r)) {
+                    r.setCurrentCommandIndex(done.getStartingLoopCommand().getStartingLoopIndex());
+                }
+            } else {
+                commandToExecute.run(r, delta_t);
+            }
+            incrementSimulationCurrentTime();
+            if(isExecutionOver()) {
+                ModelController.LOGGER.info("TIME EXPIRED, PROGRAM EXECUTION STOPPED");
+                break;
+            }
+            r.incrementCurrentCommandIndex();
         }
     }
 }

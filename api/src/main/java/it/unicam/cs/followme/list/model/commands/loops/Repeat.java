@@ -1,11 +1,12 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
+import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
 import java.util.List;
 
-public class Repeat<R extends Robot> extends LoopCommand<R> {
+public class Repeat extends LoopCommand {
 
     private int repetitionNumbers;
 
@@ -22,18 +23,30 @@ public class Repeat<R extends Robot> extends LoopCommand<R> {
     }
 
     @Override
-    public void run(R robot, double delta_t) {
+    public void run(Robot robot, double delta_t) {
     }
 
     @Override
-    public final boolean conditionStatus(R robot) {
+    public final boolean conditionStatus(Robot robot) {
         if (repetitionNumbers == -1) {
             return true;
         }
+        repetitionNumbers--;
         if (repetitionNumbers > 0) {
-            repetitionNumbers--;
             return true;
         }
         return false;
+    }
+
+    public int getRepetitions() {
+        return repetitionNumbers;
+    }
+
+    public int getStartingIndex() {
+        return startingLoopIndex;
+    }
+
+    public int getEndingIndex() {
+        return endingLoopIndex;
     }
 }

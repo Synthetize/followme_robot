@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
 import it.unicam.cs.followme.list.simulator.Simulator;
 import it.unicam.cs.followme.list.simulator.RobotSimulator;
@@ -25,15 +26,15 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UntilTest {
-    Until<BasicRobot> until;
+    Until until;
     Map<Shape, Coordinate> shapesDetails;
-    Map<BasicRobot, Coordinate> robotsDetails;
+    Map<Robot, Coordinate> robotsDetails;
 
     @Test
     void shouldReturnTrueIfRobotInSignalingLabelAndIsInsideTheShape() {
         shapesDetails = new HashMap<>();
         robotsDetails = new HashMap<>();
-        until = new Until<>("label_", 0, 0, new SimulationEnvironment<>(shapesDetails, robotsDetails));
+        until = new Until("label_", 0, 0, new SimulationEnvironment(shapesDetails, robotsDetails));
         BasicRobot robot = new BasicRobot();
         robot.addLabel("label_");
         robotsDetails.put(robot, new CartesianCoordinate(0, 0));
@@ -45,7 +46,7 @@ public class UntilTest {
     void shouldReturnFalseIfRobotInSignalingLabelAndIsNotInsideTheShape() {
         shapesDetails = new HashMap<>();
         robotsDetails = new HashMap<>();
-        until = new Until<>("label_", 0, 0, new SimulationEnvironment<>(shapesDetails, robotsDetails));
+        until = new Until("label_", 0, 0, new SimulationEnvironment(shapesDetails, robotsDetails));
         BasicRobot robot = new BasicRobot();
         robot.addLabel("label_");
         robotsDetails.put(robot, new CartesianCoordinate(0, 0));

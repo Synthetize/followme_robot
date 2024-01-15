@@ -3,17 +3,17 @@ package it.unicam.cs.followme.list.model.robots;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
+import it.unicam.cs.followme.list.model.commands.basic.Done;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class BasicRobot implements Robot {
-    List<Command> program;
-    List<String> conditionLabels;
-    Coordinate lastMovementDirection;
+    private List<Command> program = new ArrayList<>();
+    private List<String> conditionLabels;
+    private Coordinate lastMovementDirection;
+    private int currentCommandIndex = 0;
 
-
-    // TODO: 12/11/2023 da cambiare costruttore
     public BasicRobot() {
         this.conditionLabels = new ArrayList<>();
         this.lastMovementDirection = new CartesianCoordinate(0,0);
@@ -50,10 +50,29 @@ public class BasicRobot implements Robot {
     }
 
     @Override
-    public void setProgram(List<Command> commands) {
-        this.program = commands;
+    public void setProgram(List<Command> program) {
+        this.program = program;
     }
 
+    @Override
+    public List<Command> getProgram() {
+        return this.program;
+    }
+
+    @Override
+    public int getCurrentCommandIndex() {
+        return this.currentCommandIndex;
+    }
+
+    @Override
+    public void setCurrentCommandIndex(int index) {
+        this.currentCommandIndex = index;
+    }
+
+    @Override
+    public void incrementCurrentCommandIndex() {
+        this.currentCommandIndex++;
+    }
 
     @Override
     public String toString() {

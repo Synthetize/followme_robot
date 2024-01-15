@@ -7,11 +7,11 @@ import it.unicam.cs.followme.list.model.commands.loops.Until;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class Done<R extends Robot> implements Command<R> {
-    protected final LoopCommand<R> startingLoopCommand;
+public class Done implements Command {
+    protected final LoopCommand startingLoopCommand;
     protected boolean loopEnded = false;
 
-    public Done(LoopCommand<R> startingLoopCommand) {
+    public Done(LoopCommand startingLoopCommand) {
         this.startingLoopCommand = startingLoopCommand;
     }
 
@@ -21,15 +21,10 @@ public class Done<R extends Robot> implements Command<R> {
     }
 
     @Override
-    public void run(R robot, double delta_t) {
-        loopEnded = startingLoopCommand.conditionStatus(robot);
-    }
+    public void run(Robot robot, double delta_t) {}
 
-    public boolean isLoopEnded() {
-        return loopEnded;
-    }
 
-    public LoopCommand<R> getStartingLoopCommand() {
+    public LoopCommand getStartingLoopCommand() {
         return startingLoopCommand;
     }
 }

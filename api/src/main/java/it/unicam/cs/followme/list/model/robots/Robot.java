@@ -39,6 +39,26 @@ public interface Robot {
      */
     void clearCurrentConditionLabels();
 
+    /**
+     * Sets the program of the robot.
+     * @param commands The program of the robot.
+     */
     void setProgram(List<Command> commands);
+    /**
+     * Returns the program of the robot.
+     */
+    List<Command> getProgram();
+    /**
+     *Return the index of the current command that the robot will execute.
+     */
+    int getCurrentCommandIndex();
+    /**
+     * Returns the command that the robot will execute.
+     */
+    void setCurrentCommandIndex(int index);
+    /**
+     * Increments the index of the current command that the robot will execute.
+     */
+    void incrementCurrentCommandIndex();
 
 }

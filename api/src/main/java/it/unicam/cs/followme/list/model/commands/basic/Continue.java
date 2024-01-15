@@ -8,20 +8,21 @@ import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class Continue<R extends Robot> implements Command<R> {
+public class Continue implements Command {
 
     private final int seconds;
-    private final Environment<R> environment;
-    public Continue(int seconds, Environment<R> environment) {
+    private final Environment environment;
+    public Continue(int seconds, Environment environment) {
         this.seconds = seconds;
         this.environment = environment;
     }
+
     @Override
     public RobotCommand getCommandType() {
         return RobotCommand.CONTINUE;
     }
     @Override
-    public void run(R robot, double delta_t) {
+    public void run(Robot robot, double delta_t) {
         ModelController.LOGGER.info("CONTINUE | " + robot + " is executing the continue command for " + seconds + " seconds");
         for(int i=0; i<seconds; i++){
             Coordinate robotCoordinate = environment.getRobotCoordinate(robot);
@@ -31,6 +32,14 @@ public class Continue<R extends Robot> implements Command<R> {
             ModelController.LOGGER.info("CONTINUE | " + robot + " moved from " + "(" + String.format("%.3f", robotCoordinate.getX())
                     + ";" + String.format("%.3f", robotCoordinate.getY()) + ")" + " to " + "(" + String.format("%.3f", addStepX) + ";" + String.format("%.3f", addStepY) + ")");
         }
+    }
+
+    public int getSeconds() {
+        return seconds;
+    }
+
+    public Environment getEnvironment() {
+        return environment;
     }
 
 }

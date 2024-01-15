@@ -8,9 +8,8 @@ import java.util.Map;
 
 /**
  * This interface is used to rappresent a generic environment
- * @param <R> the type of robot
  */
-public interface Environment<R extends Robot> {
+public interface Environment {
     /**
      * @return a map that contains the shapes and their coordinates
      */
@@ -18,7 +17,7 @@ public interface Environment<R extends Robot> {
     /**
      * @return a map that contains the robots and their coordinates
      */
-    Map<R, Coordinate> getRobotsDetails();
+    Map<Robot, Coordinate> getRobotsDetails();
 
     /**
      * Add the shapes and their coordinates to the environment
@@ -31,7 +30,7 @@ public interface Environment<R extends Robot> {
      * @param robots the robots to add
      * @param coordinates the coordinates of the robots to add
      */
-    void addRobots(List<R> robots, List<Coordinate> coordinates);
+    void addRobots(List<Robot> robots, List<Coordinate> coordinates);
     /**
      * Calculate the distance between two coordinates
      * @param firstCoordinate the first coordinate
@@ -44,19 +43,19 @@ public interface Environment<R extends Robot> {
      * @param robot the robot to check
      * @return a list of shapes that contains the robot
      */
-    List<Shape> checkIfRobotIsInsideShapes(R robot);
+    List<Shape> checkIfRobotIsInsideShapes(Robot robot);
     /**
      * Set the position of a robot
      * @param robot the robot to move
      * @param coordinate the new position of the robot
      */
-    void setRobotPosition(R robot, Coordinate coordinate);
+    void setRobotPosition(Robot robot, Coordinate coordinate);
     /**
      * Get the position of the given robot
      * @param robot the robot to get the position
      * @return the position of the robot
      */
-    Coordinate getRobotCoordinate(R robot);
+    Coordinate getRobotCoordinate(Robot robot);
     /**
      * Get the position of the given shape
      * @param shape the shape to get the position

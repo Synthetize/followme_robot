@@ -6,7 +6,7 @@ import it.unicam.cs.followme.list.model.robots.Robot;
 
 import java.util.List;
 
-public abstract class LoopCommand<R extends Robot> extends SimulationTimer implements Command<R> {
+public abstract class LoopCommand extends SimulationTimer implements Command {
     protected int startingLoopIndex = 0;
     protected int endingLoopIndex = 0;
 
@@ -27,6 +27,6 @@ public abstract class LoopCommand<R extends Robot> extends SimulationTimer imple
         this.endingLoopIndex = endingLoopIndex;
     }
 
-    public abstract boolean conditionStatus(R robot);
+    public abstract boolean conditionStatus(Robot robot);
 
 }

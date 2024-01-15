@@ -3,6 +3,7 @@ package it.unicam.cs.followme.list.model.commands.basic;
 import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
@@ -18,13 +19,13 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FollowTest {
 
-    Environment<BasicRobot> environment;
+    Environment environment;
 
     @BeforeEach
     void setUp() {
         HashMap<Shape, Coordinate> shapesDetails = new HashMap<>();
-        HashMap<BasicRobot, Coordinate> robotsDetails = new HashMap<>();
-        environment = new SimulationEnvironment<>(shapesDetails, robotsDetails);
+        HashMap<Robot, Coordinate> robotsDetails = new HashMap<>();
+        environment = new SimulationEnvironment(shapesDetails, robotsDetails);
     }
 
     @Test
@@ -42,9 +43,9 @@ public class FollowTest {
         CartesianCoordinate robotCoordinate3 = new CartesianCoordinate(16, 16);
         CartesianCoordinate robotThatShouldFollowCoordinate = new CartesianCoordinate(1, 1);
         List<Coordinate> coordinates = List.of(robotCoordinate1, robotCoordinate2, robotCoordinate3,robotCoordinate1, robotThatShouldFollowCoordinate);
-        List<BasicRobot> robots = List.of(robot1,robot2,robot3,robot4, robotThatShouldFollow);
+        List<Robot> robots = List.of(robot1,robot2,robot3,robot4, robotThatShouldFollow);
         environment.addRobots(robots , coordinates);
-        Follow<BasicRobot> followCommand = new Follow<>("label_", new double[]{5, 3}, environment);
+        Follow followCommand = new Follow("label_", new double[]{5, 3}, environment);
         followCommand.run(robotThatShouldFollow, 1);
         DecimalFormat df = new DecimalFormat("#.##");
         String formatted = df.format(environment.getRobotCoordinate(robotThatShouldFollow).getX());

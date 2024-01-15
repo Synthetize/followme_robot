@@ -1,6 +1,7 @@
 package it.unicam.cs.followme.list.model;
 
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.CircleShape;
 import it.unicam.cs.followme.list.model.shapes.RectangleShape;
 import it.unicam.cs.followme.list.model.shapes.Shape;
@@ -15,7 +16,7 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class SimulationAreaTest {
-    SimulationEnvironment<BasicRobot> environment;
+    SimulationEnvironment environment;
     RectangleShape rectangleShape;
     CartesianCoordinate rectangleCoordinate;
     CircleShape circleShape;
@@ -23,7 +24,7 @@ public class SimulationAreaTest {
 
     @BeforeEach
     void init() {
-        environment = new SimulationEnvironment<>(new HashMap<>(), new HashMap<>());
+        environment = new SimulationEnvironment(new HashMap<>(), new HashMap<>());
         rectangleShape = new RectangleShape(6, 4, "LABEL_");
         rectangleCoordinate = new CartesianCoordinate(5, 3);
         circleShape = new CircleShape(5, "LABEL_");
@@ -52,7 +53,7 @@ public class SimulationAreaTest {
         BasicRobot robot = new BasicRobot();
         CartesianCoordinate robotCoordinate = new CartesianCoordinate(1, 1);
         BasicRobot robot2 = new BasicRobot();
-        List<BasicRobot> robots = List.of(robot,robot2);
+        List<Robot> robots = List.of(robot, robot2);
         List<Coordinate> coordinates = List.of(robotCoordinate, robotCoordinate);
         environment.addRobots(robots, coordinates);
         assertEquals(environment.getRobotsDetails().size(), 2);
@@ -104,22 +105,22 @@ public class SimulationAreaTest {
 
     @Test
     void RObotShouldBeInsideRectangleAndCircle() {
-    	environment.addShapes(Collections.singletonList(circleShape), Collections.singletonList(circleCoordinate));
-    	environment.addShapes(Collections.singletonList(rectangleShape), Collections.singletonList(rectangleCoordinate));
-    	BasicRobot robot = new BasicRobot();
-    	environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(3, 4)));
-    	assertEquals(2, environment.checkIfRobotIsInsideShapes(robot).size());
+        environment.addShapes(Collections.singletonList(circleShape), Collections.singletonList(circleCoordinate));
+        environment.addShapes(Collections.singletonList(rectangleShape), Collections.singletonList(rectangleCoordinate));
+        BasicRobot robot = new BasicRobot();
+        environment.addRobots(Collections.singletonList(robot), Collections.singletonList(new CartesianCoordinate(3, 4)));
+        assertEquals(2, environment.checkIfRobotIsInsideShapes(robot).size());
     }
 
     @Test
     void shouldReturnTheDistanceBetweenTwoCoordinates() {
-       CartesianCoordinate cartesianCoordinates = new CartesianCoordinate(1.0, 1.0);
-       CartesianCoordinate cartesianCoordinates2 = new CartesianCoordinate(1.0, 1.0);
-       assertEquals(0.0, environment.getDistanceBetweenTwoCoordinates(cartesianCoordinates, cartesianCoordinates2));
-       CartesianCoordinate cartesianCoordinates3 = new CartesianCoordinate(7.0, 5.0);
-       assertEquals(7.211102550927978, environment.getDistanceBetweenTwoCoordinates(cartesianCoordinates, cartesianCoordinates3));
-       CartesianCoordinate cartesianCoordinates4 = new CartesianCoordinate(-4.0, 10);
-       assertEquals(10.29563014098700, environment.getDistanceBetweenTwoCoordinates(cartesianCoordinates, cartesianCoordinates4));
+        CartesianCoordinate cartesianCoordinates = new CartesianCoordinate(1.0, 1.0);
+        CartesianCoordinate cartesianCoordinates2 = new CartesianCoordinate(1.0, 1.0);
+        assertEquals(0.0, environment.getDistanceBetweenTwoCoordinates(cartesianCoordinates, cartesianCoordinates2));
+        CartesianCoordinate cartesianCoordinates3 = new CartesianCoordinate(7.0, 5.0);
+        assertEquals(7.211102550927978, environment.getDistanceBetweenTwoCoordinates(cartesianCoordinates, cartesianCoordinates3));
+        CartesianCoordinate cartesianCoordinates4 = new CartesianCoordinate(-4.0, 10);
+        assertEquals(10.29563014098700, environment.getDistanceBetweenTwoCoordinates(cartesianCoordinates, cartesianCoordinates4));
     }
 
     @Test
