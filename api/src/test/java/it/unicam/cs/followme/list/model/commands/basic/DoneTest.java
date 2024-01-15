@@ -2,11 +2,9 @@ package it.unicam.cs.followme.list.model.commands.basic;
 
 import it.unicam.cs.followme.list.model.commands.loops.Repeat;
 import it.unicam.cs.followme.list.model.commands.loops.Until;
-import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class DoneTest {
     Done done;

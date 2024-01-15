@@ -14,7 +14,6 @@ import java.util.Collections;
 import java.util.HashMap;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 public class ContinueTest {
     Environment environment;

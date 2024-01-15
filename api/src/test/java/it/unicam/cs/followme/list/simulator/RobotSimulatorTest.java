@@ -19,14 +19,12 @@ import java.util.List;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class RobotSimulatorTest {
     Environment environment;
     RobotSimulator simulator;
     List<Command> program;
     FollowMeParserHandler programParserHandler;
-    Map<Robot, Coordinate> robotsList;
     HashMap<Robot, Coordinate> robotTestList;
 
     @BeforeEach

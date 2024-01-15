@@ -1,6 +1,5 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
-import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

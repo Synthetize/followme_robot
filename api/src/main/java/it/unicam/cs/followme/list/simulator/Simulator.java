@@ -1,7 +1,6 @@
 package it.unicam.cs.followme.list.simulator;
 
 import it.unicam.cs.followme.list.model.commands.Command;
-import it.unicam.cs.followme.list.model.robots.Robot;
 
 import java.util.List;
 
@@ -14,9 +13,10 @@ public interface Simulator {
     void setProgramList(List<Command> programList);
 
     /**
-     * Executes the program on the given robot
+     * Simulates the execution of the program
      *
-     * @param robot the robot on which the program will be executed
+     * @param delta_t         the time interval between two consecutive executions
+     * @param execution_time the total time of the execution
      */
     void simulate(double delta_t, double execution_time);
 }

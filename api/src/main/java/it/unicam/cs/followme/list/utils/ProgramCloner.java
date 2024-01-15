@@ -22,7 +22,6 @@ public class ProgramCloner {
         for (Command command : program) {
             switch (command.getCommandType()) {
                 case CONTINUE:
-                    ;
                     cloneContinue(command, clonedProgram);
                     break;
                 case DONE:
