@@ -13,9 +13,6 @@ public class BasicRobot implements Robot {
     private Coordinate lastMovementDirection = new CartesianCoordinate(0, 0);
     private int currentCommandIndex = 0;
 
-    public BasicRobot() {
-    }
-
     @Override
     public List<String> getCurrentConditionLabels() {
         return this.conditionLabels;

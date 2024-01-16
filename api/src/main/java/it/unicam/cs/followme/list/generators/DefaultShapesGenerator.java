@@ -24,7 +24,6 @@ public class DefaultShapesGenerator implements ShapesGenerator {
 
     public Map<Shape, Coordinate> generateShapes(File shapesFile) {
         try {
-            //File env_conf = new File(shapesFilePath);
             List<ShapeData> shapes = parser.parseEnvironment(shapesFile);
             return shapes.stream()
                     .map(shapeData -> {
