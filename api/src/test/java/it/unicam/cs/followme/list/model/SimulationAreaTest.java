@@ -34,7 +34,7 @@ public class SimulationAreaTest {
     @Test
     void shouldAddShapes() {
         assertEquals(0,
-                environment.getShapesDetails().size());
+                environment.shapesDetails().size());
         CircleShape circleShape = new CircleShape(1, "LABEL_");
         CartesianCoordinate circleCoordinate = new CartesianCoordinate(1, 1);
         RectangleShape rectangleShape = new RectangleShape(1, 1, "LABEL_");
@@ -42,22 +42,22 @@ public class SimulationAreaTest {
         List<Shape> shapes = Arrays.asList(circleShape, rectangleShape);
         List<Coordinate> coordinates = Arrays.asList(circleCoordinate, rectangleCoordinate);
         environment.addShapes(shapes, coordinates);
-        assertEquals(environment.getShapesDetails().size(), 2);
-        assertEquals(environment.getShapesDetails().get(circleShape), circleCoordinate);
-        assertEquals(environment.getShapesDetails().get(rectangleShape), rectangleCoordinate);
+        assertEquals(environment.shapesDetails().size(), 2);
+        assertEquals(environment.shapesDetails().get(circleShape), circleCoordinate);
+        assertEquals(environment.shapesDetails().get(rectangleShape), rectangleCoordinate);
     }
 
     @Test
     void shouldAddRobots() {
-        assertEquals(0, environment.getRobotsDetails().size());
+        assertEquals(0, environment.robotsDetails().size());
         BasicRobot robot = new BasicRobot();
         CartesianCoordinate robotCoordinate = new CartesianCoordinate(1, 1);
         BasicRobot robot2 = new BasicRobot();
         List<Robot> robots = List.of(robot, robot2);
         List<Coordinate> coordinates = List.of(robotCoordinate, robotCoordinate);
         environment.addRobots(robots, coordinates);
-        assertEquals(environment.getRobotsDetails().size(), 2);
-        assertEquals(environment.getRobotsDetails().get(robot), robotCoordinate);
+        assertEquals(environment.robotsDetails().size(), 2);
+        assertEquals(environment.robotsDetails().get(robot), robotCoordinate);
     }
 
     @Test
@@ -145,8 +145,8 @@ public class SimulationAreaTest {
         CartesianCoordinate coordinate = new CartesianCoordinate(5, 5);
         environment.setRobotPosition(robot, coordinate);
         assertEquals(coordinate, environment.getRobotCoordinate(robot));
-        assertEquals(5, environment.getRobotsDetails().get(robot).getX());
-        assertEquals(5, environment.getRobotsDetails().get(robot).getY());
+        assertEquals(5, environment.robotsDetails().get(robot).getX());
+        assertEquals(5, environment.robotsDetails().get(robot).getY());
     }
 
 }

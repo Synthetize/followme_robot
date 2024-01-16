@@ -71,7 +71,7 @@ public class SimulationController {
     }
 
     private void addRobotsToGroup() {
-        Map<Robot, Coordinate> robots = environment.getRobotsDetails();
+        Map<Robot, Coordinate> robots = environment.robotsDetails();
         robots.forEach((robot, coordinates) -> {
             Circle circle = new Circle(3, Color.BLACK);
             circle.setCenterX(coordinates.getX());
@@ -81,7 +81,7 @@ public class SimulationController {
     }
 
     private void addShapesToGroup() {
-        for (Map.Entry<Shape, Coordinate> entry : environment.getShapesDetails().entrySet()) {
+        for (Map.Entry<Shape, Coordinate> entry : environment.shapesDetails().entrySet()) {
             if (entry.getKey() instanceof RectangleShape) {
                 addRectangleToPane(entry);
             } else {

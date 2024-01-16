@@ -10,30 +10,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class SimulationEnvironment implements Environment {
-
-    private final Map<Shape, Coordinate> shapesDetails;
-    private final Map<Robot, Coordinate> robotsDetails;
-
-    public SimulationEnvironment(Map<Shape, Coordinate> shapesDetails, Map<Robot, Coordinate> robotsDetails) {
-        this.shapesDetails = shapesDetails;
-        this.robotsDetails = robotsDetails;
-    }
-
-    @Override
-    public Map<Shape, Coordinate> getShapesDetails() {
-        return this.shapesDetails;
-    }
-
-    @Override
-    public Map<Robot, Coordinate> getRobotsDetails() {
-        return this.robotsDetails;
-    }
+public record SimulationEnvironment(Map<Shape, Coordinate> shapesDetails,
+                                    Map<Robot, Coordinate> robotsDetails) implements Environment {
 
     @Override
     public void addShapes(List<Shape> shapes, List<Coordinate> coordinates) {
         shapes.forEach(shape -> shapesDetails.put(shape, coordinates.get(shapes.indexOf(shape))));
     }
+
     @Override
     public void addRobots(List<Robot> robots, List<Coordinate> coordinates) {
         robots.forEach(robot -> robotsDetails.put(robot, coordinates.get(robots.indexOf(robot))));

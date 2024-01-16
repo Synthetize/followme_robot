@@ -13,11 +13,11 @@ public interface Environment {
     /**
      * @return a map that contains the shapes and their coordinates
      */
-    Map<Shape, Coordinate> getShapesDetails();
+    Map<Shape, Coordinate> shapesDetails();
     /**
      * @return a map that contains the robots and their coordinates
      */
-    Map<Robot, Coordinate> getRobotsDetails();
+    Map<Robot, Coordinate> robotsDetails();
 
     /**
      * Add the shapes and their coordinates to the environment

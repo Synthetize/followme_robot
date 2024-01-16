@@ -44,7 +44,7 @@ public class RobotSimulatorTest {
         CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
         robotTestList.put(robot, robotCoordinate);
         robotTestList.put(robot2, robotCoordinate);
-        assertEquals(2, environment.getRobotsDetails().size());
+        assertEquals(2, environment.robotsDetails().size());
         assertEquals(2, simulator.robotsList.size());
         programParserHandler.moveCommand(new double[]{1, 1, 1});
         programParserHandler.signalCommand("label_");
