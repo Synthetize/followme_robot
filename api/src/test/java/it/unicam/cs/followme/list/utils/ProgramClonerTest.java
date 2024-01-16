@@ -53,7 +53,7 @@ public class ProgramClonerTest {
         assertNotEquals(cloned.get(0), program.get(0));
         assert(cloned.get(1) instanceof Done);
         assertNotEquals(cloned.get(1), program.get(1));
-        assertNotEquals(((Done) cloned.get(1)).getStartingLoopCommand(), program.get(0));
+        assertNotEquals(((Done) cloned.get(1)).startingLoopCommand(), program.get(0));
         assert(cloned.get(2) instanceof Until);
         assertNotEquals(cloned.get(1), program.get(1));
         assert(cloned.get(3) instanceof Done);

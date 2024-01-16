@@ -13,10 +13,10 @@ public class DoneTest {
     void shouldReturnTheReferenceToTheStartingLoopCommand() {
         Repeat repeat = new Repeat(1, 0, 0);
         done = new Done(repeat);
-        assertEquals(done.startingLoopCommand, repeat);
+        assertEquals(done.startingLoopCommand(), repeat);
         Until until = new Until("label_", 0, 0, null);
         done = new Done(until);
-        assertEquals(done.startingLoopCommand, until);
+        assertEquals(done.startingLoopCommand(), until);
     }
 
 }

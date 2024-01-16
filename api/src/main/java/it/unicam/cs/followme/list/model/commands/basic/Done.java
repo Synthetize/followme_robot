@@ -5,12 +5,7 @@ import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class Done implements Command {
-    protected final LoopCommand startingLoopCommand;
-
-    public Done(LoopCommand startingLoopCommand) {
-        this.startingLoopCommand = startingLoopCommand;
-    }
+public record Done(LoopCommand startingLoopCommand) implements Command {
 
     @Override
     public RobotCommand getCommandType() {
@@ -19,9 +14,5 @@ public class Done implements Command {
 
     @Override
     public void run(Robot robot, double delta_t) {
-    }
-
-    public LoopCommand getStartingLoopCommand() {
-        return startingLoopCommand;
     }
 }

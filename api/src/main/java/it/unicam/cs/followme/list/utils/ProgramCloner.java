@@ -64,7 +64,7 @@ public class ProgramCloner {
     private static void cloneDone(Command command, List<Command> clonedProgram) {
         if (!(command instanceof Done doneCommand))
             throw new IllegalArgumentException("Done not recognized");
-        int startingLoopIndex = doneCommand.getStartingLoopCommand().getStartingLoopIndex();
+        int startingLoopIndex = doneCommand.startingLoopCommand().getStartingLoopIndex();
         clonedProgram.add(new Done((LoopCommand) clonedProgram.get(startingLoopIndex)));
     }
 

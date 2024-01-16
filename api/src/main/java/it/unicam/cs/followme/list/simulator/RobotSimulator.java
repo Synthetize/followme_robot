@@ -42,8 +42,8 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
             int executionIndex = r.getCurrentCommandIndex();
             Command commandToExecute = r.getProgram().get(executionIndex);
             if (commandToExecute instanceof Done done) {
-                if (done.getStartingLoopCommand().conditionStatus(r)) {
-                    r.setCurrentCommandIndex(done.getStartingLoopCommand().getStartingLoopIndex());
+                if (done.startingLoopCommand().conditionStatus(r)) {
+                    r.setCurrentCommandIndex(done.startingLoopCommand().getStartingLoopIndex());
                 }
             } else {
                 commandToExecute.run(r, delta_t);
