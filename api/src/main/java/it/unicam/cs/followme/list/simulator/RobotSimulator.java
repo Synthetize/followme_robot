@@ -18,42 +18,43 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
     public RobotSimulator(List<Command> programList, Map<Robot, Coordinate> robotsList) {
         this.robotsList = robotsList;
         this.programList = programList;
-    }
 
+    }
     @Override
     public void setProgramList(List<Command> programList) {
         this.programList.addAll(programList);
     }
 
     @Override
-    public void simulate(double delta_t, double execution_time) {
-        setSimulationEndTime(execution_time / delta_t);
-        for (Robot r : robotsList.keySet()) {
-            ModelController.LOGGER.info("STARTING SIMULATION FOR ROBOT " + r);
-            setSimulationCurrentTime(0);
-            r.setProgram(ProgramCloner.clone(programList));
-            runRobotProgram(r, delta_t);
-        }
-        ModelController.LOGGER.info("ROBOT EXECUTION FINISHED");
+    public void setup() {
+        setSimulationCurrentTime(0);
+        robotsList.keySet().forEach(r -> r.setProgram(ProgramCloner.clone(programList)));
     }
 
-    void runRobotProgram(Robot r, double delta_t) {
-        while (r.getCurrentCommandIndex() < r.getProgram().size()) {
-            int executionIndex = r.getCurrentCommandIndex();
-            Command commandToExecute = r.getProgram().get(executionIndex);
-            if (commandToExecute instanceof Done done) {
-                if (done.startingLoopCommand().conditionStatus(r)) {
-                    r.setCurrentCommandIndex(done.startingLoopCommand().getStartingLoopIndex());
-                }
+    @Override
+    public void simulate(double delta_t, double execution_time) {
+        setSimulationEndTime(execution_time / delta_t);
+        incrementSimulationCurrentTime();
+        if (isExecutionOver()) {
+            ModelController.LOGGER.info("TIME EXPIRED, PROGRAM EXECUTION STOPPED");
+            return;
+        }
+        for (Robot r : robotsList.keySet()) {
+            int robotExecutionIndex = r.getCurrentCommandIndex();
+            if (robotExecutionIndex >= programList.size()) {
+                ModelController.LOGGER.info("ROBOT " + r + " execution ended");
             } else {
-                commandToExecute.run(r, delta_t);
+                Command commandToExecute = r.getProgram().get(robotExecutionIndex);
+                if (commandToExecute instanceof Done done) {
+                    if (done.startingLoopCommand().conditionStatus(r)) {
+                        r.setCurrentCommandIndex(done.startingLoopCommand().getStartingLoopIndex());
+                    }
+                } else {
+                    commandToExecute.run(r, delta_t);
+                }
+
+                r.incrementCurrentCommandIndex();
             }
-            incrementSimulationCurrentTime();
-            if (isExecutionOver()) {
-                ModelController.LOGGER.info("TIME EXPIRED, PROGRAM EXECUTION STOPPED");
-                break;
-            }
-            r.incrementCurrentCommandIndex();
         }
     }
 }

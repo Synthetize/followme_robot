@@ -49,6 +49,7 @@ public class ModelController {
         FollowMeShapeChecker checker = FollowMeShapeChecker.DEFAULT_CHECKER;
         parser = new FollowMeParser(handler, checker);
         shapesGenerator = new DefaultShapesGenerator(parser);
+        simulator.setup();
         LOGGER.info("ModelController initialized");
     }
 

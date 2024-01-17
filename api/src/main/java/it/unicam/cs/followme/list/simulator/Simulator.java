@@ -19,4 +19,8 @@ public interface Simulator {
      * @param execution_time the total time of the execution
      */
     void simulate(double delta_t, double execution_time);
+    /**
+     * Sets up the simulator
+     */
+    void setup();
 }

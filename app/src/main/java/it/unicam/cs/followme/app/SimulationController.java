@@ -125,9 +125,10 @@ public class SimulationController {
 
     @FXML
     void runSimulation(MouseEvent event) {
+        simulationTimeTextField.setDisable(true);
+        deltaTimeTextField.setDisable(true);
         int deltaTime = Integer.parseInt(deltaTimeTextField.getText());
         int simulationTime = Integer.parseInt(simulationTimeTextField.getText());
-        runButton.setDisable(true);
         modelController.runSimulation(deltaTime, simulationTime);
         elementToShow.getChildren().clear();
         addShapesToGroup();

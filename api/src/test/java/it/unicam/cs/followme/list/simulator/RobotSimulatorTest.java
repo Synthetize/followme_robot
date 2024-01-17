@@ -53,7 +53,10 @@ public class RobotSimulatorTest {
         programParserHandler.moveCommand(new double[]{1, 1, 1});
         programParserHandler.unsignalCommand("label_");
         programParserHandler.parsingDone();
-        simulator.simulate(1, 1000);
+        simulator.setup();
+        for (int i = 0; i < program.size(); i++) {
+            simulator.simulate(1, 1000);
+        }
         assertEquals("2,12", String.format("%.2f", environment.getRobotCoordinate(robot).getX()));
         assertEquals("2,12", String.format("%.2f", environment.getRobotCoordinate(robot).getY()));
         assertEquals("2,12", String.format("%.2f", environment.getRobotCoordinate(robot2).getX()));
@@ -72,7 +75,10 @@ public class RobotSimulatorTest {
         programParserHandler.moveCommand(new double[]{1, 1, 1});
         programParserHandler.doneCommand();
         programParserHandler.parsingDone();
-        simulator.simulate(1, 1000);
+        simulator.setup();
+        for (int i = 0; i < 10 ; i++) {
+            simulator.simulate(1, 1000);
+        }
         assertEquals("2,83", String.format("%.2f", environment.getRobotCoordinate(robot).getX()));
         assertEquals("2,83", String.format("%.2f", environment.getRobotCoordinate(robot).getY()));
         assertEquals("2,83", String.format("%.2f", environment.getRobotCoordinate(robot2).getX()));
@@ -92,8 +98,10 @@ public class RobotSimulatorTest {
         programParserHandler.moveCommand(new double[]{1, 1, 1});
         programParserHandler.doneCommand();
         programParserHandler.parsingDone();
-        simulator.simulate(1, 3);
-        assertEquals("0,71", String.format("%.2f", environment.getRobotCoordinate(robot).getX()));
+        simulator.setup();
+        for (int i = 0; i < program.size(); i++) {
+            simulator.simulate(1, 3);
+        }        assertEquals("0,71", String.format("%.2f", environment.getRobotCoordinate(robot).getX()));
         assertEquals("0,71", String.format("%.2f", environment.getRobotCoordinate(robot).getY()));
         assertEquals("0,71", String.format("%.2f", environment.getRobotCoordinate(robot2).getX()));
         assertEquals("0,71", String.format("%.2f", environment.getRobotCoordinate(robot2).getY()));
