@@ -19,9 +19,6 @@ public class Until extends LoopCommand {
         return RobotCommand.UNTIL;
     }
 
-    public void run(Robot robot, double delta_t) {
-    }
-
     @Override
     public final boolean conditionStatus(Robot robot) {
         return environment.checkIfRobotIsInsideShapes(robot).stream()

@@ -4,7 +4,7 @@ import it.unicam.cs.followme.list.utils.SimulationTimer;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 
-public abstract class LoopCommand extends SimulationTimer implements Command {
+public abstract class LoopCommand implements Command {
     protected int startingLoopIndex;
     protected int endingLoopIndex;
 

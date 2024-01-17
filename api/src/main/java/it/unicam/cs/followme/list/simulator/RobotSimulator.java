@@ -4,6 +4,7 @@ import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.basic.Done;
+import it.unicam.cs.followme.list.model.commands.basic.RunnableCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.utils.ProgramCloner;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
@@ -20,6 +21,7 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
         this.programList = programList;
 
     }
+
     @Override
     public void setProgramList(List<Command> programList) {
         this.programList.addAll(programList);
@@ -49,8 +51,8 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
                     if (done.startingLoopCommand().conditionStatus(r)) {
                         r.setCurrentCommandIndex(done.startingLoopCommand().getStartingLoopIndex());
                     }
-                } else {
-                    commandToExecute.run(r, delta_t);
+                } else if (commandToExecute instanceof RunnableCommand runnableCommand) {
+                        runnableCommand.run(r, delta_t);
                 }
 
                 r.incrementCurrentCommandIndex();

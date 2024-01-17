@@ -8,7 +8,7 @@ import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class Continue implements Command {
+public class Continue extends RunnableCommand {
 
     private final int seconds;
     private final Environment environment;

@@ -11,10 +11,5 @@ public interface Command {
      * @return the command type
      */
     RobotCommand getCommandType();
-
-    /**
-     * Executes the command.
-     */
-    void run(Robot robot, double delta_t);
 }
 

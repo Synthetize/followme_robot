@@ -12,7 +12,4 @@ public record Done(LoopCommand startingLoopCommand) implements Command {
         return RobotCommand.DONE;
     }
 
-    @Override
-    public void run(Robot robot, double delta_t) {
-    }
 }

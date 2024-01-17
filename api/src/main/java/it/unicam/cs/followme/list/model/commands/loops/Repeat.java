@@ -20,10 +20,6 @@ public class Repeat extends LoopCommand {
     }
 
     @Override
-    public void run(Robot robot, double delta_t) {
-    }
-
-    @Override
     public final boolean conditionStatus(Robot robot) {
         if (repetitionNumbers == -1) {
             return true;

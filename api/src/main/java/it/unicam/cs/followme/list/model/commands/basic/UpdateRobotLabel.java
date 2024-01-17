@@ -9,7 +9,7 @@ import it.unicam.cs.followme.utilities.RobotCommand;
 
 import java.util.List;
 
-public class UpdateRobotLabel implements Command {
+public class UpdateRobotLabel extends RunnableCommand implements Command {
     private final Environment environment;
     private final String label;
     private final RobotCommand commandType;

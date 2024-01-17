@@ -13,7 +13,7 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicReference;
 
-public class Follow implements Command {
+public class Follow extends RunnableCommand {
     private final Environment environment;
     private final String signal;
     private final double distanceFromRobot;

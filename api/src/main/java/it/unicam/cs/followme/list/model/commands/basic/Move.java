@@ -6,9 +6,10 @@ import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
+import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class Move implements Command {
+public class Move extends RunnableCommand {
     private final Coordinate targetCoordinates;
     private final double speed;
     private final Environment environment;
