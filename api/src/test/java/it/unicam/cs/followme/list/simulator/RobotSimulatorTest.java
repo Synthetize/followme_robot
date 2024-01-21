@@ -5,7 +5,6 @@ import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.list.model.robots.Robot;
-import it.unicam.cs.followme.list.model.shapes.RectangleShape;
 import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
@@ -54,7 +53,7 @@ public class RobotSimulatorTest {
         programParserHandler.moveCommand(new double[]{1, 1, 1});
         programParserHandler.unsignalCommand("label_");
         programParserHandler.parsingDone();
-        simulator.setup();
+        simulator.init();
         for (int i = 0; i < program.size(); i++) {
             simulator.simulate(1, 1000);
         }
@@ -76,7 +75,7 @@ public class RobotSimulatorTest {
         programParserHandler.moveCommand(new double[]{1, 1, 1});
         programParserHandler.doneCommand();
         programParserHandler.parsingDone();
-        simulator.setup();
+        simulator.init();
         for (int i = 0; i < 10; i++) {
             simulator.simulate(1, 1000);
         }
@@ -99,7 +98,7 @@ public class RobotSimulatorTest {
         programParserHandler.moveCommand(new double[]{1, 1, 1});
         programParserHandler.doneCommand();
         programParserHandler.parsingDone();
-        simulator.setup();
+        simulator.init();
         for (int i = 0; i < program.size(); i++) {
             simulator.simulate(1, 3);
         }

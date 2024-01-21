@@ -22,5 +22,5 @@ public interface Simulator {
     /**
      * Sets up the simulator
      */
-    void setup();
+    void init();
 }

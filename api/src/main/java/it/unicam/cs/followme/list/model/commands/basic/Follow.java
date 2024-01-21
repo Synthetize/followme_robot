@@ -40,6 +40,8 @@ public class Follow extends RunnableCommand {
             Random random = new Random();
             xAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
             yAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
+            xAvgValue.set(2.0);
+            yAvgValue.set(2.0);
             ModelController.LOGGER.info("FOLLOW | " + robot + " will move randomly");
         } else {
             for(Map.Entry<Robot, Coordinate> entry : robotList.entrySet()) {

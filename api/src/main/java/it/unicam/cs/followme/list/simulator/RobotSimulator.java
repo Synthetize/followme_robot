@@ -28,7 +28,7 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
     }
 
     @Override
-    public void setup() {
+    public void init() {
         setSimulationCurrentTime(0);
         robotsList.keySet().forEach(r -> r.setProgram(ProgramCloner.clone(programList)));
     }

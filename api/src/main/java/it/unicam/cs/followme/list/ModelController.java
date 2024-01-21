@@ -76,7 +76,7 @@ public class ModelController {
 
     public void generateCommandsFromFile(File programFile) throws FollowMeParserException, IOException {
         parser.parseRobotProgram(programFile);
-        simulator.setup();
+        simulator.init();
     }
 
     public void runSimulation(double delta_t, double time) {

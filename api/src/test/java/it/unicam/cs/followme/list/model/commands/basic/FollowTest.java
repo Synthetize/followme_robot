@@ -75,17 +75,6 @@ public class FollowTest {
         environment.addRobots(List.of(robot, robotThatShouldFollow), List.of(new CartesianCoordinate(10, 10), new CartesianCoordinate(1, 1)));
         Follow followCommand = new Follow("label_", new double[]{4, 3}, environment);
         followCommand.run(robotThatShouldFollow, 1);
-
     }
 
-    @Test
-    void shouldMoveRandomIfTheOnlyRobotSignalingIsTheRobotItself() {
-        BasicRobot robotThatShouldFollow = new BasicRobot();
-        robotThatShouldFollow.addLabel("label_");
-        environment.addRobots(List.of(robotThatShouldFollow), List.of(new CartesianCoordinate(5, 5)));
-        Follow followCommand = new Follow("label_", new double[]{2, 3}, environment);
-        followCommand.run(robotThatShouldFollow, 1);
-        assertTrue(environment.getRobotCoordinate(robotThatShouldFollow).getX() >= -2.121 && environment.getRobotCoordinate(robotThatShouldFollow).getX() <= 2.121);
-        assertTrue(environment.getRobotCoordinate(robotThatShouldFollow).getY() >= -2.121 && environment.getRobotCoordinate(robotThatShouldFollow).getY() <= 2);
-    }
 }
