@@ -1,11 +1,15 @@
 package it.unicam.cs.followme.list.model.commands.loops;
 
+import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
+
+import java.util.PrimitiveIterator;
 
 public class Repeat extends LoopCommand {
 
     private int repetitionNumbers;
+    private int currentRepetitionNumber = 0;
 
     public Repeat(int repetitionNumbers, int startingLoopIndex, int endingLoopIndex) {
         super(startingLoopIndex, endingLoopIndex);
@@ -20,12 +24,24 @@ public class Repeat extends LoopCommand {
     }
 
     @Override
-    public final boolean conditionStatus(Robot robot) {
+    public final boolean isLoopStillRunning(Robot robot) {
         if (repetitionNumbers == -1) {
             return true;
         }
-        repetitionNumbers--;
-        return repetitionNumbers > 0;
+        currentRepetitionNumber++;
+        if (currentRepetitionNumber >= repetitionNumbers) {
+            currentRepetitionNumber = 0;
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public void getLog() {
+        if (repetitionNumbers == -1)
+            ModelController.LOGGER.info("REPEAT | repeat forever");
+        else
+            ModelController.LOGGER.info("REPEAT | repeating " + repetitionNumbers + " times");
     }
 
     public int getRepetitions() {

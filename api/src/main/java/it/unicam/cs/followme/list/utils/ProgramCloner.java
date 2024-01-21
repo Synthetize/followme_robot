@@ -42,7 +42,7 @@ public class ProgramCloner {
                 case UNSIGNAL:
                     cloneUnsignal(command, clonedProgram);
                     break;
-                case REPEAT:
+                case REPEAT, FOREVER:
                     cloneRepeat(command, clonedProgram);
                     break;
                 case UNTIL:

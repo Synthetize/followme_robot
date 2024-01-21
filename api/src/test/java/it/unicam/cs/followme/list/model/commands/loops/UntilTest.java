@@ -28,7 +28,7 @@ public class UntilTest {
         robot.addLabel("label_");
         robotsDetails.put(robot, new CartesianCoordinate(0, 0));
         shapesDetails.put(new CircleShape(1, "label_"), new CartesianCoordinate(0, 0));
-        assertTrue(until.conditionStatus(robot));
+        assertTrue(until.isLoopStillRunning(robot));
     }
 
     @Test
@@ -40,6 +40,6 @@ public class UntilTest {
         robot.addLabel("label_");
         robotsDetails.put(robot, new CartesianCoordinate(0, 0));
         shapesDetails.put(new CircleShape(1, "label_"), new CartesianCoordinate(1, 1));
-        assertFalse(until.conditionStatus(robot));
+        assertFalse(until.isLoopStillRunning(robot));
     }
 }

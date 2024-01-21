@@ -5,6 +5,7 @@ import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.basic.Done;
 import it.unicam.cs.followme.list.model.commands.basic.RunnableCommand;
+import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.utils.ProgramCloner;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
@@ -35,6 +36,8 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
 
     @Override
     public void simulate(double delta_t, double execution_time) {
+
+
         setSimulationEndTime(execution_time / delta_t);
         incrementSimulationCurrentTime();
         if (isExecutionOver()) {
@@ -48,11 +51,15 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
             } else {
                 Command commandToExecute = r.getProgram().get(robotExecutionIndex);
                 if (commandToExecute instanceof Done done) {
-                    if (done.startingLoopCommand().conditionStatus(r)) {
+                    Boolean isLoopStillRunning = done.startingLoopCommand().isLoopStillRunning(r);
+                    if (isLoopStillRunning) {
                         r.setCurrentCommandIndex(done.startingLoopCommand().getStartingLoopIndex());
                     }
+                    done.getLog(isLoopStillRunning);
                 } else if (commandToExecute instanceof RunnableCommand runnableCommand) {
                         runnableCommand.run(r, delta_t);
+                } else if (commandToExecute instanceof LoopCommand command) {
+                    command.getLog();
                 }
 
                 r.incrementCurrentCommandIndex();

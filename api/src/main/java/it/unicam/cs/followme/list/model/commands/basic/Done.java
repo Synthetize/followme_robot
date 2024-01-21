@@ -1,5 +1,6 @@
 package it.unicam.cs.followme.list.model.commands.basic;
 
+import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
@@ -12,4 +13,10 @@ public record Done(LoopCommand startingLoopCommand) implements Command {
         return RobotCommand.DONE;
     }
 
+    public void getLog(Boolean isLoopStillRunning) {
+        if (isLoopStillRunning)
+            ModelController.LOGGER.info("DONE | loop " + startingLoopCommand.getCommandType() + " restarted");
+        else
+            ModelController.LOGGER.info("DONE | loop " + startingLoopCommand.getCommandType() + " ended");
+    }
 }

@@ -32,7 +32,9 @@ public class UpdateRobotLabel extends RunnableCommand implements Command {
                 List<Shape> shapes = environment.checkIfRobotIsInsideShapes(robot);
                 shapes.forEach(shape -> {
                     if (shape.getConditionLabel().equals(label)) {
-                        robot.addLabel(label);
+                        if (!robot.getCurrentConditionLabels().contains(label)) {
+                            robot.addLabel(label);
+                        }
                     }
                 });
                 addLog(robot);

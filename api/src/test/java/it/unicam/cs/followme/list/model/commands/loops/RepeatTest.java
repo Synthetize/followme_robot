@@ -10,26 +10,26 @@ public class RepeatTest {
     @Test
     void shouldReturnTrueIfRepeatIsForever() {
         repeat = new Repeat(-1, 0, 0);
-        assertTrue(repeat.conditionStatus(null));
+        assertTrue(repeat.isLoopStillRunning(null));
     }
 
     @Test
     void shouldReturnTrueIfRepetitionNumbersIsGreaterThanZero() {
         repeat = new Repeat(2, 0, 0);
-        assertTrue(repeat.conditionStatus(null));
+        assertTrue(repeat.isLoopStillRunning(null));
     }
 
     @Test
     void shouldReturnFalseIfRepetitionNumbersIsZero() {
         repeat = new Repeat(0, 0, 0);
-        assertFalse(repeat.conditionStatus(null));
+        assertFalse(repeat.isLoopStillRunning(null));
     }
 
     @Test
     void shouldReturnFalseIfRepetitionNumberReachZero() {
         repeat = new Repeat(1, 0, 0);
-        repeat.conditionStatus(null);
-        assertFalse(repeat.conditionStatus(null));
+        repeat.isLoopStillRunning(null);
+        assertFalse(repeat.isLoopStillRunning(null));
     }
 
 }

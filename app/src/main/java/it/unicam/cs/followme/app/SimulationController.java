@@ -70,7 +70,7 @@ public class SimulationController {
         simulationArea.setHvalue(0.5);
         simulationArea.setVvalue(0.5);
         deltaTimeTextField.setText("1");
-        simulationTimeTextField.setText("10");
+        simulationTimeTextField.setText("1000");
         simulationLog.setEditable(false);
     }
 
@@ -141,17 +141,6 @@ public class SimulationController {
         simulationArea.setHvalue(0.5);
         simulationArea.setVvalue(0.5);
     }
-
-//    private void readSimulationLog() {
-//        String filePath = "../configuration_files/log.txt";
-//        try {
-//            String content = new String(Files.readAllBytes(Paths.get(filePath)));
-//            simulationLog.clear();
-//            simulationLog.setText(content);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private void readSimulationLog() {
         String filePath = "../configuration_files/log.txt";
