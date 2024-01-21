@@ -4,17 +4,20 @@ import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.list.model.robots.Robot;
+import it.unicam.cs.followme.list.model.shapes.RectangleShape;
 import it.unicam.cs.followme.list.model.shapes.Shape;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class FollowTest {
 
@@ -52,38 +55,37 @@ public class FollowTest {
         formatted = df.format(environment.getRobotCoordinate(robotThatShouldFollow).getY());
         assertEquals("3,12", formatted);
     }
-//TODO: fix this tests
 
-//    @Test
-//    void shouldMoveRandomIfNoRobotsAreSignaling() {
-//        BasicRobot robot = new BasicRobot();
-//        BasicRobot robotThatShouldFollow = new BasicRobot();
-//        CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
-//        CartesianCoordinate robotThatShouldFollowCoordinate = new CartesianCoordinate(3, 3);
-//        environment.addRobots(List.of(robot, robotThatShouldFollow), List.of(robotCoordinate, robotThatShouldFollowCoordinate));
-//        Follow<BasicRobot> followCommand = new Follow<>("label_", new double[]{1, 3}, environment);
-//        followCommand.run(robotThatShouldFollow, 1);
-//    }
-//
-//    @Test
-//    void shouldMoveRandomIfNoRobotsAreInDistance() {
-//        BasicRobot robot = new BasicRobot();
-//        BasicRobot robotThatShouldFollow = new BasicRobot();
-//        robot.addLabel("label_");
-//        environment.addRobots(List.of(robot, robotThatShouldFollow), List.of(new CartesianCoordinate(10, 10), new CartesianCoordinate(1, 1)));
-//        Follow<BasicRobot> followCommand = new Follow<>("label_", new double[]{4, 3}, environment);
-//        followCommand.run(robotThatShouldFollow, 1);
-//
-//    }
-//
-//    @Test
-//    void shouldMoveRandomIfTheOnlyRobotSignalingIsTheRobotItself() {
-//        BasicRobot robotThatShouldFollow = new BasicRobot();
-//        robotThatShouldFollow.addLabel("label_");
-//        environment.addRobots(List.of(robotThatShouldFollow), List.of(new CartesianCoordinate(5, 5)));
-//        Follow<BasicRobot> followCommand = new Follow<>("label_", new double[]{2, 3}, environment);
-//        followCommand.run(robotThatShouldFollow, 1);
-//        assertTrue(environment.getRobotCoordinate(robotThatShouldFollow).getX() >= -2.121 && environment.getRobotCoordinate(robotThatShouldFollow).getX() <= 2.121);
-//        assertTrue(environment.getRobotCoordinate(robotThatShouldFollow).getY() >= -2.121 && environment.getRobotCoordinate(robotThatShouldFollow).getY() <= 2);
-//    }
+    @Test
+    void shouldMoveRandomIfNoRobotsAreSignaling() {
+        BasicRobot robot = new BasicRobot();
+        BasicRobot robotThatShouldFollow = new BasicRobot();
+        CartesianCoordinate robotCoordinate = new CartesianCoordinate(0, 0);
+        CartesianCoordinate robotThatShouldFollowCoordinate = new CartesianCoordinate(3, 3);
+        environment.addRobots(List.of(robot, robotThatShouldFollow), List.of(robotCoordinate, robotThatShouldFollowCoordinate));
+        Follow followCommand = new Follow("label_", new double[]{1, 3}, environment);
+        followCommand.run(robotThatShouldFollow, 1);
+    }
+
+    @Test
+    void shouldMoveRandomIfNoRobotsAreInDistance() {
+        BasicRobot robot = new BasicRobot();
+        BasicRobot robotThatShouldFollow = new BasicRobot();
+        robot.addLabel("label_");
+        environment.addRobots(List.of(robot, robotThatShouldFollow), List.of(new CartesianCoordinate(10, 10), new CartesianCoordinate(1, 1)));
+        Follow followCommand = new Follow("label_", new double[]{4, 3}, environment);
+        followCommand.run(robotThatShouldFollow, 1);
+
+    }
+
+    @Test
+    void shouldMoveRandomIfTheOnlyRobotSignalingIsTheRobotItself() {
+        BasicRobot robotThatShouldFollow = new BasicRobot();
+        robotThatShouldFollow.addLabel("label_");
+        environment.addRobots(List.of(robotThatShouldFollow), List.of(new CartesianCoordinate(5, 5)));
+        Follow followCommand = new Follow("label_", new double[]{2, 3}, environment);
+        followCommand.run(robotThatShouldFollow, 1);
+        assertTrue(environment.getRobotCoordinate(robotThatShouldFollow).getX() >= -2.121 && environment.getRobotCoordinate(robotThatShouldFollow).getX() <= 2.121);
+        assertTrue(environment.getRobotCoordinate(robotThatShouldFollow).getY() >= -2.121 && environment.getRobotCoordinate(robotThatShouldFollow).getY() <= 2);
+    }
 }

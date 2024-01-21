@@ -49,7 +49,6 @@ public class ModelController {
         FollowMeShapeChecker checker = FollowMeShapeChecker.DEFAULT_CHECKER;
         parser = new FollowMeParser(handler, checker);
         shapesGenerator = new DefaultShapesGenerator(parser);
-        simulator.setup();
         LOGGER.info("ModelController initialized");
     }
 
@@ -77,6 +76,7 @@ public class ModelController {
 
     public void generateCommandsFromFile(File programFile) throws FollowMeParserException, IOException {
         parser.parseRobotProgram(programFile);
+        simulator.setup();
     }
 
     public void runSimulation(double delta_t, double time) {

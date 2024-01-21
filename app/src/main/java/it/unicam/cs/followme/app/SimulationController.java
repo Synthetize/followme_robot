@@ -20,6 +20,7 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.RandomAccessFile;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.HashMap;
@@ -65,6 +66,8 @@ public class SimulationController {
         addRobotsToGroup();
         simulationArea.setContent(elementToShow);
         simulationArea.setStyle("-fx-background: rgba(110,110,110,0.06);");
+        simulationArea.setHvalue(0.5);
+        simulationArea.setVvalue(0.5);
         deltaTimeTextField.setText("1");
         simulationTimeTextField.setText("10");
         simulationLog.setEditable(false);
@@ -134,16 +137,41 @@ public class SimulationController {
         addShapesToGroup();
         addRobotsToGroup();
         readSimulationLog();
+        simulationArea.setHvalue(0.5);
+        simulationArea.setVvalue(0.5);
     }
 
     private void readSimulationLog() {
         String filePath = "configuration_files/log.txt";
         try {
             String content = new String(Files.readAllBytes(Paths.get(filePath)));
+            simulationLog.clear();
             simulationLog.setText(content);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+    //private long logFilePosition = 0;
+
+//    private void readSimulationLog() {
+//        String filePath = "configuration_files/log.txt";
+//        try {
+//            RandomAccessFile logFile = new RandomAccessFile(filePath, "r");
+//            logFile.seek(logFilePosition);
+//            String line;
+//            StringBuilder newLogContent = new StringBuilder();
+//            while ((line = logFile.readLine()) != null) {
+//                newLogContent.append(line).append("\n");
+//            }
+//            logFilePosition = logFile.getFilePointer();
+//
+//            simulationLog.clear();
+//            simulationLog.appendText(newLogContent.toString());
+//            logFile.close();
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
 
 }

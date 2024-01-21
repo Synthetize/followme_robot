@@ -2,7 +2,6 @@ package it.unicam.cs.followme.list.model.commands.basic;
 
 import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.Environment;
-import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
@@ -41,18 +40,31 @@ public class Follow extends RunnableCommand {
             Random random = new Random();
             xAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
             yAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
-            ModelController.LOGGER.info("FOLLOW | " + robot + " is moving randomly");
+            ModelController.LOGGER.info("FOLLOW | " + robot + " will move randomly");
         } else {
-            robotList.forEach((shape, coordinate) -> {
-                xAvgValue.updateAndGet(v -> v + coordinate.getX());
-                yAvgValue.updateAndGet(v -> v + coordinate.getY());
-            });
+            for(Map.Entry<Robot, Coordinate> entry : robotList.entrySet()) {
+                xAvgValue.updateAndGet(v -> v + entry.getValue().getX());
+                yAvgValue.updateAndGet(v -> v + entry.getValue().getY());
+            }
             xAvgValue.updateAndGet(v -> v / robotList.size());
             yAvgValue.updateAndGet(v -> v / robotList.size());
+            ModelController.LOGGER.info("FOLLOW | " + robot + " will move towards the average position of the robots with label: " + signal + "\n in a range of " + distanceFromRobot + "meters. Avg coordinates: (" + String.format("%.3f", xAvgValue.get()) + ";" + String.format("%.2f", yAvgValue.get()) + ") at speed: " + speed + "m/s");
         }
-        ModelController.LOGGER.info("FOLLOW | " + robot + " is moving towards the average position of the robots with label: " + signal);
-        Move move = new Move(new CartesianCoordinate(xAvgValue.get(), yAvgValue.get()), speed, environment);
+        Coordinate normalized = calculateNormalizedDirection(xAvgValue.get(), yAvgValue.get(), robot);
+        Move move = new Move(normalized, speed, environment);
         move.run(robot, delta_t);
+    }
+
+    /*
+    * The move command move the robot using the relative coordinates,
+    * so we need to calculate the direction using the robot absolute coordinates and the target absolute coordinates
+    * and then normalize the result and move the robot in that direction
+     */
+    private Coordinate calculateNormalizedDirection(Double avgXValue, Double avgYValue, Robot robot) {
+        double x = avgXValue - environment.getRobotCoordinate(robot).getX();
+        double y = avgYValue - environment.getRobotCoordinate(robot).getY();
+        double magnitude = Math.sqrt(x * x + y * y);
+        return new CartesianCoordinate(x / magnitude, y / magnitude);
     }
 
     private HashMap<Robot, Coordinate> getRobotsWithLabelBetweenDistance(Robot robot) {

@@ -4,7 +4,7 @@ import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 
 /**
- * This interface is extended by all the commands that need to perform some action
+ * This class is extended by all the commands that need to perform some action
  * on the robot position.
  */
 public abstract class RunnableCommand implements Command {

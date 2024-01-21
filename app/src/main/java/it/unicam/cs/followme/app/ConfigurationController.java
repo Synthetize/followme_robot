@@ -69,6 +69,9 @@ public class ConfigurationController implements Initializable {
 
     @FXML
     void openSimulationScene(MouseEvent event) {
+        shapesConfigFile = new File("configuration_files/shapes.txt");
+        programFile = new File("configuration_files/program.txt");
+        robots.put(new BasicRobot(), new CartesianCoordinate(0, 0));
         if (shapesConfigFile == null || programFile == null || robots.isEmpty()) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing configuration");
