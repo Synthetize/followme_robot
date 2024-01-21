@@ -54,7 +54,7 @@ public class ModelController {
 
     private void loggerSetup() {
         try {
-            FileHandler fileHandler = new FileHandler("configuration_files/log.txt");
+            FileHandler fileHandler = new FileHandler("../configuration_files/log.txt");
             LOGGER.addHandler(fileHandler);
             LOGGER.setLevel(java.util.logging.Level.ALL);
             SimpleFormatter formatter = new SimpleFormatter();

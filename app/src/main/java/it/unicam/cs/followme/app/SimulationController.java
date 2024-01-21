@@ -28,6 +28,7 @@ import java.util.Map;
 
 
 public class SimulationController {
+    private long logFilePosition = 0;
     private HashMap<Robot, Coordinate> robotsCoordinates;
     private File shapesConfigFile;
     private File programFile;
@@ -141,37 +142,35 @@ public class SimulationController {
         simulationArea.setVvalue(0.5);
     }
 
-    private void readSimulationLog() {
-        String filePath = "configuration_files/log.txt";
-        try {
-            String content = new String(Files.readAllBytes(Paths.get(filePath)));
-            simulationLog.clear();
-            simulationLog.setText(content);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    //private long logFilePosition = 0;
-
 //    private void readSimulationLog() {
-//        String filePath = "configuration_files/log.txt";
+//        String filePath = "../configuration_files/log.txt";
 //        try {
-//            RandomAccessFile logFile = new RandomAccessFile(filePath, "r");
-//            logFile.seek(logFilePosition);
-//            String line;
-//            StringBuilder newLogContent = new StringBuilder();
-//            while ((line = logFile.readLine()) != null) {
-//                newLogContent.append(line).append("\n");
-//            }
-//            logFilePosition = logFile.getFilePointer();
-//
+//            String content = new String(Files.readAllBytes(Paths.get(filePath)));
 //            simulationLog.clear();
-//            simulationLog.appendText(newLogContent.toString());
-//            logFile.close();
+//            simulationLog.setText(content);
 //        } catch (IOException e) {
 //            e.printStackTrace();
 //        }
 //    }
+
+    private void readSimulationLog() {
+        String filePath = "../configuration_files/log.txt";
+        try {
+            RandomAccessFile logFile = new RandomAccessFile(filePath, "r");
+            logFile.seek(logFilePosition);
+            String line;
+            StringBuilder newLogContent = new StringBuilder();
+            while ((line = logFile.readLine()) != null) {
+                newLogContent.append(line).append("\n");
+            }
+            logFilePosition = logFile.getFilePointer();
+
+            simulationLog.clear();
+            simulationLog.appendText(newLogContent.toString());
+            logFile.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
 }

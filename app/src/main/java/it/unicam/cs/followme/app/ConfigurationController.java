@@ -31,7 +31,7 @@ public class ConfigurationController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        fileChooser.setInitialDirectory(new File("configuration_files"));
+        fileChooser.setInitialDirectory(new File("../configuration_files"));
         showRobotsArea.setEditable(false);
     }
 
@@ -69,9 +69,10 @@ public class ConfigurationController implements Initializable {
 
     @FXML
     void openSimulationScene(MouseEvent event) {
-        shapesConfigFile = new File("configuration_files/shapes.txt");
-        programFile = new File("configuration_files/program.txt");
+        shapesConfigFile = new File("../configuration_files/shapes.txt");
+        programFile = new File("../configuration_files/program.txt");
         robots.put(new BasicRobot(), new CartesianCoordinate(0, 0));
+        robots.put(new BasicRobot(), new CartesianCoordinate(0, 90));
         if (shapesConfigFile == null || programFile == null || robots.isEmpty()) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing configuration");
