@@ -1,0 +1,5 @@
+DO FOREVER
+SIGNAL circle02_
+MOVE 1 -1 15
+UNSIGNAL circle02_
+DONE

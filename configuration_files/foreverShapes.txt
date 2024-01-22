@@ -1,0 +1,5 @@
+circle01_ CIRCLE 40 -40 15
+circle02_ CIRCLE 80 -80 15
+circle03_ CIRCLE 120 -120 15
+circle04_ CIRCLE 160 -160 15
+circle05_ CIRCLE -650 300 1

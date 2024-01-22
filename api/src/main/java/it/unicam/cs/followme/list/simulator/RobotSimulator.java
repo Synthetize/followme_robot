@@ -35,9 +35,9 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
     }
 
     @Override
-    public void simulate(double delta_t, double execution_time, int numberOfCommandForExecution) {
+    public void simulate(double delta_t, double execution_time, int numberOfCommandsForExecution) {
         setSimulationEndTime(execution_time / delta_t);
-        for (int i = 0; i < numberOfCommandForExecution; i++) {
+        for (int i = 0; i < numberOfCommandsForExecution; i++) {
             incrementSimulationCurrentTime();
             if (isExecutionOver()) {
                 ModelController.LOGGER.info("TIME EXPIRED, PROGRAM EXECUTION STOPPED");

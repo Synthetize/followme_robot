@@ -1,0 +1,2 @@
+rectangle01_ RECTANGLE 130 0 60 100
+circle05_ CIRCLE -650 300 1

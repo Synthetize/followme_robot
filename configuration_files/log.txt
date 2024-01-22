@@ -1,0 +1,62 @@
+gen 22, 2024 11:42:57 AM it.unicam.cs.followme.list.ModelController loggerSetup
+INFO: LoggerHandler initialized
+gen 22, 2024 11:42:57 AM it.unicam.cs.followme.list.ModelController initialize
+INFO: ModelController initialized
+gen 22, 2024 11:43:00 AM it.unicam.cs.followme.list.model.commands.loops.Repeat getLog
+INFO: REPEAT | repeat forever
+gen 22, 2024 11:43:00 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel addLog
+INFO: SIGNAL | BasicRobot @6c97651c {signaling=[]}robot wasn't inside any shape with condition: CIRCLE02_
+gen 22, 2024 11:43:01 AM it.unicam.cs.followme.list.model.commands.basic.Move addLog
+INFO: MOVE | BasicRobot @6c97651c {signaling=[]} moved from (0,000;0,000) to (10,607;-10,607)
+gen 22, 2024 11:43:01 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel run
+INFO: UNSIGNAL | BasicRobot @6c97651c {signaling=[]} removed condition: CIRCLE02_
+gen 22, 2024 11:43:01 AM it.unicam.cs.followme.list.model.commands.basic.Done getLog
+INFO: DONE | loop FOREVER restarted
+gen 22, 2024 11:43:01 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel addLog
+INFO: SIGNAL | BasicRobot @6c97651c {signaling=[]}robot wasn't inside any shape with condition: CIRCLE02_
+gen 22, 2024 11:43:01 AM it.unicam.cs.followme.list.model.commands.basic.Move addLog
+INFO: MOVE | BasicRobot @6c97651c {signaling=[]} moved from (10,607;-10,607) to (21,213;-21,213)
+gen 22, 2024 11:43:01 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel run
+INFO: UNSIGNAL | BasicRobot @6c97651c {signaling=[]} removed condition: CIRCLE02_
+gen 22, 2024 11:43:02 AM it.unicam.cs.followme.list.model.commands.basic.Done getLog
+INFO: DONE | loop FOREVER restarted
+gen 22, 2024 11:43:02 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel addLog
+INFO: SIGNAL | BasicRobot @6c97651c {signaling=[]}robot wasn't inside any shape with condition: CIRCLE02_
+gen 22, 2024 11:43:02 AM it.unicam.cs.followme.list.model.commands.basic.Move addLog
+INFO: MOVE | BasicRobot @6c97651c {signaling=[]} moved from (21,213;-21,213) to (31,820;-31,820)
+gen 22, 2024 11:43:02 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel run
+INFO: UNSIGNAL | BasicRobot @6c97651c {signaling=[]} removed condition: CIRCLE02_
+gen 22, 2024 11:43:02 AM it.unicam.cs.followme.list.model.commands.basic.Done getLog
+INFO: DONE | loop FOREVER restarted
+gen 22, 2024 11:43:02 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel addLog
+INFO: SIGNAL | BasicRobot @6c97651c {signaling=[]}robot wasn't inside any shape with condition: CIRCLE02_
+gen 22, 2024 11:43:03 AM it.unicam.cs.followme.list.model.commands.basic.Move addLog
+INFO: MOVE | BasicRobot @6c97651c {signaling=[]} moved from (31,820;-31,820) to (42,426;-42,426)
+gen 22, 2024 11:43:03 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel run
+INFO: UNSIGNAL | BasicRobot @6c97651c {signaling=[]} removed condition: CIRCLE02_
+gen 22, 2024 11:43:03 AM it.unicam.cs.followme.list.model.commands.basic.Done getLog
+INFO: DONE | loop FOREVER restarted
+gen 22, 2024 11:43:03 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel addLog
+INFO: SIGNAL | BasicRobot @6c97651c {signaling=[]}robot wasn't inside any shape with condition: CIRCLE02_
+gen 22, 2024 11:43:03 AM it.unicam.cs.followme.list.model.commands.basic.Move addLog
+INFO: MOVE | BasicRobot @6c97651c {signaling=[]} moved from (42,426;-42,426) to (53,033;-53,033)
+gen 22, 2024 11:43:04 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel run
+INFO: UNSIGNAL | BasicRobot @6c97651c {signaling=[]} removed condition: CIRCLE02_
+gen 22, 2024 11:43:04 AM it.unicam.cs.followme.list.model.commands.basic.Done getLog
+INFO: DONE | loop FOREVER restarted
+gen 22, 2024 11:43:04 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel addLog
+INFO: SIGNAL | BasicRobot @6c97651c {signaling=[]}robot wasn't inside any shape with condition: CIRCLE02_
+gen 22, 2024 11:43:04 AM it.unicam.cs.followme.list.model.commands.basic.Move addLog
+INFO: MOVE | BasicRobot @6c97651c {signaling=[]} moved from (53,033;-53,033) to (63,640;-63,640)
+gen 22, 2024 11:43:04 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel run
+INFO: UNSIGNAL | BasicRobot @6c97651c {signaling=[]} removed condition: CIRCLE02_
+gen 22, 2024 11:43:04 AM it.unicam.cs.followme.list.model.commands.basic.Done getLog
+INFO: DONE | loop FOREVER restarted
+gen 22, 2024 11:43:05 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel addLog
+INFO: SIGNAL | BasicRobot @6c97651c {signaling=[]}robot wasn't inside any shape with condition: CIRCLE02_
+gen 22, 2024 11:43:05 AM it.unicam.cs.followme.list.model.commands.basic.Move addLog
+INFO: MOVE | BasicRobot @6c97651c {signaling=[]} moved from (63,640;-63,640) to (74,246;-74,246)
+gen 22, 2024 11:43:05 AM it.unicam.cs.followme.list.model.commands.basic.UpdateRobotLabel run
+INFO: UNSIGNAL | BasicRobot @6c97651c {signaling=[]} removed condition: CIRCLE02_
+gen 22, 2024 11:43:05 AM it.unicam.cs.followme.list.model.commands.basic.Done getLog
+INFO: DONE | loop FOREVER restarted

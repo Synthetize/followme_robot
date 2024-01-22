@@ -1,0 +1,5 @@
+REPEAT 5
+SIGNAL circle01_
+MOVE 1 -1 15
+UNSIGNAL circle01_
+DONE

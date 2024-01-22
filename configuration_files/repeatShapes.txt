@@ -1,0 +1,2 @@
+circle01_ CIRCLE 40 -40 20
+circle05_ CIRCLE -650 300 1
