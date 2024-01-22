@@ -50,8 +50,16 @@ public class SimulationController {
     @FXML
     private TextField commandsNumber;
 
+    public void initialize(HashMap<Robot, Coordinate> robotsCoordinates, File shapesConfigFile, File programFile) {
+        this.robotsCoordinates = robotsCoordinates;
+        this.shapesConfigFile = shapesConfigFile;
+        this.programFile = programFile;
+        initializeEnvironment();
+        initializeSimulationArea();
+    }
 
-    public void initializeEnvironment() {
+
+    private void initializeEnvironment() {
         modelController.initialize();
         modelController.setRobotsHashMap(robotsCoordinates);
         modelController.generateShapesFromFile(shapesConfigFile);
@@ -62,15 +70,13 @@ public class SimulationController {
         }
     }
 
-    public void initializeSimulationArea() {
+    private void initializeSimulationArea() {
         environment = modelController.getEnvironment();
         elementToShow = new Group();
         addShapesToGroup();
         addRobotsToGroup();
         simulationArea.setContent(elementToShow);
         simulationArea.setStyle("-fx-background: rgba(110,110,110,0.06);");
-        simulationArea.setHvalue(0.5);
-        simulationArea.setVvalue(0.5);
         deltaTimeTextField.setText("1");
         simulationTimeTextField.setText("1000");
         commandsNumber.setText("1");
@@ -116,18 +122,6 @@ public class SimulationController {
         rectangle.setFill(Color.BLUE);
         rectangle.setOpacity(0.5);
         elementToShow.getChildren().add(rectangle);
-    }
-
-    protected void setRobotsCoordinates(HashMap<Robot, Coordinate> robotsCoordinates) {
-        this.robotsCoordinates = robotsCoordinates;
-    }
-
-    protected void setShapesConfigFile(File shapesConfigFile) {
-        this.shapesConfigFile = shapesConfigFile;
-    }
-
-    protected void setProgramFile(File programFile) {
-        this.programFile = programFile;
     }
 
     @FXML

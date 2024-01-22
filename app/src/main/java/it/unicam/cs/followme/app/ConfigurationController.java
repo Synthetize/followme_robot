@@ -79,11 +79,7 @@ public class ConfigurationController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("simulation.fxml"));
                 Parent root = loader.load();
                 SimulationController simulationController = loader.getController();
-                simulationController.setRobotsCoordinates(robots);
-                simulationController.setShapesConfigFile(shapesConfigFile);
-                simulationController.setProgramFile(programFile);
-                simulationController.initializeEnvironment();
-                simulationController.initializeSimulationArea();
+                simulationController.initialize(robots, shapesConfigFile, programFile);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();
