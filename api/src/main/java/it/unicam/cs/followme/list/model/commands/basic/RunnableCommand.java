@@ -5,7 +5,7 @@ import it.unicam.cs.followme.list.model.robots.Robot;
 
 /**
  * This interface is extended by all the commands that need to perform some action
- * on the robot position.
+ * on the robot position or on the robot state,
  */
 public interface RunnableCommand extends Command {
     /**
