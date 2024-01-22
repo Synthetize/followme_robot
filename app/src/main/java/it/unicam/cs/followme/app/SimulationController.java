@@ -47,6 +47,8 @@ public class SimulationController {
     private TextArea simulationLog;
     @FXML
     private Button runButton;
+    @FXML
+    private TextField commandsNumber;
 
 
     public void initializeEnvironment() {
@@ -71,6 +73,7 @@ public class SimulationController {
         simulationArea.setVvalue(0.5);
         deltaTimeTextField.setText("1");
         simulationTimeTextField.setText("1000");
+        commandsNumber.setText("1");
         simulationLog.setEditable(false);
     }
 
@@ -133,7 +136,8 @@ public class SimulationController {
         deltaTimeTextField.setDisable(true);
         int deltaTime = Integer.parseInt(deltaTimeTextField.getText());
         int simulationTime = Integer.parseInt(simulationTimeTextField.getText());
-        modelController.runSimulation(deltaTime, simulationTime);
+        int numberOfCommands = Integer.parseInt(this.commandsNumber.getText());
+        modelController.runSimulation(deltaTime, simulationTime, numberOfCommands);
         elementToShow.getChildren().clear();
         addShapesToGroup();
         addRobotsToGroup();

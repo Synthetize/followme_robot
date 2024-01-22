@@ -17,10 +17,11 @@ public interface Simulator {
      *
      * @param delta_t         the time interval between two consecutive executions
      * @param execution_time the total time of the execution
+     * @param numberOfCommandForExecution the number of commands to be executed in each simulation step
      */
-    void simulate(double delta_t, double execution_time);
+    void simulate(double delta_t, double execution_time, int numberOfCommandForExecution);
     /**
-     * Sets up the simulator
+     * Initializes the simulator
      */
     void init();
 }

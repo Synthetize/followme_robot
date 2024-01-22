@@ -79,8 +79,8 @@ public class ModelController {
         simulator.init();
     }
 
-    public void runSimulation(double delta_t, double time) {
-        simulator.simulate(delta_t, time);
+    public void runSimulation(double delta_t, double time, int numberOfCommands) {
+        simulator.simulate(delta_t, time, numberOfCommands);
     }
 
     public Environment getEnvironment() {

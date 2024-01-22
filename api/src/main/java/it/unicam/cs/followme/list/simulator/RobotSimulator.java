@@ -35,35 +35,39 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
     }
 
     @Override
-    public void simulate(double delta_t, double execution_time) {
-
-
+    public void simulate(double delta_t, double execution_time, int numberOfCommandForExecution) {
         setSimulationEndTime(execution_time / delta_t);
-        incrementSimulationCurrentTime();
-        if (isExecutionOver()) {
-            ModelController.LOGGER.info("TIME EXPIRED, PROGRAM EXECUTION STOPPED");
-            return;
-        }
-        for (Robot r : robotsList.keySet()) {
-            int robotExecutionIndex = r.getCurrentCommandIndex();
-            if (robotExecutionIndex >= programList.size()) {
-                ModelController.LOGGER.info("ROBOT " + r + " execution ended");
-            } else {
-                Command commandToExecute = r.getProgram().get(robotExecutionIndex);
-                if (commandToExecute instanceof Done done) {
-                    Boolean isLoopStillRunning = done.startingLoopCommand().isLoopStillRunning(r);
-                    if (isLoopStillRunning) {
-                        r.setCurrentCommandIndex(done.startingLoopCommand().getStartingLoopIndex());
-                    }
-                    done.getLog(isLoopStillRunning);
-                } else if (commandToExecute instanceof RunnableCommand runnableCommand) {
+        for (int i = 0; i < numberOfCommandForExecution; i++) {
+            incrementSimulationCurrentTime();
+            if (isExecutionOver()) {
+                ModelController.LOGGER.info("TIME EXPIRED, PROGRAM EXECUTION STOPPED");
+                return;
+            }
+            for (Robot r : robotsList.keySet()) {
+                int robotExecutionIndex = r.getCurrentCommandIndex();
+                if (robotExecutionIndex >= programList.size()) {
+                    ModelController.LOGGER.info("ROBOT " + r + " execution ended");
+                } else {
+                    Command commandToExecute = r.getProgram().get(robotExecutionIndex);
+                    if (commandToExecute instanceof Done done) {
+                        handleDoneCommand(r, done);
+                    } else if (commandToExecute instanceof RunnableCommand runnableCommand) {
                         runnableCommand.run(r, delta_t);
-                } else if (commandToExecute instanceof LoopCommand command) {
-                    command.getLog();
-                }
+                    } else if (commandToExecute instanceof LoopCommand command) {
+                        command.getLog();
+                    }
 
-                r.incrementCurrentCommandIndex();
+                    r.incrementCurrentCommandIndex();
+                }
             }
         }
+    }
+
+    private void handleDoneCommand(Robot robot, Done done) {
+        Boolean isLoopStillRunning = done.startingLoopCommand().isLoopStillRunning(robot);
+        if (isLoopStillRunning) {
+            robot.setCurrentCommandIndex(done.startingLoopCommand().getStartingLoopIndex());
+        }
+        done.getLog(isLoopStillRunning);
     }
 }
