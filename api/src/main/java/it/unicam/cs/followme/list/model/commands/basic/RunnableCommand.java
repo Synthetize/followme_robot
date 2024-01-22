@@ -14,5 +14,5 @@ public interface RunnableCommand extends Command {
      * @param robot   the robot on which the command is performed
      * @param delta_t the time elapsed since the last call
      */
-    abstract public void run(Robot robot, double delta_t);
+    void run(Robot robot, double delta_t);
 }
