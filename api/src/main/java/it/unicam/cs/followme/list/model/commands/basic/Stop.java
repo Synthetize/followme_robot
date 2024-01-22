@@ -6,7 +6,7 @@ import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class Stop extends RunnableCommand implements Command {
+public class Stop implements RunnableCommand {
 
     @Override
     public RobotCommand getCommandType() {

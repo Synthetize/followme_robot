@@ -9,7 +9,7 @@ import it.unicam.cs.followme.utilities.RobotCommand;
 
 import java.util.List;
 
-public class UpdateRobotLabel extends RunnableCommand implements Command {
+public class UpdateRobotLabel implements Command, RunnableCommand {
     private final Environment environment;
     private final String label;
     private final RobotCommand commandType;
@@ -29,15 +29,7 @@ public class UpdateRobotLabel extends RunnableCommand implements Command {
     public void run(Robot robot, double delta_t) {
         switch (this.commandType) {
             case SIGNAL:
-                List<Shape> shapes = environment.checkIfRobotIsInsideShapes(robot);
-                shapes.forEach(shape -> {
-                    if (shape.getConditionLabel().equals(label)) {
-                        if (!robot.getCurrentConditionLabels().contains(label)) {
-                            robot.addLabel(label);
-                        }
-                    }
-                });
-                addLog(robot);
+                handleSignalRun(robot);
                 break;
             case UNSIGNAL:
                 robot.removeLabel(label);
@@ -46,6 +38,18 @@ public class UpdateRobotLabel extends RunnableCommand implements Command {
             default:
                 throw new IllegalStateException("Unexpected command type: " + this.commandType);
         }
+    }
+
+    private void handleSignalRun(Robot robot) {
+        List<Shape> shapes = environment.checkIfRobotIsInsideShapes(robot);
+        shapes.forEach(shape -> {
+            if (shape.getConditionLabel().equals(label)) {
+                if (!robot.getCurrentConditionLabels().contains(label)) {
+                    robot.addLabel(label);
+                }
+            }
+        });
+        addLog(robot);
     }
 
     private void addLog(Robot robot) {

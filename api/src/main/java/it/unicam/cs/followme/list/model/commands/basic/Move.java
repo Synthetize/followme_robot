@@ -9,7 +9,7 @@ import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class Move extends RunnableCommand {
+public class Move implements RunnableCommand {
     private final Coordinate targetCoordinates;
     private final double speed;
     private final Environment environment;
