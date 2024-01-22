@@ -8,7 +8,7 @@ import java.util.PrimitiveIterator;
 
 public class Repeat extends LoopCommand {
 
-    private int repetitionNumbers;
+    private final int repetitionNumbers;
     private int currentRepetitionNumber = 0;
 
     public Repeat(int repetitionNumbers, int startingLoopIndex, int endingLoopIndex) {

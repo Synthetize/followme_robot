@@ -4,8 +4,7 @@ import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 
 /**
- * This class represents a loop command that is used to execute a block of code
- * multiple times until a certain condition is satisfied
+ * This class represents a loop command. It contains the details of the loop such as the starting and ending index and the condition to check.
  */
 public abstract class LoopCommand implements Command {
     protected int startingLoopIndex;
