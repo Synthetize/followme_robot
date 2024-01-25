@@ -4,7 +4,7 @@ import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.shapes.CircleShape;
 import it.unicam.cs.followme.list.model.shapes.RectangleShape;
 import it.unicam.cs.followme.list.model.shapes.Shape;
-import it.unicam.cs.followme.list.parser_handler.ProgramParserHandler;
+import it.unicam.cs.followme.list.parserHandler.ProgramParserHandler;
 import it.unicam.cs.followme.utilities.FollowMeParser;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import it.unicam.cs.followme.utilities.FollowMeShapeChecker;
@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class DefaultShapeGeneratorTest {
 
 
-    FollowMeParserHandler handler = new ProgramParserHandler<>(null, null);
+    FollowMeParserHandler handler = new ProgramParserHandler(null, null);
     FollowMeShapeChecker checker = FollowMeShapeChecker.DEFAULT_CHECKER;
     FollowMeParser parser = new FollowMeParser(handler, checker);
     ShapesGenerator shapesGenerator = new DefaultShapesGenerator(parser);
@@ -35,7 +35,7 @@ public class DefaultShapeGeneratorTest {
         Shape shape0 = shapeList.get(0);
         Coordinate coordinate0 = coordinateList.get(0);
         assertEquals("CIRCLE1_", shape0.getConditionLabel());
-        assertTrue(shape0 instanceof CircleShape);
+        assertInstanceOf(CircleShape.class, shape0);
         CircleShape circle = (CircleShape) shape0;
         assertEquals(coordinate0.getX(), 5);
         assertEquals(coordinate0.getY(), 4);
@@ -44,7 +44,7 @@ public class DefaultShapeGeneratorTest {
         Shape shape1 = shapeList.get(1);
         Coordinate coordinate1 = coordinateList.get(1);
         assertEquals("RECTANGLE1_", shape1.getConditionLabel());
-        assertTrue(shape1 instanceof RectangleShape);
+        assertInstanceOf(RectangleShape.class, shape1);
         RectangleShape rectangle = (RectangleShape) shape1;
         assertEquals(coordinate1.getX(), 0);
         assertEquals(coordinate1.getY(), 0);

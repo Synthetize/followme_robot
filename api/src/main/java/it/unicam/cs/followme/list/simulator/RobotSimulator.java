@@ -3,48 +3,71 @@ package it.unicam.cs.followme.list.simulator;
 import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
+import it.unicam.cs.followme.list.model.commands.basic.Done;
+import it.unicam.cs.followme.list.model.commands.basic.RunnableCommand;
+import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
-import it.unicam.cs.followme.list.utils.HandleCommandToExecute;
+import it.unicam.cs.followme.list.utils.ProgramCloner;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
 
-public class RobotSimulator<R extends Robot> extends SimulationTimer implements Simulator<R> {
-    private final List<Command<R>> programList;
-    protected AtomicInteger currentCommandIndex = new AtomicInteger(0);
-    private final Map<R, Coordinate> robotsList;
+public class RobotSimulator extends SimulationTimer implements Simulator {
+    private final List<Command> programList;
+    protected final Map<Robot, Coordinate> robotsList;
 
-    public RobotSimulator(List<Command<R>> programList, Map<R, Coordinate> robotsList) {
+    public RobotSimulator(List<Command> programList, Map<Robot, Coordinate> robotsList) {
         this.robotsList = robotsList;
         this.programList = programList;
+
     }
 
     @Override
-    public void setProgramList(List<Command<R>> programList) {
+    public void setProgramList(List<Command> programList) {
         this.programList.addAll(programList);
     }
 
     @Override
-    public void simulate(double delta_t, double execution_time) {
-        for (R r : robotsList.keySet()) {
-            ModelController.LOGGER.info("RUNNING PROGRAM FOR ROBOT: " + r);
-            runProgram(r, delta_t, execution_time);
-        }
-    }
-
-    private void runProgram(R robot, double delta_t, double execution_time) {
-        currentCommandIndex.set(0);
+    public void init() {
         setSimulationCurrentTime(0);
-        setSimulationEndTime(numberOfCommandsThatCanBeExecuted(execution_time, delta_t));
-        while (currentCommandIndex.get() < programList.size()) {
-            HandleCommandToExecute<R> handleCommandToExecute = new HandleCommandToExecute<>(currentCommandIndex, programList);
-            handleCommandToExecute.findLoopOrBasicCommandAndCallRun(delta_t, robot, programList.size());
+        robotsList.keySet().forEach(r -> r.setProgram(ProgramCloner.clone(programList)));
+    }
+
+    @Override
+    public void simulate(double delta_t, double execution_time, int numberOfCommandsForExecution) {
+        setSimulationEndTime(execution_time / delta_t);
+        for (int i = 0; i < numberOfCommandsForExecution; i++) {
+            incrementSimulationCurrentTime();
+            if (isExecutionOver()) {
+                ModelController.LOGGER.info("TIME EXPIRED, PROGRAM EXECUTION STOPPED");
+                return;
+            }
+            for (Robot r : robotsList.keySet()) {
+                int robotExecutionIndex = r.getCurrentCommandIndex();
+                if (robotExecutionIndex >= programList.size()) {
+                    ModelController.LOGGER.info("ROBOT " + r + " execution ended");
+                } else {
+                    Command commandToExecute = r.getProgram().get(robotExecutionIndex);
+                    if (commandToExecute instanceof Done done) {
+                        handleDoneCommand(r, done);
+                    } else if (commandToExecute instanceof RunnableCommand runnableCommand) {
+                        runnableCommand.run(r, delta_t);
+                    } else if (commandToExecute instanceof LoopCommand command) {
+                        command.getLog();
+                    }
+
+                    r.incrementCurrentCommandIndex();
+                }
+            }
         }
     }
 
-    private long numberOfCommandsThatCanBeExecuted(double execution_time, double delta_t) {
-        return Math.round(execution_time / delta_t);
+    private void handleDoneCommand(Robot robot, Done done) {
+        Boolean isLoopStillRunning = done.startingLoopCommand().isLoopStillRunning(robot);
+        if (isLoopStillRunning) {
+            robot.setCurrentCommandIndex(done.startingLoopCommand().getStartingLoopIndex());
+        }
+        done.getLog(isLoopStillRunning);
     }
 }

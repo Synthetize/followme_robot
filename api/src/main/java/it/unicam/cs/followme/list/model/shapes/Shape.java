@@ -1,7 +1,7 @@
 package it.unicam.cs.followme.list.model.shapes;
 
 /**
- * This interface is used to rappresent a generic shape
+ * This interface is used to represent a generic shape
  */
 public interface Shape {
     /**

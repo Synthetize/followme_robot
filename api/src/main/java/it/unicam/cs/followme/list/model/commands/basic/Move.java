@@ -6,14 +6,15 @@ import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.list.model.commands.Command;
+import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class Move<R extends Robot> implements Command<R> {
+public class Move implements RunnableCommand {
     private final Coordinate targetCoordinates;
     private final double speed;
-    private final Environment<R> environment;
+    private final Environment environment;
 
-    public Move(Coordinate targetCoordinates, double speed, Environment<R> environment) {
+    public Move(Coordinate targetCoordinates, double speed, Environment environment) {
         this.targetCoordinates = targetCoordinates;
         this.speed = speed;
         this.environment = environment;
@@ -26,7 +27,7 @@ public class Move<R extends Robot> implements Command<R> {
     }
 
     @Override
-    public void run(R robot, double delta_t) {
+    public void run(Robot robot, double delta_t) {
         Coordinate robotRelativeCoordinates = new CartesianCoordinate(0, 0);
         double distance = environment.getDistanceBetweenTwoCoordinates(targetCoordinates, robotRelativeCoordinates);
         // Calculate the change in position
@@ -42,12 +43,24 @@ public class Move<R extends Robot> implements Command<R> {
                 currentX + deltaX,
                 currentY + deltaY
         ));
-        robot.setLastMovementDirection(new CartesianCoordinate(deltaX, deltaY));
+        robot.setLastMovementValues(new CartesianCoordinate(deltaX, deltaY));
         addLog(robot, deltaX, deltaY, currentX, currentY);
     }
 
-    private void addLog(R robot, double deltaX, double deltaY, double currentX, double currentY) {
+    private void addLog(Robot robot, double deltaX, double deltaY, double currentX, double currentY) {
         ModelController.LOGGER.info("MOVE | " + robot + " moved from " + "(" + String.format("%.3f", currentX)
                 + ";" + String.format("%.3f", currentY) + ")" + " to " + "(" + String.format("%.3f", currentX + deltaX) + ";" + String.format("%.3f", currentY + deltaY) + ")");
+    }
+
+    public Coordinate getCoordinate() {
+        return targetCoordinates;
+    }
+
+    public double getSpeed() {
+        return speed;
+    }
+
+    public Environment getEnvironment() {
+        return environment;
     }
 }

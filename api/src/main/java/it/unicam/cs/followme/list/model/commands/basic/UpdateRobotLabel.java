@@ -9,12 +9,12 @@ import it.unicam.cs.followme.utilities.RobotCommand;
 
 import java.util.List;
 
-public class UpdateRobotLabel<R extends Robot> implements Command<R> {
-    private final Environment<R> environment;
+public class UpdateRobotLabel implements Command, RunnableCommand {
+    private final Environment environment;
     private final String label;
     private final RobotCommand commandType;
 
-    public UpdateRobotLabel(String label, Environment<R> environment, RobotCommand commandType) {
+    public UpdateRobotLabel(String label, Environment environment, RobotCommand commandType) {
         this.label = label;
         this.environment = environment;
         this.commandType = commandType;
@@ -26,16 +26,10 @@ public class UpdateRobotLabel<R extends Robot> implements Command<R> {
     }
 
     @Override
-    public void run(R robot, double delta_t) {
+    public void run(Robot robot, double delta_t) {
         switch (this.commandType) {
             case SIGNAL:
-                List<Shape> shapes = environment.checkIfRobotIsInsideShapes(robot);
-                shapes.forEach(shape -> {
-                    if (shape.getConditionLabel().equals(label)) {
-                        robot.addLabel(label);
-                    }
-                });
-                addLog(robot);
+                handleSignalRun(robot);
                 break;
             case UNSIGNAL:
                 robot.removeLabel(label);
@@ -46,11 +40,31 @@ public class UpdateRobotLabel<R extends Robot> implements Command<R> {
         }
     }
 
-    private void addLog(R robot) {
-        if(robot.getCurrentConditionLabels().contains(label))
+    private void handleSignalRun(Robot robot) {
+        List<Shape> shapes = environment.checkIfRobotIsInsideShapes(robot);
+        shapes.forEach(shape -> {
+            if (shape.getConditionLabel().equals(label)) {
+                if (!robot.getCurrentConditionLabels().contains(label)) {
+                    robot.addLabel(label);
+                }
+            }
+        });
+        addLog(robot);
+    }
+
+    private void addLog(Robot robot) {
+        if (robot.getCurrentConditionLabels().contains(label))
             ModelController.LOGGER.info("SIGNAL | " + robot + " added condition: " + label);
         else
             ModelController.LOGGER.info("SIGNAL | " + robot + "robot wasn't inside any shape with condition: " + label);
 
+    }
+
+    public String getLabel() {
+        return label;
+    }
+
+    public Environment getEnvironment() {
+        return environment;
     }
 }

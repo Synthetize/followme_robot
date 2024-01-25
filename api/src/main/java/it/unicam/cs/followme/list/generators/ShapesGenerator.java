@@ -10,13 +10,15 @@ import java.util.Map;
 
 /**
  * Instances of this class are used to generate shapes from an external source.
+ *
  * @apiNote This class uses the {@link FollowMeParser} to parse the shapes.
  */
 public interface ShapesGenerator {
     /**
      * Generates a Map of shapes and coordinates from a file.
-     * @param shapesFilePath the path of the file.
-     * @return a list of shapes.
+     *
+     * @param shapesFile the file containing the shapes.
+     * @return a Map of shapes and coordinates.
      */
     Map<Shape, Coordinate> generateShapes(File shapesFile);
 }

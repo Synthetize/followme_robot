@@ -1,6 +1,7 @@
-package it.unicam.cs.followme.list.parser_handler;
+package it.unicam.cs.followme.list.parserHandler;
 
 import it.unicam.cs.followme.list.model.Coordinate;
+import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.simulator.Simulator;
 import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.model.Environment;
@@ -8,7 +9,6 @@ import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.commands.basic.*;
 import it.unicam.cs.followme.list.model.commands.loops.Repeat;
-import it.unicam.cs.followme.list.model.robots.BasicRobot;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -21,19 +21,19 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProgramParserHandlerTest {
-    Environment<BasicRobot> environment;
-    Simulator<BasicRobot> simulator;
-    List<Command<BasicRobot>> program;
+    Environment environment;
+    Simulator simulator;
+    List<Command> program;
     FollowMeParserHandler programParserHandler;
-    Map<BasicRobot, Coordinate> robotsList;
+    Map<Robot, Coordinate> robotsList;
 
     @BeforeEach
     void setUp() {
-        environment = new SimulationEnvironment<>(null, null);
+        environment = new SimulationEnvironment(null, null);
         program = new ArrayList<>();
         robotsList = new HashMap<>();
-        simulator = new RobotSimulator<>(program, robotsList);
-        programParserHandler = new ProgramParserHandler<>(environment, simulator);
+        simulator = new RobotSimulator(program, robotsList);
+        programParserHandler = new ProgramParserHandler(environment, simulator);
         programParserHandler.parsingStarted();
 
     }
@@ -143,7 +143,6 @@ public class ProgramParserHandlerTest {
 
     @Test
     void shouldNotParseContinueCommand() {
-        //assertThrows(IllegalArgumentException.class, () -> programParserHandler.continueCommand(0)); //TODO: speed can be 0?
         assertThrows(IllegalArgumentException.class, () -> programParserHandler.continueCommand(-1));
         programParserHandler.parsingDone();
         assertEquals(0, program.size());
@@ -158,7 +157,7 @@ public class ProgramParserHandlerTest {
         programParserHandler.parsingDone();
         assertEquals(4, program.size());
         assertInstanceOf(Repeat.class, program.get(0));
-        Repeat<BasicRobot> repeat = (Repeat<BasicRobot>) program.get(0);
+        Repeat repeat = (Repeat) program.get(0);
         assertEquals(repeat.getStartingLoopIndex(), 0);
         assertEquals(repeat.getEndingLoopIndex(), 3);
 
@@ -171,7 +170,7 @@ public class ProgramParserHandlerTest {
 
         assertEquals(3, program.size());
         assertInstanceOf(Repeat.class, program.get(1));
-        repeat = (Repeat<BasicRobot>) program.get(1);
+        repeat = (Repeat) program.get(1);
         assertEquals(repeat.getStartingLoopIndex(), 1);
         assertEquals(repeat.getEndingLoopIndex(), 2);
 
@@ -187,11 +186,11 @@ public class ProgramParserHandlerTest {
         programParserHandler.parsingDone();
         assertEquals(7, program.size());
         assertInstanceOf(Repeat.class, program.get(0));
-        repeat = (Repeat<BasicRobot>) program.get(0);
+        repeat = (Repeat) program.get(0);
         assertEquals(repeat.getStartingLoopIndex(), 0);
         assertEquals(repeat.getEndingLoopIndex(), 6);
         assertInstanceOf(Repeat.class, program.get(2));
-        repeat = (Repeat<BasicRobot>) program.get(2);
+        repeat = (Repeat) program.get(2);
         assertEquals(repeat.getStartingLoopIndex(), 2);
         assertEquals(repeat.getEndingLoopIndex(), 4);
     }
@@ -216,12 +215,26 @@ public class ProgramParserHandlerTest {
         programParserHandler.parsingDone();
         assertEquals(7, program.size());
         assertInstanceOf(Repeat.class, program.get(1));
-        Repeat<BasicRobot> repeat = (Repeat<BasicRobot>) program.get(1);
+        Repeat repeat = (Repeat) program.get(1);
         assertEquals(repeat.getStartingLoopIndex(), 1);
         assertEquals(repeat.getEndingLoopIndex(), 6);
 
-        repeat = (Repeat<BasicRobot>) program.get(3);
+        repeat = (Repeat) program.get(3);
         assertEquals(repeat.getStartingLoopIndex(), 3);
         assertEquals(repeat.getEndingLoopIndex(), 4);
     }
+
+    @Test
+    void shouldParseDoneCommand() {
+        programParserHandler.untilCommandStart("label_");
+        programParserHandler.repeatCommandStart(2);
+        programParserHandler.doneCommand();
+        programParserHandler.doneCommand();
+        programParserHandler.parsingDone();
+        assertEquals(4, program.size());
+        assertInstanceOf(Done.class, program.get(2));
+        assertInstanceOf(Done.class, program.get(3));
+
+    }
+
 }

@@ -10,32 +10,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class SimulationEnvironment<R extends Robot> implements Environment<R> {
-
-    private final Map<Shape, Coordinate> shapesDetails;
-    private final Map<R, Coordinate> robotsDetails;
-
-    public SimulationEnvironment(Map<Shape, Coordinate> shapesDetails, Map<R, Coordinate> robotsDetails) {
-        this.shapesDetails = shapesDetails;
-        this.robotsDetails = robotsDetails;
-    }
-
-    @Override
-    public Map<Shape, Coordinate> getShapesDetails() {
-        return this.shapesDetails;
-    }
-
-    @Override
-    public Map<R, Coordinate> getRobotsDetails() {
-        return this.robotsDetails;
-    }
+public record SimulationEnvironment(Map<Shape, Coordinate> shapesDetails,
+                                    Map<Robot, Coordinate> robotsDetails) implements Environment {
 
     @Override
     public void addShapes(List<Shape> shapes, List<Coordinate> coordinates) {
         shapes.forEach(shape -> shapesDetails.put(shape, coordinates.get(shapes.indexOf(shape))));
     }
+
     @Override
-    public void addRobots(List<R> robots, List<Coordinate> coordinates) {
+    public void addRobots(List<Robot> robots, List<Coordinate> coordinates) {
         robots.forEach(robot -> robotsDetails.put(robot, coordinates.get(robots.indexOf(robot))));
     }
 
@@ -45,8 +29,8 @@ public class SimulationEnvironment<R extends Robot> implements Environment<R> {
     }
 
     @Override
-    public List<Shape> checkIfRobotIsInsideShapes(R robot) {
-        Map.Entry<R, Coordinate> robotEntry = this.robotsDetails.entrySet()
+    public List<Shape> checkIfRobotIsInsideShapes(Robot robot) {
+        Map.Entry<Robot, Coordinate> robotEntry = this.robotsDetails.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().equals(robot))
                 .findFirst().orElse(null);
@@ -69,7 +53,7 @@ public class SimulationEnvironment<R extends Robot> implements Environment<R> {
     }
 
     @Override
-    public void setRobotPosition(R robot, Coordinate coordinate) {
+    public void setRobotPosition(Robot robot, Coordinate coordinate) {
         this.robotsDetails.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().equals(robot))
@@ -78,7 +62,7 @@ public class SimulationEnvironment<R extends Robot> implements Environment<R> {
     }
 
     @Override
-    public Coordinate getRobotCoordinate(R robot) {
+    public Coordinate getRobotCoordinate(Robot robot) {
         return this.robotsDetails.entrySet()
                 .stream()
                 .filter(entry -> entry.getKey().equals(robot))

@@ -24,14 +24,14 @@ import java.util.*;
 public class ConfigurationController implements Initializable {
 
     FileChooser fileChooser = new FileChooser();
-    HashMap<BasicRobot, Coordinate> robots = new HashMap<>();
+    LinkedHashMap<Robot, Coordinate> robots = new LinkedHashMap<>();
     File shapesConfigFile;
     File programFile;
     Alert alert;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        fileChooser.setInitialDirectory(new File("configuration_files"));
+        fileChooser.setInitialDirectory(new File("../configuration_files"));
         showRobotsArea.setEditable(false);
     }
 
@@ -69,9 +69,6 @@ public class ConfigurationController implements Initializable {
 
     @FXML
     void openSimulationScene(MouseEvent event) {
-        shapesConfigFile = new File("configuration_files/shapes.txt");
-        programFile = new File("configuration_files/program.txt");
-        robots.put(new BasicRobot(), new CartesianCoordinate(0, 0));
         if (shapesConfigFile == null || programFile == null || robots.isEmpty()) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing configuration");
@@ -82,11 +79,7 @@ public class ConfigurationController implements Initializable {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("simulation.fxml"));
                 Parent root = loader.load();
                 SimulationController simulationController = loader.getController();
-                simulationController.setRobotsCoordinates(robots);
-                simulationController.setShapesConfigFile(shapesConfigFile);
-                simulationController.setProgramFile(programFile);
-                simulationController.initializeEnvironment();
-                simulationController.initializeSimulationArea();
+                simulationController.initialize(robots, shapesConfigFile, programFile);
                 Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
                 stage.setScene(new Scene(root));
                 stage.show();

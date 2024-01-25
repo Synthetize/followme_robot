@@ -15,8 +15,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-public class DefaultShapesGenerator implements ShapesGenerator{
-    FollowMeParser parser;
+public class DefaultShapesGenerator implements ShapesGenerator {
+    private final FollowMeParser parser;
 
     public DefaultShapesGenerator(FollowMeParser parser) {
         this.parser = parser;
@@ -24,19 +24,18 @@ public class DefaultShapesGenerator implements ShapesGenerator{
 
     public Map<Shape, Coordinate> generateShapes(File shapesFile) {
         try {
-            //File env_conf = new File(shapesFilePath);
             List<ShapeData> shapes = parser.parseEnvironment(shapesFile);
             return shapes.stream()
                     .map(shapeData -> {
                         Coordinate shapeCoordinate = new CartesianCoordinate(shapeData.args()[0], shapeData.args()[1]);
-                        if(shapeData.shape().equals("RECTANGLE")){
-                            Shape rectangleShape = new RectangleShape(shapeData.args()[2], shapeData.args()[3], shapeData.label());
-                            return Map.entry(rectangleShape, shapeCoordinate);
-                        } else if(shapeData.shape().equals("CIRCLE")) {
-                            Shape circleShape = new CircleShape(shapeData.args()[2], shapeData.label());
-                            return Map.entry(circleShape, shapeCoordinate);
+                        switch (shapeData.shape()) {
+                            case "RECTANGLE":
+                                return Map.entry(new RectangleShape(shapeData.args()[2], shapeData.args()[3], shapeData.label()), shapeCoordinate);
+                            case "CIRCLE":
+                                return Map.entry(new CircleShape(shapeData.args()[2], shapeData.label()), shapeCoordinate);
+                            default:
+                                throw new RuntimeException("Shape type not supported");
                         }
-                        throw new RuntimeException("Shape type not supported");
                     })
                     .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         } catch (FollowMeParserException | IOException e) {

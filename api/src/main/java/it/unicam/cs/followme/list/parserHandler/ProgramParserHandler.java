@@ -1,4 +1,4 @@
-package it.unicam.cs.followme.list.parser_handler;
+package it.unicam.cs.followme.list.parserHandler;
 
 import it.unicam.cs.followme.list.simulator.Simulator;
 import it.unicam.cs.followme.list.model.Environment;
@@ -7,7 +7,6 @@ import it.unicam.cs.followme.list.model.commands.basic.*;
 import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.commands.loops.Repeat;
 import it.unicam.cs.followme.list.model.commands.loops.Until;
-import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
@@ -17,14 +16,14 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
-public class ProgramParserHandler<R extends Robot> implements FollowMeParserHandler {
+public class ProgramParserHandler implements FollowMeParserHandler {
 
-    private List<Command<R>> program;
-    private final Simulator<R> simulator;
-    private final Environment<R> environment;
+    private List<Command> program;
+    private final Simulator simulator;
+    private final Environment environment;
     private Stack<Integer> startingLoopIndexStack;
 
-    public ProgramParserHandler(Environment<R> environment, Simulator<R> simulator) {
+    public ProgramParserHandler(Environment environment, Simulator simulator) {
         this.environment = environment;
         this.simulator = simulator;
     }
@@ -48,7 +47,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
         }
         checkIfCoordinatesAreInRange(args[0], args[1]);
         validateSpeed(args[2]);
-        Move<R> move = new Move<>(targetCoordinate, args[2], environment);
+        Move move = new Move(targetCoordinate, args[2], environment);
         program.add(move);
     }
 
@@ -74,14 +73,14 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
             throw new IllegalArgumentException("The mean values of the coordinates cannot both be 0");
         }
         validateSpeed(args[4]);
-        Move<R> move = new Move<>(new CartesianCoordinate(xAvgValue, yAvgValue), args[4], environment);
+        Move move = new Move(new CartesianCoordinate(xAvgValue, yAvgValue), args[4], environment);
         program.add(move);
     }
 
     @Override
     public void signalCommand(String label) {
         validateLabel(label);
-        UpdateRobotLabel<R> updateRobotLabel = new UpdateRobotLabel<>(label, environment, RobotCommand.SIGNAL);
+        UpdateRobotLabel updateRobotLabel = new UpdateRobotLabel(label, environment, RobotCommand.SIGNAL);
         program.add(updateRobotLabel);
     }
 
@@ -94,7 +93,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
     @Override
     public void unsignalCommand(String label) {
         validateLabel(label);
-        UpdateRobotLabel<R> updateRobotLabel = new UpdateRobotLabel<>(label, environment, RobotCommand.UNSIGNAL);
+        UpdateRobotLabel updateRobotLabel = new UpdateRobotLabel(label, environment, RobotCommand.UNSIGNAL);
         program.add(updateRobotLabel);
     }
 
@@ -105,13 +104,13 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
         if (args[0] <= 0) {
             throw new IllegalArgumentException("Distance must be greater than 0");
         }
-        Follow<R> follow = new Follow<>(label, args, environment);
+        Follow follow = new Follow(label, args, environment);
         program.add(follow);
     }
 
     @Override
     public void stopCommand() {
-        Stop<R> stop = new Stop<>();
+        Stop stop = new Stop();
         program.add(stop);
     }
 
@@ -120,7 +119,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
         if (s <= 0) {
             throw new IllegalArgumentException("Number of seconds must be greater than 0");
         }
-        Continue<R> continueCommand = new Continue<>(s, environment);
+        Continue continueCommand = new Continue(s, environment);
         program.add(continueCommand);
     }
 
@@ -131,7 +130,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
         }
         // the index of the loop is the size of the program list because the loopCommand is not yet added
         int loopStartIndex = program.size();
-        Repeat<R> repeatCommand = new Repeat<>(n, loopStartIndex, -1, environment, program);
+        Repeat repeatCommand = new Repeat(n, loopStartIndex, 0);
         program.add(repeatCommand);
         startingLoopIndexStack.push(loopStartIndex);
     }
@@ -141,7 +140,7 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
         validateLabel(label);
         // the index of the loop is the size of the program list because the loopCommand is not yet added
         int loopStartIndex = program.size();
-        Until<R> untilCommand = new Until<>(label, loopStartIndex, -1, environment, program);
+        Until untilCommand = new Until(label, loopStartIndex, -1, environment);
         program.add(untilCommand);
         startingLoopIndexStack.push(loopStartIndex);
     }
@@ -156,12 +155,12 @@ public class ProgramParserHandler<R extends Robot> implements FollowMeParserHand
     public void doneCommand() {
         // the index of the end is the size of the program list because the doneCommand is not yet added
         int loopEndIndex = program.size();
-        Command<R> startingLoopCommand = program.get(startingLoopIndexStack.pop());
-        if (!(startingLoopCommand instanceof LoopCommand<R> loopCommand)) {
+        Command startingLoopCommand = program.get(startingLoopIndexStack.pop());
+        if (!(startingLoopCommand instanceof LoopCommand loopCommand)) {
             throw new IllegalArgumentException("The starting loop command must be a loop command");
         }
         loopCommand.setEndingLoopIndex(loopEndIndex);
-        Done<R> doneCommand = new Done<>();
+        Done doneCommand = new Done(loopCommand);
         program.add(doneCommand);
     }
 }

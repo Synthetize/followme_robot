@@ -2,19 +2,16 @@ package it.unicam.cs.followme.list.model.robots;
 
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
+import it.unicam.cs.followme.list.model.commands.Command;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class BasicRobot implements Robot {
-
-    List<String> conditionLabels;
-    Coordinate lastMovementDirection;
-
-    // TODO: 12/11/2023 da cambiare costruttore
-    public BasicRobot() {
-        this.conditionLabels = new ArrayList<>();
-        this.lastMovementDirection = new CartesianCoordinate(0,0);
-    }
+    private List<Command> program = new ArrayList<>();
+    private final List<String> conditionLabels = new ArrayList<>();
+    private Coordinate lastMovementDirection = new CartesianCoordinate(0, 0);
+    private int currentCommandIndex = 0;
 
     @Override
     public List<String> getCurrentConditionLabels() {
@@ -32,18 +29,43 @@ public class BasicRobot implements Robot {
     }
 
     @Override
-    public Coordinate getLastMovementDirection() {
+    public Coordinate getLastMovementValues() {
         return this.lastMovementDirection;
     }
 
     @Override
-    public void setLastMovementDirection(Coordinate direction) {
-        this.lastMovementDirection = direction;
+    public void setLastMovementValues(Coordinate movement) {
+        this.lastMovementDirection = movement;
     }
 
     @Override
     public void clearCurrentConditionLabels() {
         this.conditionLabels.clear();
+    }
+
+    @Override
+    public void setProgram(List<Command> program) {
+        this.program = program;
+    }
+
+    @Override
+    public List<Command> getProgram() {
+        return this.program;
+    }
+
+    @Override
+    public int getCurrentCommandIndex() {
+        return this.currentCommandIndex;
+    }
+
+    @Override
+    public void setCurrentCommandIndex(int index) {
+        this.currentCommandIndex = index;
+    }
+
+    @Override
+    public void incrementCurrentCommandIndex() {
+        this.currentCommandIndex++;
     }
 
     @Override

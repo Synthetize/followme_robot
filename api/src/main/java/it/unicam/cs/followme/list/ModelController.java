@@ -8,10 +8,9 @@ import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.model.shapes.Shape;
-import it.unicam.cs.followme.list.parser_handler.ProgramParserHandler;
+import it.unicam.cs.followme.list.parserHandler.ProgramParserHandler;
 import it.unicam.cs.followme.list.simulator.RobotSimulator;
 import it.unicam.cs.followme.list.simulator.Simulator;
-import it.unicam.cs.followme.list.utils.HandleCommandToExecute;
 import it.unicam.cs.followme.utilities.FollowMeParser;
 import it.unicam.cs.followme.utilities.FollowMeParserException;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
@@ -28,15 +27,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.SimpleFormatter;
 
-public class ModelController<R extends Robot> {
-    private Map<R, Coordinate> robotsHashMap;
+public class ModelController {
+    private Map<Robot, Coordinate> robotsHashMap;
     private Map<Shape, Coordinate> shapesHashMap;
-    private List<Command<R>> program;
-    private Environment<R> environment;
-    private FollowMeParserHandler handler;
-    private FollowMeShapeChecker checker;
+    private Environment environment;
     private ShapesGenerator shapesGenerator;
-    private Simulator<R> simulator;
+    private Simulator simulator;
     private FollowMeParser parser;
     public static final Logger LOGGER = Logger.getLogger(ModelController.class.getName());
 
@@ -44,13 +40,13 @@ public class ModelController<R extends Robot> {
         loggerSetup();
         robotsHashMap = new HashMap<>();
         shapesHashMap = new HashMap<>();
-        environment = new SimulationEnvironment<>(shapesHashMap, robotsHashMap);
+        environment = new SimulationEnvironment(shapesHashMap, robotsHashMap);
 
-        program = new ArrayList<>();
-        simulator = new RobotSimulator<>(program, robotsHashMap);
+        List<Command> program = new ArrayList<>();
+        simulator = new RobotSimulator(program, robotsHashMap);
 
-        handler = new ProgramParserHandler<>(environment, simulator);
-        checker = FollowMeShapeChecker.DEFAULT_CHECKER;
+        FollowMeParserHandler handler = new ProgramParserHandler(environment, simulator);
+        FollowMeShapeChecker checker = FollowMeShapeChecker.DEFAULT_CHECKER;
         parser = new FollowMeParser(handler, checker);
         shapesGenerator = new DefaultShapesGenerator(parser);
         LOGGER.info("ModelController initialized");
@@ -58,7 +54,7 @@ public class ModelController<R extends Robot> {
 
     private void loggerSetup() {
         try {
-            FileHandler fileHandler = new FileHandler("log.txt");
+            FileHandler fileHandler = new FileHandler("../configuration_files/log.txt");
             LOGGER.addHandler(fileHandler);
             LOGGER.setLevel(java.util.logging.Level.ALL);
             SimpleFormatter formatter = new SimpleFormatter();
@@ -69,7 +65,7 @@ public class ModelController<R extends Robot> {
         }
     }
 
-    public void setRobotsHashMap(Map<R, Coordinate> robotsHashMap) {
+    public void setRobotsHashMap(Map<Robot, Coordinate> robotsHashMap) {
         this.robotsHashMap.clear();
         this.robotsHashMap.putAll(robotsHashMap);
     }
@@ -80,13 +76,14 @@ public class ModelController<R extends Robot> {
 
     public void generateCommandsFromFile(File programFile) throws FollowMeParserException, IOException {
         parser.parseRobotProgram(programFile);
+        simulator.init();
     }
 
-    public void runSimulation(double delta_t, double time) {
-        simulator.simulate(delta_t, time);
+    public void runSimulation(double delta_t, double time, int numberOfCommands) {
+        simulator.simulate(delta_t, time, numberOfCommands);
     }
 
-    public Environment<R> getEnvironment() {
+    public Environment getEnvironment() {
         return environment;
     }
 
