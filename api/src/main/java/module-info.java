@@ -7,4 +7,5 @@ module api {
     exports it.unicam.cs.followme.list.model.shapes;
     exports it.unicam.cs.followme.list.utils;
     exports it.unicam.cs.followme.list.model.commands;
+    exports it.unicam.cs.followme.list.utils.cloneFactory;
 }

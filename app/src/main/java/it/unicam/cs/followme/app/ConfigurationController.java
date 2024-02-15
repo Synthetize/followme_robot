@@ -69,6 +69,12 @@ public class ConfigurationController implements Initializable {
 
     @FXML
     void openSimulationScene(MouseEvent event) {
+        String currentDirectory = System.getProperty("user.dir");
+        System.out.println("Current working directory: " + currentDirectory);
+        shapesConfigFile = new File("..\\configuration_files\\allLoopsShapes.txt");
+        programFile = new File("..\\configuration_files\\allLoopsProgram.txt");
+        robots.put(new BasicRobot(), new CartesianCoordinate(0, 0));
+
         if (shapesConfigFile == null || programFile == null || robots.isEmpty()) {
             alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Missing configuration");
