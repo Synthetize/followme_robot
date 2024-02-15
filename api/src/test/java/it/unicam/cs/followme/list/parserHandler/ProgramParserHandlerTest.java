@@ -81,7 +81,7 @@ public class ProgramParserHandlerTest {
         programParserHandler.signalCommand("label_");
         programParserHandler.parsingDone();
         assertEquals(1, program.size());
-        assertInstanceOf(UpdateRobotLabel.class, program.get(0));
+        assertInstanceOf(Signal.class, program.get(0));
     }
 
     @Test
@@ -97,7 +97,7 @@ public class ProgramParserHandlerTest {
         programParserHandler.unsignalCommand("label_");
         programParserHandler.parsingDone();
         assertEquals(1, program.size());
-        assertInstanceOf(UpdateRobotLabel.class, program.get(0));
+        assertInstanceOf(Unsignal.class, program.get(0));
     }
 
     @Test

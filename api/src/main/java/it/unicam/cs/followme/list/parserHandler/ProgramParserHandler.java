@@ -80,8 +80,8 @@ public class ProgramParserHandler implements FollowMeParserHandler {
     @Override
     public void signalCommand(String label) {
         validateLabel(label);
-        UpdateRobotLabel updateRobotLabel = new UpdateRobotLabel(label, environment, RobotCommand.SIGNAL);
-        program.add(updateRobotLabel);
+        Signal signalCommand = new Signal(label, environment);
+        program.add(signalCommand);
     }
 
     private void validateLabel(String label) {
@@ -93,8 +93,8 @@ public class ProgramParserHandler implements FollowMeParserHandler {
     @Override
     public void unsignalCommand(String label) {
         validateLabel(label);
-        UpdateRobotLabel updateRobotLabel = new UpdateRobotLabel(label, environment, RobotCommand.UNSIGNAL);
-        program.add(updateRobotLabel);
+        Unsignal unsignalCommand = new Unsignal(label, environment);
+        program.add(unsignalCommand);
     }
 
     @Override
