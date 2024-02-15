@@ -4,7 +4,7 @@ import it.unicam.cs.followme.list.model.Environment;
 import it.unicam.cs.followme.list.model.SimulationEnvironment;
 import it.unicam.cs.followme.list.model.commands.basic.Continue;
 import it.unicam.cs.followme.list.model.commands.basic.Move;
-import it.unicam.cs.followme.list.utils.CloneCommandException;
+import it.unicam.cs.followme.list.utils.exceptions.CloneCommandException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

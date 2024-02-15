@@ -9,7 +9,10 @@ import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.utils.ProgramCloner;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
+import it.unicam.cs.followme.list.utils.cloneFactory.CommandClonerFactory;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +34,10 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
     @Override
     public void init() {
         setSimulationCurrentTime(0);
-        robotsList.keySet().forEach(r -> r.setProgram(ProgramCloner.clone(programList)));
+        robotsList.keySet().forEach(r -> {
+            ProgramCloner programCloner = new ProgramCloner(new HashMap<>());
+            r.setProgram(programCloner.clone(programList));
+        });
     }
 
     @Override

@@ -2,7 +2,7 @@ package it.unicam.cs.followme.list.utils.cloneFactory;
 
 import it.unicam.cs.followme.list.model.commands.basic.Move;
 import it.unicam.cs.followme.list.model.commands.loops.Repeat;
-import it.unicam.cs.followme.list.utils.CloneCommandException;
+import it.unicam.cs.followme.list.utils.exceptions.CloneCommandException;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
