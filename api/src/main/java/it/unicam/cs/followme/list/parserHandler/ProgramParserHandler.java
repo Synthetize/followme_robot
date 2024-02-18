@@ -10,7 +10,6 @@ import it.unicam.cs.followme.list.model.commands.loops.Until;
 import it.unicam.cs.followme.list.model.CartesianCoordinate;
 import it.unicam.cs.followme.list.model.Coordinate;
 import it.unicam.cs.followme.utilities.FollowMeParserHandler;
-import it.unicam.cs.followme.utilities.RobotCommand;
 
 import java.util.ArrayList;
 import java.util.List;

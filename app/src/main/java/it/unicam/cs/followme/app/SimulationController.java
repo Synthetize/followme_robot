@@ -94,6 +94,11 @@ public class SimulationController {
     }
 
     private void addShapesToGroup() {
+        Circle circle = new Circle(3, Color.BLACK);
+        circle.setOpacity(0);
+        circle.setCenterX(-simulationArea.getPrefWidth()/2);
+        circle.setCenterY(-simulationArea.getPrefHeight()/2);
+        elementToShow.getChildren().add(circle);
         for (Map.Entry<Shape, Coordinate> entry : environment.shapesDetails().entrySet()) {
             if (entry.getKey() instanceof RectangleShape) {
                 addRectangleToPane(entry);

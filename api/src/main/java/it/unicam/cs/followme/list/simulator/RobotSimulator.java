@@ -49,23 +49,30 @@ public class RobotSimulator extends SimulationTimer implements Simulator {
                 ModelController.LOGGER.info("TIME EXPIRED, PROGRAM EXECUTION STOPPED");
                 return;
             }
-            for (Robot r : robotsList.keySet()) {
-                int robotExecutionIndex = r.getCurrentCommandIndex();
-                if (robotExecutionIndex >= programList.size()) {
-                    ModelController.LOGGER.info("ROBOT " + r + " execution ended");
-                } else {
-                    Command commandToExecute = r.getProgram().get(robotExecutionIndex);
-                    if (commandToExecute instanceof Done done) {
-                        handleDoneCommand(r, done);
-                    } else if (commandToExecute instanceof RunnableCommand runnableCommand) {
-                        runnableCommand.run(r, delta_t);
-                    } else if (commandToExecute instanceof LoopCommand command) {
-                        command.getLog();
-                    }
+            executeRobotCommands(delta_t);
+        }
+    }
 
-                    r.incrementCurrentCommandIndex();
-                }
+    private void executeRobotCommands(double delta_t) {
+        for (Robot r : robotsList.keySet()) {
+            int robotExecutionIndex = r.getCurrentCommandIndex();
+            if (robotExecutionIndex >= programList.size()) {
+                ModelController.LOGGER.info("ROBOT " + r + " execution ended");
+            } else {
+                executeCommand(r, robotExecutionIndex, delta_t);
+                r.incrementCurrentCommandIndex();
             }
+        }
+    }
+
+    private void executeCommand(Robot r, int robotExecutionIndex, double delta_t) {
+        Command commandToExecute = r.getProgram().get(robotExecutionIndex);
+        if (commandToExecute instanceof Done done) {
+            handleDoneCommand(r, done);
+        } else if (commandToExecute instanceof RunnableCommand runnableCommand) {
+            runnableCommand.run(r, delta_t);
+        } else if (commandToExecute instanceof LoopCommand command) {
+            command.getLog();
         }
     }
 

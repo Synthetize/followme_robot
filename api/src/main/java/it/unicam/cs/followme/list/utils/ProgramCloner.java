@@ -11,10 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-
-/**
- *
- */
 public class ProgramCloner {
     private final Map<Class<? extends Command>, CommandClonerFactory> factoryMap;
     private final List<Command> clonedProgram = new ArrayList<>();
