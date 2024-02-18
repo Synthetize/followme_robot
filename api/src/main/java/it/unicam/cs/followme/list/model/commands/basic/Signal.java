@@ -9,7 +9,7 @@ import it.unicam.cs.followme.utilities.RobotCommand;
 
 import java.util.List;
 
-public class Signal implements Command, RunnableCommand {
+public class Signal implements RunnableCommand {
     private final Environment environment;
     private final String label;
 

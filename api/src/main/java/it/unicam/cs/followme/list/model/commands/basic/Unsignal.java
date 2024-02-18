@@ -6,7 +6,7 @@ import it.unicam.cs.followme.list.model.commands.Command;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-public class Unsignal implements Command, RunnableCommand {
+public class Unsignal implements RunnableCommand {
     private final Environment environment;
     private final String label;
 
