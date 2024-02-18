@@ -2,4 +2,3 @@ circle01_ CIRCLE 0 0 40
 circle02_ CIRCLE 180 0 40
 circle03_ CIRCLE 0 -100 40
 circle04_ CIRCLE 180 -100 40
-circle05_ CIRCLE -650 300 1
