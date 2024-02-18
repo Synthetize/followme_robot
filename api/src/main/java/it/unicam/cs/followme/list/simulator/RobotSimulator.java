@@ -9,9 +9,7 @@ import it.unicam.cs.followme.list.model.commands.loops.LoopCommand;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.list.utils.ProgramCloner;
 import it.unicam.cs.followme.list.utils.SimulationTimer;
-import it.unicam.cs.followme.list.utils.cloneFactory.CommandClonerFactory;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
