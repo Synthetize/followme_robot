@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The ProgramCloner class is responsible for cloning a program. It maintains a map of CommandClonerFactory instances
+ * associated with their corresponding Command classes. It also maintains a list of cloned commands.
+ */
 public class ProgramCloner {
     private final Map<Class<? extends Command>, CommandClonerFactory> factoryMap;
     private final List<Command> clonedProgram = new ArrayList<>();
@@ -28,6 +32,14 @@ public class ProgramCloner {
         factoryMap.put(Until.class, new UntilFactory());
     }
 
+    /**
+     * Clones the given list of commands using the appropriate CommandClonerFactory for each command.
+     * The cloned commands are added to the clonedProgram list.
+     *
+     * @param program the list of commands to clone
+     * @return the list of cloned commands
+     * @throws InvalidFactoryException if no factory is found for a command
+     */
     public List<Command> clone(List<Command> program) {
         for (Command command : program) {
             CommandClonerFactory factory = factoryMap.get(command.getClass());

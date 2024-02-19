@@ -31,17 +31,20 @@ public class Follow implements RunnableCommand {
         return RobotCommand.FOLLOW;
     }
 
+    /**
+     * Executes the follow command for a given robot.
+     * This method calculates the average position of the robots with the given label or calculates a direction if
+     * no robots are found. It then normalizes the direction and moves the robot in that direction.
+     */
     @Override
     public void run(Robot robot, double delta_t) {
         HashMap<Robot, Coordinate> robotList = getRobotsWithLabelBetweenDistance(robot);
-        final AtomicReference<Double> xAvgValue = new AtomicReference<>((double) 0);
-        final AtomicReference<Double> yAvgValue = new AtomicReference<>((double) 0);
+        final AtomicReference<Double> xAvgValue = new AtomicReference<>(0.0);
+        final AtomicReference<Double> yAvgValue = new AtomicReference<>(0.0);
         if (robotList.isEmpty()) {
             Random random = new Random();
             xAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
             yAvgValue.updateAndGet(v -> random.nextDouble(2 * this.distanceFromRobot) - this.distanceFromRobot);
-            xAvgValue.set(2.0);
-            yAvgValue.set(2.0);
             ModelController.LOGGER.info("FOLLOW | " + robot + " will move randomly");
         } else {
             for(Map.Entry<Robot, Coordinate> entry : robotList.entrySet()) {
@@ -57,10 +60,9 @@ public class Follow implements RunnableCommand {
         move.run(robot, delta_t);
     }
 
-    /*
-    * The move command move the robot using the relative coordinates,
-    * so we need to calculate the direction using the robot absolute coordinates and the target absolute coordinates
-    * and then normalize the result and move the robot in that direction
+    /**
+     * The MOVE command move the robot using the relative coordinates (0,0) as the starting point.
+     * This method takes the x and y average values and calculates the normalized direction.
      */
     private Coordinate calculateNormalizedDirection(Double avgXValue, Double avgYValue, Robot robot) {
         double x = avgXValue - environment.getRobotCoordinate(robot).getX();
@@ -69,6 +71,9 @@ public class Follow implements RunnableCommand {
         return new CartesianCoordinate(x / magnitude, y / magnitude);
     }
 
+    /**
+     * This is used to find all the robots with the given label that are within the given distance from the robot.
+     */
     private HashMap<Robot, Coordinate> getRobotsWithLabelBetweenDistance(Robot robot) {
         Map<Robot, Coordinate> robotList = environment.robotsDetails();
         HashMap<Robot, Coordinate> robotWithLabelBetweenDistance = new HashMap<>();

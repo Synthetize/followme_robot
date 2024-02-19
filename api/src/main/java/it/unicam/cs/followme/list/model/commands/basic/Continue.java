@@ -23,6 +23,12 @@ public class Continue implements RunnableCommand {
         return RobotCommand.CONTINUE;
     }
 
+    /**
+     * Executes the continue command for a given robot.
+     *
+     * This method calculates get the robot's last movement values and applies them to the robot's current position
+     * for the given number of seconds.
+     */
     @Override
     public void run(Robot robot, double delta_t) {
         ModelController.LOGGER.info("CONTINUE | " + robot + " is executing the continue command for " + seconds + " seconds");

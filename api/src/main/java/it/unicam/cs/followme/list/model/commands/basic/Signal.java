@@ -23,6 +23,10 @@ public class Signal implements RunnableCommand {
         return RobotCommand.SIGNAL;
     }
 
+    /**
+     * Executes the signal command for a given robot.
+     * This method adds a label to the robot if it is inside a shape with the same label.
+     */
     @Override
     public void run(Robot robot, double delta_t) {
         List<Shape> shapes = environment.checkIfRobotIsInsideShapes(robot);

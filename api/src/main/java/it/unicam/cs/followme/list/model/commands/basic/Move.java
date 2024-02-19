@@ -26,6 +26,12 @@ public class Move implements RunnableCommand {
         return RobotCommand.MOVE;
     }
 
+    /**
+     * Executes the move command for a given robot.
+     * This method calculates the distance between the robot's current position and the target coordinates,
+     * then calculates the change in position based on the speed and the time delta. It then applies this
+     * change to the robot's current position in the environment.
+     */
     @Override
     public void run(Robot robot, double delta_t) {
         Coordinate robotRelativeCoordinates = new CartesianCoordinate(0, 0);

@@ -4,8 +4,6 @@ import it.unicam.cs.followme.list.ModelController;
 import it.unicam.cs.followme.list.model.robots.Robot;
 import it.unicam.cs.followme.utilities.RobotCommand;
 
-import java.util.PrimitiveIterator;
-
 public class Repeat extends LoopCommand {
 
     private final int repetitionNumbers;
